@@ -73,7 +73,7 @@ class Company extends \yii\db\ActiveRecord
             [['type_id', 'activity_id', 'pib'], 'integer'],
             [['is_pdv'], 'boolean'],
             [['created_at', 'updated_at', 'report_date'], 'safe'],
-            [['embedding'], 'string'],
+            // [['embedding'], 'string'],
             [['name', 'name_tg'], 'string', 'max' => 512],
             [['specific_reports', 'reminder'], 'string', 'max' => 256],
             [['status'], 'string', 'max' => 32],

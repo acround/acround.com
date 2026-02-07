@@ -33,10 +33,10 @@ class m251208_123539_insert_companies extends Migration
             $company->specific_reports = $companyRaw['specific_reports'];
             $company->reminder = $companyRaw['reminder'];
             $company->pib = null;
-            if ($company->insert()) {
+            if ($company->save()) {
                 $num++;
             } else {
-                echo $company->name." insert error\n";
+                echo $company->name . " insert error\n";
                 print_r($company->getErrors());
                 // var_dump($company->type_id);
                 // var_dump($company->activity_id);
