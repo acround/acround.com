@@ -21,7 +21,7 @@ use yii\db\Query;
  * @property string $created_at
  * @property string $updated_at
  * @property string|null $report_date
- * @property string|null $embedding
+//  * @property string|null $embedding
  *
  * @property Accountant[] $accountants
  * @property CompanyActivities $activity
@@ -66,7 +66,7 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_tg', 'type_id', 'activity_id', 'specific_reports', 'reminder', 'pib', 'report_date', 'embedding'], 'default', 'value' => null],
+            [['name', 'name_tg', 'type_id', 'activity_id', 'specific_reports', 'reminder', 'pib', 'report_date'], 'default', 'value' => null],
             [['is_pdv'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 'onboarding'],
             [['type_id', 'activity_id', 'pib'], 'default', 'value' => null],
@@ -102,7 +102,7 @@ class Company extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'report_date' => 'Report Date',
-            'embedding' => 'Embedding',
+            // 'embedding' => 'Embedding',
         ];
     }
 
