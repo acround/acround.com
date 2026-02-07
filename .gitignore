@@ -1,6 +1,10 @@
-assets/*
-!assets/.gitignore
-protected/runtime/*
-!protected/runtime/.gitignore
-protected/data/*.db
-themes/classic/views/
+buhgalterija-office/assets/*
+!buhgalterija-office/assets/.gitignore
+buhgalterija-office/protected/runtime/*
+!buhgalterija-office/protected/runtime/.gitignore
+buhgalterija-office/protected/data/*.db
+buhgalterija-office/themes/classic/views/
+.env
+.vscode
+test
+.venv

@@ -1,0 +1,15 @@
+[
+    {
+        "id": 0,
+        "name": "company_name",
+        "name_tg": "company_name_tg",
+        "type_id": 0,
+        "is_pdv": true,
+        "activity_id": 0,
+        "specific_reports": "",
+        "reminder": "",
+        "pib": "",
+        "status": "active",
+        "report_date": "2024-01-01"
+    }
+]

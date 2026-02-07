@@ -1,0 +1,104 @@
+/* Основной контейнер */
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    /* Высота вашего чата */
+    max-width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f9f9f9;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.chat-header {
+    background: #0088cc;
+    /* Цвет Telegram */
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Область сообщений */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+    /* Плавный скролл */
+}
+
+/* Стилизация скроллбара */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+/* Общее облачко сообщения */
+.message {
+    max-width: 80%;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+    word-wrap: break-word;
+}
+
+/* Входящие (из Telegram) */
+.message.incoming {
+    align-self: flex-start;
+    background: #ffffff;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Исходящие (с сайта) */
+.message.outgoing {
+    align-self: flex-end;
+    background: #efffde;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Служебная информация внутри сообщения */
+.message .meta {
+    display: block;
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.message strong {
+    display: block;
+    font-size: 11px;
+    color: #0088cc;
+    margin-bottom: 2px;
+}
+
+/* Поле ввода */
+.chat-input-area {
+    padding: 10px;
+    background: white;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid #eee;
+}
+
+.chat-input-area input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 15px;
+    outline: none;
+}

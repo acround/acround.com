@@ -1,0 +1,22 @@
+[
+    {
+        "accountant": "Marija Kovačević",
+        "tasks": "prijava\/odjava radnika (pio\/croso), obračun zarada"
+    },
+    {
+        "accountant": "Jelena Milojković",
+        "tasks": "knjiženje, pdv, odgovor na pitanja vezanih za poslovanje firmi"
+    },
+    {
+        "accountant": "Viktorija Egorova",
+        "tasks": "knjiženje, pdv, odgovor na pitanja vezanih za poslovanje firmi"
+    },
+    {
+        "accountant": "Julija Radčenko",
+        "tasks": "knjiženje, promena podataka, rad na terenu"
+    },
+    {
+        "accountant": "Oleg Sabančiev",
+        "tasks": "plaćanje računa"
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "id": 0,
+        "firstname": "firstname",
+        "lastname": "lastname",
+        "rule": "accountant",
+        "lang": "ru",
+        "email": "email",
+        "password": "12cool09",
+        "token": ""
+    }
+]

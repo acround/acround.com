@@ -1,0 +1,11 @@
+[
+    {
+        "id": 0,
+        "company_id": 0,
+        "category": "Test task",
+        "request": "This is a test task",
+        "status": "new",
+        "accountant_id": 0,
+        "priority": "normal"
+    }
+]

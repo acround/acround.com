@@ -1,0 +1,12 @@
+[
+    {
+        "id": 0,
+        "tg_id": 0,
+        "company_id": 0,
+        "firstname": "Test",
+        "lastname": "Customer",
+        "username": "test_customer",
+        "status": "active",
+        "lang": "ru"
+    }
+]
