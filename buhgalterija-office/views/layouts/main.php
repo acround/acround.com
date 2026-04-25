@@ -4,9 +4,9 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\components\ModalCreateRegReminderWidget;
-use app\components\ModalEditCalendarWidget;
-use app\components\ModalWindowWidget;
+use app\widgets\ModalCreateRegReminderWidget;
+use app\widgets\ModalEditCalendarWidget;
+use app\widgets\ModalWindowWidget;
 
 AppAsset::register($this);
 $this->registerCsrfMetaTags();
@@ -15,6 +15,7 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$centrifugoUrl = getenv('CENTRIFUGO_URL');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -32,18 +33,21 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php
     $this->registerJsFile('@web/js/jquery.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     $this->registerJsFile('@web/js/index.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
+    $this->registerJsFile('@web/js/search.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
+    $this->registerJsFile('@web/js/reminder.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     $this->registerJsFile('@web/js/dictionary.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     $this->registerJsFile('@web/js/modal.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     $this->registerJsFile('@web/js/tiff.min.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     $this->registerJsFile('@web/js/select.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     $this->registerJsFile('@web/js/chat.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
+    $this->registerJsFile('@web/js/suggestions.js', ['depends' => [\yii\web\JqueryAsset::class], 'position' => \yii\web\View::POS_END,]);
     ?>
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" href="/css/select.css">
-    <!-- <link rel="stylesheet" href="/css/chat.css"> -->
     <link rel="stylesheet" href="/css/chat-cl.css">
+    <link rel="stylesheet" href="/css/suggestions.css">
 </head>
 
 <body>

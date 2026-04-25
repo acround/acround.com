@@ -1,8 +1,8 @@
 <?php
 
-use app\components\MainMenuWidget;
-use app\components\MainHeaderWidget;
-use app\components\MainUserMenuWidget;
+use app\widgets\MainMenuWidget;
+use app\widgets\MainHeaderWidget;
+use app\widgets\MainUserMenuWidget;
 
 /** @var $user app\models\Accountant */
 /** @var $data array */

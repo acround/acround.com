@@ -1,13 +1,11 @@
 <?php
 
-use app\components\ButtonBackWidget;
 use app\services\DictionaryService;
 
 ?>
 <div class="p-6">
     <div class="space-y-6">
-        <div class="flex items-center gap-4">
-            <?= ButtonBackWidget::widget(['user' => $user]) ?>
+        <div id="page-header" class="flex items-center gap-4">
             <div>
                 <h1 class="text-2xl font-heading font-bold"><?= $user->firstname . ' ' . $user->lastname ?></h1>
             </div>

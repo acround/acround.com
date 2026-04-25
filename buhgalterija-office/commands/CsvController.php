@@ -8,13 +8,13 @@ use yii\console\ExitCode;
 class CsvController extends Controller
 {
 
-    public function actionIndex($a)
+    public function actionIndex($a, $delimiter = ';')
     {
         $out = [];
         $num = 0;
         $fields = [];
         if (($handle = fopen($a, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
                 if ($num === 0) {
                     $fields = $data;
                 } else {

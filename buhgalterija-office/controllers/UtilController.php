@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\widgets\ButtonBackWidget;
 use app\models\Accountant;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -26,7 +27,25 @@ class UtilController extends BaseController
                 'from' => $request->post('from'),
                 'to' => $request->post('to'),
             ];
-            $response->data = $this->makeN8nWebhookCall('translate',$data);
+            $response->data = $this->makeN8nWebhookCall('translate', $data);
+            return $response;
+        } else {
+            return $this->renderLogout();
+        }
+    }
+
+    public function actionBackButton()
+    {
+        $request = \Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
+        if ($accountant->isValid()) {
+            $response = \Yii::$app->response;
+            $response->format = Response::FORMAT_JSON;
+            $response->data = [
+                'status' => 'success',
+                'button' => ButtonBackWidget::widget(['user' => $accountant]),
+            ];
             return $response;
         } else {
             return $this->renderLogout();

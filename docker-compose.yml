@@ -4,16 +4,17 @@ services:
     container_name: traefik
     restart: unless-stopped
     command:
-      - '--api.insecure=true'
-      - '--providers.docker=true'
-      - '--providers.docker.exposedbydefault=false'
-      - '--entrypoints.web.address=:80'
-      - '--entrypoints.web.http.redirections.entrypoint.to=websecure'
-      - '--entrypoints.web.http.redirections.entrypoint.scheme=https'
-      - '--entrypoints.websecure.address=:443'
-      - '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true'
-      - '--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}'
-      - '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      # - --tls.insecure=true
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+      - --certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}
+      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
     ports:
       - '80:80'
       - '443:443'
@@ -21,7 +22,8 @@ services:
       - 'traefik_data:/letsencrypt'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     networks:
-      - web
+      - acround-web
+
   postgres:
     image: pgvector/pgvector:pg15
     # build:
@@ -37,7 +39,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - web
+      - acround-web
     healthcheck:
       test:
         - CMD-SHELL
@@ -103,7 +105,7 @@ services:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
     networks:
-      - web
+      - acround-web
     depends_on:
       postgres:
         condition: service_healthy
@@ -114,7 +116,7 @@ services:
     build: ./embedding-service
     container_name: embedding-service
     networks:
-      - web
+      - acround-web
     ports:
       - "5000:5000"
     restart: unless-stopped
@@ -149,7 +151,7 @@ services:
     volumes:
       - ./buhgalterija-office:/var/www/html
     networks:
-      - web
+      - acround-web
     labels:
       - traefik.enable=true
       - traefik.http.routers.buhgalterija-office.rule=Host(`${BUH_OFFICE_SUBDOMAIN}.${DOMAIN_NAME}`)
@@ -174,7 +176,7 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     networks:
-      - web
+      - acround-web
     depends_on:
       - postgres
     labels:
@@ -186,8 +188,8 @@ services:
       - traefik.http.services.pgadmin.loadbalancer.server.port=80
 
 networks:
-  web:
-    driver: bridge
+  acround-web:
+    external: true
 volumes:
   traefik_data:
   postgres_data:

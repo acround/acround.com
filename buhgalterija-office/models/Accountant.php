@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\services\AuthService;
+use app\services\DictionaryService;
 use \yii\db\ActiveRecord;
 
 /**
@@ -137,10 +138,10 @@ class Accountant extends ActiveRecord //implements \yii\web\IdentityInterface
             }
         }
         switch ($accountant->lang) {
-            case 'ru':
+            case DictionaryService::LANG_RUSSIAN:
                 Yii::$app->language = 'ru-RU';
                 break;
-            case 'rs':
+            case DictionaryService::LANG_SERBIAN:
                 Yii::$app->language = 'sr-RS';
                 break;
             default:

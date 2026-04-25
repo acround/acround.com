@@ -99,7 +99,7 @@ class TestDataController extends Controller
         $fileCompany = file_get_contents(realpath(Yii::getAlias(self::TEST_DIRECTORY)) . '/' . self::TEST_DATA_COMPANY_FILE_NAME);
         $companies = json_decode($fileCompany, true);
         $nextCompanyIdQuery = 'SELECT nextval(\'company_id_seq\'::regclass)';
-        $insertCompanyQuery = 'INSERT INTO "company" ("id","name","name_tg","type_id","is_pdv","activity_id","specific_reports","reminder","pib","status","report_date") VALUES (:id,:name,:name_tg,:type_id,:is_pdv,:activity_id,:specific_reports,:reminder,:pib,:status,:report_date) RETURNING id';
+        $insertCompanyQuery = 'INSERT INTO "company" ("id","name","name_tg","type_id","is_pdv","activity_id","pib","status") VALUES (:id,:name,:name_tg,:type_id,:is_pdv,:activity_id,:pib,:status) RETURNING id';
         $nextCustomerIdQuery = 'SELECT nextval(\'customer_id_seq\'::regclass)';
         $insertCustomerQuery = 'INSERT INTO "customer" ("id","tg_id","firstname","lastname","username","status","lang") VALUES (:id,:tg_id,:firstname,:lastname,:username,:status,:lang) RETURNING id';
         $insertCompanyCustomerQuery = 'INSERT INTO "company_customer" ("company_id","customer_id") VALUES (:company_id,:customer_id) RETURNING id';

@@ -70,21 +70,6 @@ class SiteController extends BaseController
         return $mainMenu;
     }
 
-    protected function putHtml($label = '')
-    {
-        $filePath = $filePath = \Yii::getAlias('@app/web/index.html');
-        if (!is_file($filePath)) {
-            throw new NotFoundHttpException('Frontend index.html file not found. Have you built the React application and placed it in ' . $filePath . '?');
-        }
-        $response = \Yii::$app->response;
-        $response->format = \yii\web\Response::FORMAT_RAW;
-        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
-        $response->headers->set('Content-Disposition', 'inline');
-        $response->data = $label . file_get_contents($filePath);
-        return $response;
-    }
-
-
     public function actions()
     {
         return [
@@ -124,19 +109,24 @@ class SiteController extends BaseController
             ->leftJoin(['t' => Task::tableName()], 't.accountant_id = a.id')
             ->where(['!=', 'a.rule', 'bot'])
             ->andWhere(['!=', 'a.rule', 'admin'])
-            ->andWhere('t.status not in (\'done\', \'closed\', \'archived\')')
-            ->andWhere('t.due_date < CURRENT_DATE')
+            ->andWhere(['t.status' => Task::STATUS_OVERDUE])
             ->andWhere(['!=', 'a.rule', 'ceo'])
             ->groupBy('a.id')
             ->orderBy(['a.id' => SORT_ASC]);
+        if ($accountant->rule !== 'ceo') {
+            $overdueTasksQuery->andWhere('t.accountant_id = :accountant_id', ['accountant_id' => $accountant->id]);
+        }
         if ($viewAccountants) {
+            $taskOnCondition = [
+                't.accountant_id = c.id',
+                't.status not in (\'' . Task::STATUS_DONE . '\', \'' . Task::STATUS_CLOSED . '\', \'' . Task::STATUS_ARCHIVED . '\')',
+                't.accountant_id = c.id'
+            ];
             $accountantQuery = (new Query())
                 ->select(['c.id', 'c.firstname', 'c.lastname', 'c.rule', 'c.lang', 'c.email', 'COUNT(t.id) AS tasks'])
                 ->from(['c' => Accountant::tableName()])
-                ->leftJoin(['t' => Task::tableName()], 't.accountant_id = c.id')
-                ->where(['!=', 'c.rule', 'bot'])
-                ->andWhere(['!=', 'c.rule', 'admin'])
-                ->andWhere(['!=', 'c.rule', 'ceo'])
+                ->leftJoin(['t' => Task::tableName()], implode(' AND ', $taskOnCondition))
+                ->where(['c.rule' => Accountant::RULE_ACCOUNTANT])
                 ->groupBy(['c.id', 'c.firstname', 'c.lastname', 'c.rule', 'c.lang', 'c.email'])
                 ->orderBy(['tasks' => SORT_DESC, 'c.lastname' => SORT_ASC, 'c.firstname' => SORT_ASC]);
             $accountantsRaw = $accountantQuery->all();
@@ -145,9 +135,6 @@ class SiteController extends BaseController
                 $accountants[$accountantOne['id']] = $accountantOne;
             }
 
-            if ($accountant->rule !== 'ceo') {
-                $overdueTasksQuery->andWhere('t.accountant_id = :accountant_id', ['accountant_id' => $accountant->id]);
-            }
             $recentActivity = [];
         } else {
             $accountants = [];
@@ -196,8 +183,7 @@ class SiteController extends BaseController
         $activeTasks = $activeTasksQuery->count();
 
         $overdueTasksQuery = Task::find()
-            ->where(['<', 'due_date', date('Y-m-d')])
-            ->andWhere(['!=', 'status', Task::STATUS_DONE]);
+            ->where(['status' => Task::STATUS_OVERDUE]);
         if ($accountant->rule !== 'ceo') {
             $overdueTasksQuery->andWhere('accountant_id = :accountant_id', ['accountant_id' => $accountant->id]);
         }
@@ -217,7 +203,7 @@ class SiteController extends BaseController
                 'accountants' => $accountants,
                 'clents' => $companies,
                 'activeTasks' => $activeTasks,
-                'overdueTasks' => $overdueTasks,
+                'overdueTasks' => $overdueTasksQuery->count(),
                 'upcomingDeadlines' => $upcomingDeadlines,
                 'docsToCheck' => $docsToCheck,
                 'activities' => $recentActivity,

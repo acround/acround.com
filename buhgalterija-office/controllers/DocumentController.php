@@ -4,12 +4,13 @@ namespace app\controllers;
 
 use yii\web\Response;
 use yii\db\Query;
-use app\components\DocViewActivityWidget;
-use app\components\DocListWidget;
+use app\widgets\DocViewActivityWidget;
+use app\widgets\DocListWidget;
 use app\models\Accountant;
 use app\models\Company;
 use app\models\Document;
 use app\models\DocumentComment;
+use app\models\DocumentType;
 use app\models\Task;
 use app\models\TaskDocument;
 use Exception;
@@ -17,19 +18,50 @@ use Exception;
 class DocumentController extends BaseController
 {
 
-    public function getDataForPage($accountant, $status = null)
+    protected function getDocumentQuery($accountant, $filters)
     {
-        $docsQuery = Document::find();
+        $docsQuery = Document::find()
+            ->select(['d.*'])
+            ->distinct()
+            ->from(['d' => Document::tableName()]);
         if ($accountant->rule !== 'ceo') {
             $docsQuery
-                ->leftJoin(['td' => TaskDocument::tableName()], 'documents.id = td.document_id')
+                ->leftJoin(['td' => TaskDocument::tableName()], 'd.id = td.document_id')
                 ->leftJoin(['t' => Task::tableName()], 'td.task_id = t.id')
                 ->leftJoin(['a' => Accountant::tableName()], 't.accountant_id = a.id')
                 ->where('t.accountant_id = :accountant_id', ['accountant_id' => $accountant->id]);
         }
-        if ($status !== null) {
-            $docsQuery->andWhere(['documents.status' => $status]);
+        if ($filters['name']) {
+            $docsQuery->andWhere([
+                'OR',
+                ['ilike', 'd.filename', $filters['name']],
+                ['ilike', 'd.ocr_text', $filters['name']],
+                ['ilike', 'd.summary', $filters['name']],
+                ['ilike', 'd.category', $filters['name']],
+            ]);
         }
+        if ($filters['status']) {
+            $docsQuery->andWhere(['d.status' => $filters['status']]);
+        }
+        if ($filters['priority']) {
+            $docsQuery->andWhere(['d.priority' => $filters['priority']]);
+        }
+        if ($filters['company']) {
+            $docsQuery->andWhere(['d.company_id' => $filters['company']]);
+        }
+        if ($filters['type']) {
+            $docsQuery->andWhere(['d.type_id' => $filters['type']]);
+        }
+        return $docsQuery;
+    }
+
+    public function getDataForPage($accountant, $filters = [], $back = false)
+    {
+        $docsQuery = $this->getDocumentQuery($accountant, $filters);
+        $total = $docsQuery->count();
+        $page = $filters['page'] ?? 1;
+        $offset = ($page - 1) * self::PAGE_LENGTH;
+        $docsQuery->offset($offset)->limit(self::PAGE_LENGTH);
         $docs = $docsQuery->all();
 
         $filterCompanyQuery = (new Query())
@@ -49,7 +81,7 @@ class DocumentController extends BaseController
             ->select(['t.id', 't.name'])
             ->distinct()
             ->from(['d' => Document::tableName()])
-            ->innerJoin(['t' => 'document_types'], 't.id = d.type_id')
+            ->innerJoin(['t' => DocumentType::tableName()], 't.id = d.type_id')
             ->orderBy('t.name ASC');
 
         $filterStatusQuery = (new Query())
@@ -60,11 +92,13 @@ class DocumentController extends BaseController
         $data = [
             'user' => $accountant,
             'documents' => $docs,
-            'status' => $status,
+            'total' => $total,
+            'limit' => self::PAGE_LENGTH,
+            'filters' => $filters,
             'filterCompany' => $filterCompanyQuery->all(),
             'filterDocumentType' => $filterDocumentTypeQuery->all(),
             'filterStatus' => $filterStatusQuery->all(),
-            'back' => $status !== null,
+            'back' => $back,
         ];
         return $data;
     }
@@ -76,7 +110,19 @@ class DocumentController extends BaseController
         $token = $request->post('token');
         $accountant = Accountant::findIdentityByAccessToken($token);
         if ($accountant->isValid()) {
-            $data = $this->getDataForPage($accountant, $status);
+            $back = $status !== null;
+            $page = $request->post('page') ?? 1;
+            $offset = ($page - 1) * self::PAGE_LENGTH;
+            $filters = [
+                'name' => $request->post('name'),
+                'status' => $status ?? $request->post('status'),
+                'priority' => $request->post('priority'),
+                'company' => $request->post('company'),
+                'type' => $request->post('type'),
+                'page' => $page,
+                'offset' => $offset,
+            ];
+            $data = $this->getDataForPage($accountant, $filters, $back);
             return $this->renderPage($data);
         } else {
             return $this->renderLogout();
@@ -102,6 +148,7 @@ class DocumentController extends BaseController
         }
     }
 
+
     public function actionFilter()
     {
         $this->layout = false;
@@ -109,46 +156,31 @@ class DocumentController extends BaseController
         $token = $request->post('token');
         $accountant = Accountant::findIdentityByAccessToken($token);
         if ($accountant->isValid()) {
-            $name = $request->post('name');
-            $status = $request->post('status');
-            $priority = $request->post('priority');
-            $company = $request->post('company');
-            $docsQuery = Document::find()
-                ->select(['d.*'])
-                ->distinct()
-                ->from(['d' => Document::tableName()]);
-            if ($accountant->rule !== 'ceo') {
-                $docsQuery
-                    ->leftJoin(['td' => TaskDocument::tableName()], 'd.id = td.document_id')
-                    ->leftJoin(['t' => Task::tableName()], 'td.task_id = t.id')
-                    ->leftJoin(['a' => Accountant::tableName()], 't.accountant_id = a.id')
-                    ->where('t.accountant_id = :accountant_id', ['accountant_id' => $accountant->id]);
-            }
-            if ($name) {
-                $docsQuery->andWhere([
-                    'OR',
-                    ['ilike', 'd.filename', $name],
-                    ['ilike', 'd.ocr_text', $name],
-                    ['ilike', 'd.summary', $name],
-                    ['ilike', 'd.category', $name],
-                ]);
-            }
-            if ($status) {
-                $docsQuery->andWhere(['d.status' => $status]);
-            }
-            if ($priority) {
-                $docsQuery->andWhere(['d.priority' => $priority]);
-            }
-            if ($company) {
-                $docsQuery->andWhere(['d.company_id' => $company]);
-            }
+            $page = $request->post('page') ?? 1;
+            $offset = ($page - 1) * self::PAGE_LENGTH;
+            $filters = [
+                'name' => $request->post('name'),
+                'status' => $request->post('status'),
+                'priority' => $request->post('priority'),
+                'company' => $request->post('company'),
+                'type' => $request->post('type'),
+                'page' => $page,
+                'offset' => $offset,
+            ];
+            $docsQuery = $this->getDocumentQuery($accountant, $filters);
+            $total = $docsQuery->count();
+            $filters['total'] = $total;
+            $page = $filters['page'] ?? 1;
+            $offset = ($page - 1) * self::PAGE_LENGTH;
+            $docsQuery->offset($offset)->limit(self::PAGE_LENGTH);
             $docs = $docsQuery->all();
             $response = \Yii::$app->response;
             $response->format = Response::FORMAT_JSON;
             $response->headers->set('Content-Type', 'application/json; charset=UTF-8');
             $response->data = [
                 'status' => 'success',
-                'data' => DocListWidget::widget(['user' => $accountant, 'documents' => $docs, 'company' => null]),
+                'data' => DocListWidget::widget(['user' => $accountant, 'documents' => $docs, 'company' => null, 'filters' => $filters, 'total' => $total, 'limit' => self::PAGE_LENGTH]),
+                'count' => $total,
             ];
             return $response;
         } else {
@@ -168,7 +200,7 @@ class DocumentController extends BaseController
             $response->headers->set('Content-Type', 'application/json; charset=UTF-8');
             $id = $request->post('task_id');
             $file = $_FILES['document'] ?? null;
-            if ($id && $file) {
+            if ($id && $file && ($file['error'] == UPLOAD_ERR_OK)) {
                 try {
                     $task = Task::findOne(['id' => $id]);
                     $errors = [];
@@ -267,16 +299,6 @@ class DocumentController extends BaseController
             'document' => $document,
         ]);
     }
-    //     if ($document) {
-    //         $response->format = Response::FORMAT_RAW;
-    //         $response->headers->add('Content-Type', $document->mimetype);
-    //         $response->headers->add('Content-Disposition', "inline; filename=\"{$document->filename}\"");
-    //         $response->content = stream_get_contents($document->content);
-    //         return $response;
-    //     } else {
-    //         throw new \yii\web\NotFoundHttpException('Document not found');
-    //     }
-    // }
 
     public function actionChangeStatus()
     {
@@ -358,6 +380,50 @@ class DocumentController extends BaseController
             return $response;
         } else {
             return $this->renderLogout($accountant);
+        }
+    }
+
+    public function actionSuggest()
+    {
+        $this->layout = false;
+        $request = \Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken($token);
+        if ($accountant->isValid()) {
+            $query = $request->post('query');
+            $docsQuery = (new Query())
+                ->select(['d.*'])
+                ->distinct()
+                ->from(['d' => Document::tableName()])
+                ->where([
+                    'OR',
+                    // ['ilike', 'd.filename', $query],
+                    ['ilike', 'd.ocr_text', $query],
+                    ['ilike', 'd.summary', $query],
+                    ['ilike', 'd.category', $query],
+                ])
+                ->limit(self::SUGGESTS_COUNT);
+
+            $data = $docsQuery->all();
+            $data = array_map(function ($item) {
+                $item['name'] = $item['ocr_text'] ?? $item['summary'] ?? $item['category'];
+                $item['name'] = explode('\n', $item['name'])[0];
+                return [
+                    'id' => $item['id'],
+                    'name' => mb_strlen($item['name'], 'utf-8') > 40 ? mb_substr($item['name'], 0, 40, 'utf-8') . '…' : $item['name'],
+                ];
+            }, $data);
+
+            $response = \Yii::$app->response;
+            $response->format = Response::FORMAT_JSON;
+            $response->data =
+                [
+                    'status' => 'success',
+                    'data' => $data,
+                ];
+            return $response;
+        } else {
+            return $this->renderLogout();
         }
     }
 }

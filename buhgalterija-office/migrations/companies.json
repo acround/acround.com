@@ -4,859 +4,601 @@
         "name_tg": "Konoba.RS DOO Novi Sad",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Kidotech",
         "name_tg": "Kidotech Buhgalteria",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "суммы зп"
+        "activity": "programiranje"
     },
     {
         "name": "Beavers Global",
         "name_tg": "BEAVERS GLOBAL DOO",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "reklama",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": "инвойсы, счета итд"
+        "activity": "reklama"
     },
     {
         "name": "Drop Table",
         "name_tg": "DROP TABLE DOO",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Girid Software",
         "name_tg": "андрей",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "первый рабочий день месяца",
-        "reminder": "чтобы прислали изводы и счета"
+        "activity": "programiranje"
     },
     {
         "name": "OnlyApps",
         "name_tg": "Vitaliy Podolskiy",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Jezeto",
         "name_tg": "JEZETO doo",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Lorem ipsum",
         "name_tg": "Aleksandra Tsvetkova 🦥",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Alm Tech",
         "name_tg": "Aleksei Morozov Alm Tech",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "RTT Europe",
         "name_tg": "RTT Europe",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "programiranje",
-        "specific_reports": "отчет о взаимозависимых лицах",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "зп"
+        "activity": "programiranje"
     },
     {
         "name": "noma Dev",
         "name_tg": "NomaDev бухгалтерия",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "programiranje",
-        "specific_reports": "отчет о взаимозависимых лицах",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "WAL Consulting",
         "name_tg": "Artem Wal Consalting",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Creomate",
         "name_tg": "CREOMATE RS Buhgalteria",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "smartvez",
         "name_tg": "SmartVez и Buhgalterija",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "North Panels",
         "name_tg": "",
         "type": "DOO",
         "is_pdv": "",
-        "activity": "",
-        "specific_reports": "???",
-        "report_date": "",
-        "reminder": ""
+        "activity": ""
     },
     {
         "name": "GREEN HOUSE COFFEE DOO NOVI SAD",
         "name_tg": "GREEN HOUSE COFFEE - buhgalterija",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "kafić",
-        "specific_reports": "отчет о взаимозависимых лицах",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "Ikigai 021",
         "name_tg": "IKIGAI &co \/ Rg IKIGAI",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "sushi",
-        "specific_reports": "отчет о взаимозависимых лицах",
-        "report_date": "",
-        "reminder": ""
+        "activity": "sushi"
     },
     {
         "name": "Ikigai Bubble",
         "name_tg": "IKIGAI &co \/ Rg IKIGAI",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "sushi",
-        "specific_reports": "отчет о взаимозависимых лицах",
-        "report_date": "",
-        "reminder": ""
+        "activity": "sushi"
     },
     {
         "name": "Kuruneko",
         "name_tg": "IKIGAI &co \/ Rg IKIGAI",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "sushi",
-        "specific_reports": "отчет о взаимозависимых лицах",
-        "report_date": "",
-        "reminder": ""
+        "activity": "sushi"
     },
     {
         "name": "ruscafe",
         "name_tg": "Kirill",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "kafić",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "kalopsia",
         "name_tg": "Бухгалтерия Kalopsia",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "kafić",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "family office",
         "name_tg": "Milorad Prodanov - Family Office",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "konsalting"
     },
     {
         "name": "marvini",
         "name_tg": "MARNIVI KNJIGOVODSTVO",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "окна",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "окна"
     },
     {
         "name": "Headshot agency",
         "name_tg": "Elena Elisova",
         "type": "DOO",
         "is_pdv": "false",
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "konsalting"
     },
     {
         "name": "vs agregati",
         "name_tg": "Vs Agregati DOO",
         "type": "DOO",
         "is_pdv": "true",
-        "activity": "trgovina",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "trgovina"
     },
     {
         "name": "Mikhail Butorin pr Les",
         "name_tg": "Mikhail Butorin Les",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "Obrazovanje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "Obrazovanje"
     },
     {
         "name": "ALEKSANDR GORDIENKO PR",
         "name_tg": "Alexander Gordienko",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Ivan Edemskii pr",
         "name_tg": "Ivan Edemskiy",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Andrei Girko pe Bananalama",
         "name_tg": "Andrey Girko",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "Obrazovanje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "Obrazovanje"
     },
     {
         "name": "ULTRAMARINE",
         "name_tg": "Ultramarine - Tsekhanovsky PR",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "turistička",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "turistička"
     },
     {
         "name": "Valerii Timofeev pr",
         "name_tg": "Llin First",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Vino i delikatese",
         "name_tg": "Elena Razbegaeva Vino i delikatese",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "trgovina",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "trgovina"
     },
     {
         "name": "Yury Sorokin pr Trava",
         "name_tg": "Юрий Сорокин",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "trgovina",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "trgovina"
     },
     {
         "name": "Nataliia Prokhorskaia pr",
         "name_tg": "Прохорская 🎾 Наталия",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": ""
     },
     {
         "name": "SEAL & TEA",
         "name_tg": "Sanja Tarasenko",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "kafić",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "NOVI ČAJ",
         "name_tg": "Tiho i toplo х BUHGALTERIJA",
         "type": "Knigaš",
         "is_pdv": "true",
-        "activity": "kafić",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "Dmytro Kovalenko PR",
         "name_tg": "BUHGALTERIJA Kovalenko",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Maksim Grishin PR",
         "name_tg": "Rg IKIGAI",
         "type": "Knigaš",
         "is_pdv": "true",
-        "activity": "sushi",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "sushi"
     },
     {
         "name": "Anton Saburov pr",
         "name_tg": "Anton Saburov",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Aleksandr Nedopekin pe",
         "name_tg": "Aleksandr Nedopekin",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Aleksandr Safronov pr",
         "name_tg": "Sashok Aleksandr Safronov",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Iana Motina PR SUNRICE",
         "name_tg": "SUNRICE",
         "type": "Knigaš",
         "is_pdv": "",
-        "activity": "sushi",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "sushi"
     },
     {
         "name": "Vladimir Nikolaev PR Novi Sad",
         "name_tg": "Владимир Nikolaev",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "",
-        "specific_reports": "",
-        "report_date": "до 15го в месяце",
-        "reminder": "налоги"
+        "activity": ""
     },
     {
         "name": "Nikolay Pereslavtsev PR Marnivi",
         "name_tg": "MARNIVI KNJIGOVODSTVO",
         "type": "Knigaš",
         "is_pdv": "",
-        "activity": "окна",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "окна"
     },
     {
         "name": "ANTON IVASHCHENKO PR NOVI SAD",
         "name_tg": "Anton Ivashchenko",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "kafić",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "Egor Khorkin PR Kafa i Kolaci",
         "name_tg": "GREEN HOUSE COFFEE - buhgalterija \/ Egor Khorkin",
         "type": "Knigaš",
         "is_pdv": "true",
-        "activity": "kafić",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "kafić"
     },
     {
         "name": "VADIM DMITRIUKOV PR NOVI SAD",
         "name_tg": ". Dmitriukov Vadim",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "trgovina",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "trgovina"
     },
     {
         "name": "SAŠATOKS",
         "name_tg": "Валерий (Саша Т.)",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "pisac",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "pisac"
     },
     {
         "name": "NOVA TRAVA",
         "name_tg": "Ekaterina TRAVA",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "trgovina",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "trgovina"
     },
     {
         "name": "Оlga Khusainova pr",
         "name_tg": "Olga Khusainova",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Dmitrii Chubar pr",
         "name_tg": "Dmitry Chubar",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "programiranje"
     },
     {
         "name": "Petshop Šapica",
         "name_tg": "Sergei89 Pet Shop Šapica",
         "type": "Knigaš",
         "is_pdv": "false",
-        "activity": "trgovina",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": "trgovina"
     },
     {
         "name": "Aleksandr Kanaev PR",
         "name_tg": "Aleksandr Kanaev",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Alexey Goryainov ",
         "name_tg": "keslorod",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Anastasiia Pahomova PR",
         "name_tg": "adventuresska",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "konsalting"
     },
     {
         "name": "Andrei Lomonosov PR",
         "name_tg": "Andrew Lomonosov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Andrey Maximov PR",
         "name_tg": "Andrey Maximov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Anton Buryka PR",
         "name_tg": "Anton Бурыка",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Anton Subbota PR",
         "name_tg": "Anton Subbota",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Artem Melnikov PR",
         "name_tg": "Artem Melnikov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Artem Putilov pr Ledinci",
         "name_tg": "Temo Kasinović",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Arkadiy Nemtsev pr TRANSLUB CONSULTING",
         "name_tg": "Паушалац Брук",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "konsalting"
     },
     {
         "name": "Danil Deneko PR",
         "name_tg": "Danil Deneko",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "konsalting"
     },
     {
         "name": "Daria Tikhodeeva PR",
         "name_tg": "",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Denis Merkulov PR",
         "name_tg": "Denis Merkulov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Dmitrii Kulinenkov PR",
         "name_tg": "Dmitrii Kulinenkov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "koncerte",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "koncerte"
     },
     {
         "name": "Dmitrii Novikov PR",
         "name_tg": "Dmitri Novikov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Gamebooster",
         "name_tg": "Ivan Belov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "German Iurin PR",
         "name_tg": "Gera",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Ikatie Nail",
         "name_tg": "Katarina 🐝",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "salon lepote",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги, зп и аренда"
+        "activity": "salon lepote"
     },
     {
         "name": "Ilia Babushkin PR",
         "name_tg": "Ilia Babushkin",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Ilia Vorobev PR",
         "name_tg": "Илья Воробьев",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "KULIKOVAS",
         "name_tg": "Алексей Куликов",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Maksim Marchenkov PR",
         "name_tg": "Max",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "konsalting"
     },
     {
         "name": "Maksim Serdiukov PR",
         "name_tg": "ИП Сербия",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Marat Minnullin PR",
         "name_tg": "Marat Minnullin",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Maria Zhertovskaya PR",
         "name_tg": "",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "",
-        "specific_reports": "",
-        "report_date": "",
-        "reminder": ""
+        "activity": ""
     },
     {
         "name": "Marina Bruk PR",
         "name_tg": "Паушалац Брук",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "konsalting",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "konsalting"
     },
     {
         "name": "Marko Todorović PR Inđija",
         "name_tg": "Todorovič Marko PR",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "koncerte",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "koncerte"
     },
     {
         "name": "MIK",
         "name_tg": "Ad1n0d1n",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Mikhail Novikov PR",
         "name_tg": "Mike Nov",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Nikolai Tikhodeev PR",
         "name_tg": "",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Nikolai Zhukov PR",
         "name_tg": "NIkola¥ Жуков",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Tatiana Babarina PR",
         "name_tg": "Tanya Babarina",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Valerii Popov PR",
         "name_tg": "Валера Попов",
         "type": "Paušal",
         "is_pdv": null,
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     },
     {
         "name": "Aleksandra Selezneva pr",
         "name_tg": "ИП Сербия",
         "type": "Paušal",
         "is_pdv": "",
-        "activity": "programiranje",
-        "specific_reports": "",
-        "report_date": "до 5го числа в месяце",
-        "reminder": "налоги"
+        "activity": "programiranje"
     }
 ]

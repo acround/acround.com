@@ -4,6 +4,12 @@ namespace app\services;
 
 class DictionaryService
 {
+
+    const LANG_RUSSIAN = 'ru';
+    const LANG_SERBIAN = 'rs';
+    const LANG_ENGLISH = 'en';
+    const LANG_DEFAULT = self::LANG_RUSSIAN;
+
     static array $prioritySign = [
         'low' => '↓',
         'normal' => '●',
@@ -47,15 +53,15 @@ class DictionaryService
             'documents' =>  'Документы',
             'reports' =>  'Отчёты',
             'settings' =>  'Настройки',
-            'reminders' => 'Напоминания',
             'users' =>  'Пользователи',
+            'accountants' =>  'Бухгалтеры',
+            'archive' => 'Архив',
 
             // Roles
             'role' => 'Роль',
             'ceo' =>  'Руководитель',
             'admin' =>  'Администратор',
             'accountant' =>  'Бухгалтер',
-            'accountants' =>  'Бухгалтеры',
             'accountantCreate' => 'Создание учетной записи',
             'accountantEdit' => 'Редактирование учетной записи',
 
@@ -169,8 +175,10 @@ class DictionaryService
             'taskEditing' => 'Редактирование задачи',
             'taskCreation' => 'Создание задачи',
             'finishTask' =>  'Отметить выполненной',
+            'archiveTask' => 'Поместить в архив',
 
             // Task statuses
+            'taskStatusTodo' =>  'К выполнению',
             'taskStatusNew' =>  'Новая',
             'taskStatusInProgress' =>  'В работе',
             'taskStatusWaiting' =>  'Ожидание документов',
@@ -198,6 +206,12 @@ class DictionaryService
             'taskTypeReconciliation' =>  'Сверка',
             'taskTypeOther' =>  'Другое',
 
+            // Task errors
+            'categoryIsRequired'=> 'Категория обязательна',
+            'dueDateIsRequired'=>'Срок обязателен',
+            'companyIsRequired'=>'Компания обязательна',
+            'accountantIsRequired'=>'Ответственный обязателен',
+
             // Priorities
             'priorityLow' =>  'Низкий',
             'priorityNormal' =>  'Обычный',
@@ -216,6 +230,7 @@ class DictionaryService
             'selectPeriod' =>  'Выберите период',
             'selectDocType' =>  'Выберите тип документа',
             'selectOption' => 'Выберите вариант',
+            'documentSearch' => 'Поиск документа…',
 
             // Document types
             'docTypeUnknown' =>  'Неизвестно',
@@ -233,6 +248,7 @@ class DictionaryService
             'docStatusChecked' =>  'Проверен',
             'docStatusNeedsRevision' =>  'Требует правки',
             'docStatusProcessing' => 'В обработке',
+            'docStatusArchived' => 'Архивирован',
 
             // Notes
             'addNote' => 'Добавить заметку',
@@ -287,10 +303,15 @@ class DictionaryService
             'reminderType' => 'Тип напоминания',
             'taxCalendar' => 'Налоговый календарь',
             'regularReminders' => 'Регулярные напоминания',
+            'reminders' => 'Напоминания',
+            'yearlyReminders' => 'Годовые напоминания',
+            'oneTimeReminders' => 'Разовые напоминания',
             'thisMonthReminders' => 'Напоминания этого месяца',
             'loadTaxCalendarPage' => 'Загрузить страницу налогового календаря',
             'editReminder' => 'Редактировать напоминание',
-            'createReminder' => 'Создать регулярное напоминание',
+            'createRegReminder' => 'Создать регулярное напоминание',
+            'createYearlyReminder' => 'Создать годовое напоминание',
+            'createOneTimeReminder' => 'Создать разовое напоминание',
             'topic' => 'Тема',
             'text' => 'Текст',
 
@@ -329,7 +350,11 @@ class DictionaryService
             'telegramChat' => 'Чат поддержки Telegram',
             'sendMessage' => 'Отправить',
             'writeMessage' => 'Напишите сообщение...',
+            'putMessage' => 'Введите сообщение...',
+            'noMessages' => 'Нет сообщений',
             'chatList' => 'Список чатов',
+            'chatSummary' => 'Резюме чата',
+            'chatSummaryFor24Hours' => 'Резюме за последние 24 часа',
 
         ],
         'rs' =>   [
@@ -354,15 +379,15 @@ class DictionaryService
             'documents' =>  'Dokumenti',
             'reports' =>  'Izveštaji',
             'settings' =>  'Podešavanja',
-            'reminders' => 'Podsetnici',
             'users' =>  'Korisnici',
+            'accountants' => 'Knjigovođe',
+            'archive' => 'Arhiva',
 
             // Roles
             'role' => 'Uloga',
             'ceo' =>  'Direktor',
             'admin' =>  'Administrator',
             'accountant' =>  'Knjigovođa',
-            'accountants' => 'Knjigovođe',
             'accountantCreate' => 'Креирање налога',
             'accountantEdit' => 'Уређивање налога',
 
@@ -476,8 +501,10 @@ class DictionaryService
             'taskEditing' => 'Уређивање задатка',
             'taskCreation' => 'Креирање задатка',
             'finishTask' =>  'Означи као готово',
+            'archiveTask' =>  'Архивирај задатак',
 
             // Task statuses
+            'taskStatusTodo' => 'Za obaviti',
             'taskStatusNew' =>  'Novi',
             'taskStatusInProgress' =>  'U toku',
             'taskStatusWaiting' =>  'Čeka dokumente',
@@ -505,6 +532,12 @@ class DictionaryService
             'taskTypeReconciliation' =>  'Usaglašavanje',
             'taskTypeOther' =>  'Ostalo',
 
+            // Task errors
+            'categoryIsRequired'=> 'Kategorija je obavezna',
+            'dueDateIsRequired'=>'Rok je obavezan',
+            'companyIsRequired'=>'Kompanija je obavezna',
+            'accountantIsRequired'=>'Potreban je odgovoran računovođa',
+
             // Priorities
             'priorityLow' =>  'Nizak',
             'priorityNormal' =>  'Normalan',
@@ -523,12 +556,13 @@ class DictionaryService
             'selectPeriod' =>  'Izaberite period',
             'selectDocType' =>  'Izaberite tip dokumenta',
             'selectOption' => 'Izaberite opciju',
+            'documentSearch' => 'Pretraga dokumenata…',
 
             // Document types
             'docTypeUnknown' =>  'Nepoznato',
             'docTypeInvoice' =>  'Faktura',
             'docTypeBill' =>  'Račun',
-            'docTypeReceipt'=>'Priznanica',
+            'docTypeReceipt' => 'Priznanica',
             'docTypeBankStatement' =>  'Izvod iz banke',
             'docTypePayroll' =>  'Platni spisak',
             'docTypeContract' =>  'Ugovor',
@@ -540,6 +574,7 @@ class DictionaryService
             'docStatusChecked' =>  'Proveren',
             'docStatusNeedsRevision' =>  'Potrebna ispravka',
             'docStatusProcessing' => 'U obradi',
+            'docStatusArchived' => 'Arhiviran',
 
             // Notes
             'addNote' => 'Dodaj belešku',
@@ -593,11 +628,16 @@ class DictionaryService
             'reminderText' => 'Tekst podsećanja',
             'reminderType' => 'Tip podsećanja',
             'taxCalendar' => 'Poreski kalendar',
+            'reminders' => 'Podsetnici',
             'regularReminders' => 'Redovna podsećanja',
+            'yearlyReminders' => 'Godišnja podsećanja',
+            'oneTimeReminders' => 'Jednokratna podsećanja',
             'thisMonthReminders' => 'Podsećanja za ovaj mesec',
             'loadTaxCalendarPage' => 'Učitaj stranicu poreskog kalendara',
             'editReminder' => 'Izmeni podsećanje',
-            'createReminder' => 'Kreiraj stalno podsećanje',
+            'createRegReminder' => 'Kreiraj stalno podsećanje',
+            'createYearlyReminder' => 'Kreiraj godišnje podsećanje',
+            'createOneTimeReminder' => 'Kreiraj jednokratno podsećanje',
             'topic' => 'Tema',
             'text' => 'Tekst',
 
@@ -636,7 +676,11 @@ class DictionaryService
             'telegramChat' => 'Telegram podrška ćaskanje',
             'sendMessage' => 'Pošalji',
             'writeMessage' => 'Napišite poruku...',
+            'putMessage' => 'Unesite poruku...',
+            'noMessages' => 'Nema poruka',
             'chatList' => 'Lista ćaskanja',
+            'chatSummary' => 'Rezime ćaskanja',
+            'chatSummaryFor24Hours' => 'Rezime za poslednjih 24 sata',
         ],
         'en' =>   [
             // Months
@@ -660,15 +704,15 @@ class DictionaryService
             'documents' =>  'Documents',
             'reports' =>  'Reports',
             'settings' =>  'Settings',
-            'reminders' => 'Reminders',
             'users' =>  'Users',
+            'accountants' => 'Accountants',
+            'archive' => 'Archive',
 
             // Roles
             'role' => 'Role',
             'ceo' =>  'CEO',
             'admin' =>  'Administrator',
             'accountant' =>  'Accountant',
-            'accountants' => 'Accountants',
             'accountantCreate' => 'Create an account',
             'accountantEdit' => 'Editing an account',
 
@@ -782,8 +826,10 @@ class DictionaryService
             'taskEditing' => 'Task editing',
             'taskCreation' => 'Task creation',
             'finishTask' =>  'Mark done',
+            'archiveTask' => 'Mark archived',
 
             // Task statuses
+            'taskStatusTodo' =>  'To Do',
             'taskStatusNew' =>  'New',
             'taskStatusInProgress' =>  'In Progress',
             'taskStatusWaiting' =>  'Waiting for Documents',
@@ -811,6 +857,12 @@ class DictionaryService
             'taskTypeReconciliation' =>  'Reconciliation',
             'taskTypeOther' =>  'Other',
 
+            // Task errors
+            'categoryIsRequired'=> 'Category is required',
+            'dueDateIsRequired'=>'Due date is required',
+            'companyIsRequired'=>'Company is required',
+            'accountantIsRequired'=>'Accountants is required',
+
             // Priorities
             'priorityLow' =>  'Low',
             'priorityNormal' =>  'Normal',
@@ -829,6 +881,7 @@ class DictionaryService
             'selectPeriod' =>  'Select Period',
             'selectDocType' =>  'Select Document Type',
             'selectOption' =>  'Select an option',
+            'documentSearch'=> 'Documents search…',
 
             // Document types
             'docTypeUnknown' =>  'Unknown',
@@ -846,6 +899,7 @@ class DictionaryService
             'docStatusChecked' =>  'Checked',
             'docStatusNeedsRevision' =>  'Needs Revision',
             'docStatusProcessing' => 'Processing',
+            'docStatusArchived' => 'Archived',
 
             // Notes
             'addNote' => 'Add Note',
@@ -895,14 +949,19 @@ class DictionaryService
             'notAssigned' => 'Not Assigned',
             'stopped' => 'Stopped',
             'activityType' => 'Activity Type',
+            'reminders' => 'Reminders',
+            'regularReminders' => 'Regular Reminders',
+            'yearlyReminders' => 'Yearly Reminders',
+            'oneTimeReminders' => 'One-time Reminders',
             'reminderText' => 'Reminder Text',
             'reminderType' => 'Reminder Type',
             'taxCalendar' => 'Tax Calendar',
-            'regularReminders' => 'Regular Reminders',
             'thisMonthReminders' => 'This Month\'s Reminders',
             'loadTaxCalendarPage' => 'Load Tax Calendar Page',
             'editReminder' => 'Edit Reminder',
-            'createReminder' => 'Create Regular Reminder',
+            'createRegReminder' => 'Create Regular Reminder',
+            'createYearlyReminder' => 'Create Yearly Reminder',
+            'createOneTimeReminder' => 'Create One-time Reminder',
             'topic' => 'Topic',
             'text' => 'Text',
 
@@ -941,7 +1000,11 @@ class DictionaryService
             'telegramChat' => 'Telegram Support Chat',
             'sendMessage' => 'Send',
             'writeMessage' => 'Write a message...',
+            'putMessage' => 'Enter a message...',
+            'noMessages' => 'No messages',
             'chatList' => 'Chat List',
+            'chatSummary' => 'Chat Summary',
+            'chatSummaryFor24Hours' => 'Summary for the last 24 hours',
         ],
     ];
 

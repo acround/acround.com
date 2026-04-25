@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\services\DictionaryService;
 use Yii;
 
 /**
@@ -61,7 +62,7 @@ class DocumentActivity extends \yii\db\ActiveRecord
         return parent::save($runValidation, $attributeNames);
     }
 
-    public function getStepName($lang = 'ru')
+    public function getStepName($lang = DictionaryService::LANG_RUSSIAN)
     {
         $step = DocumentStep::findOne(['id' => $this->step_id]);
         if ($step) {

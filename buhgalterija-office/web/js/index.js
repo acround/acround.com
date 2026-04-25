@@ -70,6 +70,7 @@ function loadContent() {
     success: function (response) {
       $('#root').html(response.data);
       userMenuResize();
+      addBackButton();
     },
     error: function (e) {
       showError('Load error', e);
@@ -96,6 +97,35 @@ function showTiff() {
 
 }
 
+function startPageHistory(itemHistory) {
+  const pageHistory = [itemHistory];
+  localStorage.setItem('pageHistory', JSON.stringify(pageHistory));
+}
+
+function addPageHistory(itemHistory) {
+  let pageHistory = localStorage.getItem('pageHistory');
+  pageHistory = pageHistory ? JSON.parse(pageHistory) : [];
+  if (pageHistory.length > 0) {
+    let lastPage = pageHistory[pageHistory.length - 1];
+    if (lastPage.url !== itemHistory.url || JSON.stringify(lastPage.data) !== JSON.stringify(itemHistory.data)) {
+      pageHistory.push(itemHistory);
+    }
+  } else {
+    pageHistory.push(itemHistory);
+  }
+  localStorage.setItem('pageHistory', JSON.stringify(pageHistory));
+}
+
+function clearPageHistory(count) {
+  let pageHistory = localStorage.getItem('pageHistory');
+  pageHistory = pageHistory ? JSON.parse(pageHistory) : [];
+  while ((count > 0) && (pageHistory.length > 0)) {
+    count--;
+    pageHistory.pop();
+  }
+  localStorage.setItem('pageHistory', JSON.stringify(pageHistory));
+}
+
 function loadPage(url, data = {}, saveHistory = false, success) {
   let user = getUser();
   let token = user ? user?.token : '';
@@ -103,27 +133,16 @@ function loadPage(url, data = {}, saveHistory = false, success) {
     data = {};
   }
   data.token = token;
+
   let itemHistory = { url: url, data: data };
-  let pageHistory = localStorage.getItem('pageHistory');
-  pageHistory = pageHistory ? JSON.parse(pageHistory) : [];
   if (saveHistory === true) {
-    if (pageHistory.length > 0) {
-      let lastPage = pageHistory[pageHistory.length - 1];
-      if (lastPage.url !== itemHistory.url || JSON.stringify(lastPage.data) !== JSON.stringify(itemHistory.data)) {
-        pageHistory.push(itemHistory);
-      }
-    } else {
-      pageHistory.push(itemHistory);
-    }
+    addPageHistory(itemHistory);
   } else if (saveHistory === false) {
-    pageHistory = [itemHistory];
+    startPageHistory(itemHistory);
   } else if (typeof saveHistory === 'number') {
-    while (saveHistory > 0) {
-      saveHistory--;
-      pageHistory.pop();
-    }
+    clearPageHistory(saveHistory);
   }
-  localStorage.setItem('pageHistory', JSON.stringify(pageHistory));
+
   $.ajax({
     url: url,
     type: 'POST',
@@ -136,6 +155,7 @@ function loadPage(url, data = {}, saveHistory = false, success) {
         $('main').html(response.data);
         userMenuResize();
         showTiff();
+        addBackButton();
         if (success && (typeof (success) === 'function')) {
           success();
         }
@@ -151,6 +171,43 @@ function loadPage(url, data = {}, saveHistory = false, success) {
     },
     dataType: 'json'
   })
+}
+
+async function getBackButton() {
+  const user = getUser();
+  let formData = new FormData();
+  formData.append('token', user.token);
+  let response = await fetch('/util/back-button', {
+    method: 'POST',
+    body: formData
+  });
+  return response.button;
+  // return '<button class="back inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-2">' +
+  //   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left h-4 w-4">' +
+  //   '<path d="m12 19-7-7 7-7"></path>' +
+  //   '<path d="M19 12H5"></path>' +
+  //   '</svg>' +
+  //   dictionaryLookup('back', user.lang) +
+  //   '</button>';
+}
+
+async function addBackButton() {
+  let pageHistory = localStorage.getItem('pageHistory');
+  pageHistory = pageHistory ? JSON.parse(pageHistory) : [];
+  if (pageHistory.length > 1) {
+    const user = getUser();
+    $.ajax({
+      url: '/util/back-button',
+      type: 'POST',
+      data: {
+        token: user.token
+      },
+      success: function (response) {
+        let button = response.button
+        $('#page-header').prepend(button);
+      }
+    })
+  }
 }
 
 function goBack() {
@@ -174,6 +231,7 @@ function goBack() {
           $('main').html(response.data);
           userMenuResize();
           showTiff();
+          addBackButton();
         }
       },
       error: function (e) {
@@ -198,7 +256,7 @@ function putLangDependentWords() {
   $('.btn-save').text(dictionaryLookup('save', lang));
 }
 
-function loadCompanyListModal(id, url, trFunction) {
+function loadCompanyListModal(id, url, trFunction, type) {
   let user = getUser();
   let token = user ? user?.token : '';
   $.ajax({
@@ -206,7 +264,8 @@ function loadCompanyListModal(id, url, trFunction) {
     type: 'POST',
     data: {
       token: token,
-      id: id
+      id: id,
+      type: type
     },
     success: function (response) {
       if (response.status === 'success') {
@@ -230,41 +289,12 @@ function loadCompanyListModal(id, url, trFunction) {
   })
 }
 
-function removeReminder(id) {
-  let user = getUser();
-  let token = user ? user?.token : '';
-  if (confirm('Are you sure you want to delete this calendar row?')) {
-    $.ajax({
-      url: '/company/delete-calendar-reminder',
-      type: 'POST',
-      data: {
-        token: token,
-        id: id
-      },
-      success: function (response) {
-        if (response.status === 'success') {
-          $('#tax-calendar-table').find('tr[data-item-id="' + id + '"]').remove();
-        } else if (response.status === 'logout') {
-          clearUser();
-          loadContent();
-        } else {
-          showError('Delete error', response.message);
-        }
-      },
-      error: function (e) {
-        showError('Delete error', e);
-      },
-      type: 'json'
-    })
-  }
-}
-
 function makeCompanyListTr(listItem) {
   return '<tr><td><label for="company_ps_reminder_' + listItem.id + '">' + listItem.name + '</label></td>' +
     '<td><input id="company_ps_reminder_' + listItem.id + '" type="checkbox" value="' + listItem.id + '"' + (listItem.count > 0 ? ' checked' : '') + ' /></td></tr>';
 }
 
-function makeCompanyListRegReminderTr(listItem) {
+function makeCompanyReminderList(listItem) {
   return '<tr><td><label for="company_reg_reminder_' + listItem.id + '">' + listItem.name + '</label></td>' +
     '<td><input id="company_reg_reminder_' + listItem.id + '" type="checkbox" value="' + listItem.id + '"' + (listItem.count > 0 ? ' checked' : '') + ' /></td></tr>';
 }
@@ -372,8 +402,9 @@ $(document).on('click', '#lang-card-mini', function () {
 
 $(document).on('click', '.company_open_profile', function (e) {
   e.preventDefault();
+  setSearchHistory();
   let id = $(this).data('id');
-  let data = {
+  data = {
     id: id
   }
   loadPage('/company/profile', data, true);
@@ -409,23 +440,55 @@ $(document).on('click', '#task-edit-button, #task-add-button', function (e) {
 });
 
 $(document).on('click', '#task-save-button', function (e) {
+  $('#task-edit-table td').removeClass('error-input');
   let user = getUser();
   let token = user ? user?.token : '';
   let taskId = $('#task-edit-table input[name=id]').val();
+  let data = {
+    token: token,
+    id: taskId,
+    category: $('#task-edit-table input[name=category]').val(),
+    request: $('#task-edit-table textarea[name=request]').val(),
+    status: getSelectWidgetValue('status'),
+    priority: getSelectWidgetValue('priority'),
+    due_date: $('#task-edit-table input[name=due_date]').val(),
+    company_id: getSelectWidgetValue('company'),
+    accountant_id: getSelectWidgetValue('accountant'),
+  };
+  let errors = 0;
+  if (!data.category) {
+    showError(dictionaryLookup('categoryIsRequired', user.lang), '');
+    $('#task-edit-table input[name=category]').closest('td').addClass('error-input');
+    errors++;
+  }
+  if (!data.due_date) {
+    showError(dictionaryLookup('dueDateIsRequired', user.lang), '');
+    $('#task-edit-table input[name=due_date]').closest('td').addClass('error-input');
+    errors++;
+  }
+  if (!data.company_id) {
+    showError(dictionaryLookup('companyIsRequired', user.lang), '');
+    $('#company').closest('td').addClass('error-input');
+    errors++;
+  }
+  if (!data.accountant_id) {
+    showError(dictionaryLookup('accountantIsRequired', user.lang), '');
+    $('#accountant').closest('td').addClass('error-input');
+    errors++;
+  }
+  if (errors > 0) {
+    return false;
+  }
+  if (!data.status) {
+    data.status = 'new';
+  }
+  if (!data.priority) {
+    data.priority = 'low';
+  }
   $.ajax({
     url: '/task/save',
     type: 'POST',
-    data: {
-      token: token,
-      id: taskId,
-      category: $('#task-edit-table input[name=category]').val(),
-      request: $('#task-edit-table textarea[name=request]').val(),
-      status: getSelectWidgetValue('status'),
-      priority: getSelectWidgetValue('priority'),
-      due_date: $('#task-edit-table input[name=due_date]').val(),
-      company_id: getSelectWidgetValue('company'),
-      accountant_id: getSelectWidgetValue('accountant'),
-    },
+    data: data,
     success: function (response) {
       if (response.status === 'success') {
         let data = {
@@ -553,12 +616,21 @@ $(document).on('click', '#add_note_button', function (e) {
       }
     },
     error: function () {
-      alert('Произошла ошибка при добавлении заметки.');
+      showError(dictionaryLookup('error', user.lang), 'Unknown error');
     }
   });
 });
 
-$(document).on('click', 'tr.task-row, div.task-row', function (e) {
+$(document).on('click', 'tr.task-row', function (e) {
+  setSearchHistory();
+  let taskId = $(this).data('task-id');
+  data = {
+    id: taskId
+  }
+  loadPage('/task/view', data, true);
+});
+
+$(document).on('click', 'div.task-row', function (e) {
   let taskId = $(this).data('task-id');
   let data = {
     id: taskId
@@ -712,14 +784,15 @@ $(document).on('click', 'button.back', function (e) {
 });
 
 $(document).on('click', 'tr.doc-row', function (e) {
+  setSearchHistory();
   let docId = $(this).data('doc-id');
-  let data = {
+  data = {
     id: docId
   }
   loadPage('/document/view', data, true);
 });
 
-$(document).on('click', 'a.document-view', function (e) {
+$(document).on('click', 'div.document-view', function (e) {
   const id = $(this).data('doc-id');
   const data = { id: id };
   loadPage('/document/view', data, true);
@@ -754,6 +827,34 @@ $(document).on('click', '#finish-task', function (e) {
   return false;
 });
 
+$(document).on('click', '#archive-task', function (e) {
+  const taskId = $(this).data('task-id');
+  const user = getUser();
+  const data = {
+    token: user.token,
+    id: taskId
+  };
+  $.ajax({
+    url: '/task/archive',
+    type: 'POST',
+    data: data,
+    success: function (response) {
+      if (response.status === 'success') {
+        loadPage('/task/view', { id: taskId }, 0);
+      } else if (response.status === 'logout') {
+        clearUser();
+        loadContent();
+      } else {
+        showError(dictionaryLookup('error', user.lang), response.message);
+      }
+    },
+    error: function (e) {
+      showError(dictionaryLookup('error', user.lang), e.message);
+    }
+  });
+  return false;
+});
+
 $(document).on('click', '#sendComment', function (e) {
   const taskId = $(this).data('task-id');
   const commentText = $('#commentInput').val();
@@ -778,8 +879,8 @@ $(document).on('click', '#sendComment', function (e) {
         showError(dictionaryLookup('error', user.lang), response.message);
       }
     },
-    error: function () {
-      alert('Произошла ошибка при добавлении комментария.');
+    error: function (e) {
+      showError(dictionaryLookup('error', user.lang), e.message);
     }
   });
   return false;
@@ -966,663 +1067,15 @@ $(document).on('click', '#save-user', function (e) {
   return false;
 });
 
-$(document).on('change', '#tax-calendar-month', function (e) {
-  let month = $(this).val();
-  let user = getUser();
-  let data = {
-    token: user.token,
-  };
-  $.ajax({
-    url: '/reminder/tax-calendar-table/' + month,
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $('#tax-calendar-table').replaceWith(response.data);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-});
-
-$(document).on('click', '#tax-calendar-month-load', function (e) {
-  let month = $('#tax-calendar-month_to_load').val();
-  let user = getUser();
-  let data = {
-    token: user.token,
-    month: month
-  };
-  $.ajax({
-    url: '/reminder/tax-calendar-month-load/',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $('#tax-calendar-load-message').show();
-        setTimeout(() => {
-          $('#tax-calendar-load-message').hide();
-        }, 2000);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-});
-
-let regReminderModal = null;
-$(document).on('click', '#reg-reminder-create', function (e) {
-  let user = getUser();
-  let data = {
-    token: user.token,
-  };
-  $.ajax({
-    url: '/reminder/reg-reminder-create/',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        let title = dictionaryLookup('createReminder', user.lang);
-        regReminderModal = new Modal('modal-create-reg-reminder', title, 'reminder');
-        regReminderModal.setContent(response.data);
-        regReminderModal.open();
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-});
-
-$(document).on('click', '.edit-reg-reminder-btn', function (e) {
-  let user = getUser();
-  let id = $(this).data('item-id');
-  let data = {
-    token: user.token,
-    id: id
-  };
-  $.ajax({
-    url: '/reminder/reg-reminder-update/',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        let title = dictionaryLookup('createReminder', user.lang);
-        regReminderModal = new Modal('modal-create-reg-reminder', title, 'reminder');
-        regReminderModal.setContent(response.data);
-        regReminderModal.open();
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-});
-
-/*
-function fieldTranslate(fieldFrom, fieldTo, langFrom, langTo) {
-  let textOriginal = $(fieldFrom).val();
-  let user = getUser();
-  let data = {
-    token: user.token,
-    text: textOriginal,
-    from: langFrom,
-    to: langTo
-  };
-  $.ajax({
-    url: '/util/translate/',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $(fieldTo).val(response.data.translation);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-}
-*/
-
-// $(document).on('change', '#modal-create-reg-reminder input[name=type_ru]', function (e) {
-//   return fieldTranslate('#modal-create-reg-reminder input[name=type_ru]', '#modal-create-reg-reminder input[name=type_rs]', 'ru', 'rs');
-// });
-
-// $(document).on('change', '#modal-create-reg-reminder input[name=type_rs]', function (e) {
-//   return fieldTranslate('#modal-create-reg-reminder input[name=type_rs]', '#modal-create-reg-reminder input[name=type_ru]', 'rs', 'ru');
-// });
-
-// $(document).on('change', '#modal-create-reg-reminder input[name=text_ru]', function (e) {
-//   return fieldTranslate('#modal-create-reg-reminder input[name=text_ru]', '#modal-create-reg-reminder input[name=text_rs]', 'ru', 'rs');
-// });
-
-// $(document).on('change', '#modal-create-reg-reminder input[name=text_rs]', function (e) {
-//   return fieldTranslate('#modal-create-reg-reminder input[name=text_rs]', '#modal-create-reg-reminder input[name=text_ru]', 'rs', 'ru');
-// });
-
-$(document).on('click', '#save-reg-reminder', function (e) {
-  let user = getUser();
-  let modalBody = $(this).closest('.modal-window').find('.modal-body');
-  let data = {
-    token: user.token,
-    id: $(modalBody).find('input[name="reminderId"]').val(),
-    lang: $(modalBody).find('input[name="reminder-lang"]').val(),
-    deadLine: $(modalBody).find('input[name="deadlineDay"]').val(),
-    topic: $(modalBody).find('input[name="topic"]').val(),
-    text: $(modalBody).find('input[name="text"]').val(),
-  };
-  $.ajax({
-    url: '/reminder/reg-reminder-save/',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        if (response.action === 'created') {
-          $('#reg-reminder-table-body').append(response.data);
-        } else if (response.action === 'updated') {
-          let row = $('#reg-reminder-row-' + response.reminder.id);
-          $(row).replaceWith(response.data);
-        }
-        regReminderModal.close();
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-});
-
-$(document).on('click', '#reminders-button-list button', function (e) {
-  let user = getUser();
-  let divId = $(this).data('controls');
-  let div = $('#' + divId);
-  let url = $(this).data('link');
-  $('#reminders-button-list > button').attr('data-state', 'inactive');
-  $(this).attr('data-state', 'active');
-  $('#reminders-div-list > div').attr('data-state', 'inactive').hide();
-  div.attr('data-state', 'active').show();
-  let data = {
-    token: user.token,
-  };
-  $.ajax({
-    url: url,
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        div.html(response.data);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError(dictionaryLookup('error', user.lang), response.message);
-      }
-    },
-    error: function (e) {
-      showError(dictionaryLookup('error', user.lang), e.message);
-    }
-  });
-  return false;
-});
-
-$(document).on('click', '.cancel-reg-reminder-btn', function (e) {
-  if (confirm('Are you sure you want to delete this reminder?')) {
-    let user = getUser();
-    let reminderId = $(this).data('item-id');
-    let data = {
-      token: user.token,
-      id: reminderId
-    }
-    let row = $(this).closest('tr');
-    $.ajax({
-      url: '/reminder/cancel-regular',
-      type: 'POST',
-      data: data,
-      success: function (response) {
-        if (response.status === 'success') {
-          $(row).remove();
-        } else if (response.status === 'logout') {
-          clearUser();
-          loadContent();
-        } else {
-          showError(dictionaryLookup('error', user.lang), response.message);
-        }
-      },
-      error: function (e) {
-        showError(dictionaryLookup('error', user.lang), e.message);
-      }
-    });
-  }
-});
-
-$(document).on('click', 'button.company-tax-reminder-btn', function (e) {
+$(document).on('click', '#accountant-company-button', function (e) {
   let id = $(this).data('item-id');
   const title = $(this).closest('tr').find('.calendar-text').text();
+  const type = $(this).data('type');
   companyListModal = new Modal('modal-overlay', title);
-  companyListModal.setDoUrl('/company/update-calendar-reminders/');
-  loadCompanyListModal(id, '/company/list-to-calendar', makeCompanyListTr);
+  companyListModal.setDoUrl('/accountant/update-company/');
+  loadCompanyListModal(id, '/accountant/company-list', makeCompanyListTr, type);
   companyListModal.open(this);
 });
-
-$(document).on('click', 'button.company-reg-reminder-btn', function (e) {
-  let user = getUser();
-  let id = $(this).data('item-id');
-  let title = dictionaryLookup('regularReminders', user.lang);
-  companyListModal = new Modal('modal-overlay', title);
-  companyListModal.setDoUrl('/company/update-list-to-regular/');
-  loadCompanyListModal(id, '/company/list-to-regular', makeCompanyListRegReminderTr);
-  companyListModal.open(this);
-});
-
-$(document).on('click', 'button.edit-calendar-btn', function (e) {
-  let id = $(this).data('item-id');
-  const user = getUser();
-  let title = dictionaryLookup('editReminder', user?.lang || 'ru');
-  editReminderModal = new Modal('modal-edit-reminder', title, 'edit-reminder');
-  let text = $('#tax-calendar-table').find('tr[data-item-id="' + id + '"] td.calendar-text').text();
-  $(editReminderModal.modal).find('.modal-body').empty().append('<textarea class="edit-reminder-text" style="height: 100%;width: 100%;">' + text + '</textarea>');
-  editReminderModal.open(id);
-});
-
-$(document).on('click', 'button.delete-calendar-btn', function (e) {
-  removeReminder($(this).data('item-id'));
-});
-
-$(document).on('click', '#do-edit-reminder', function (e) {
-  const reminder_id = editReminderModal?.currentRow;
-  if (reminder_id) {
-    let user = getUser();
-    let token = user ? user?.token : '';
-    let text = $(editReminderModal.modal).find('.edit-reminder-text').val();
-    $.ajax({
-      url: '/company/update-reminder-details',
-      type: 'POST',
-      data: {
-        token: token,
-        id: reminder_id,
-        text: text
-      },
-      success: function (response) {
-        if (response.status === 'success') {
-          $('#tax-calendar-table').find('tr[data-item-id="' + reminder_id + '"] td.calendar-text').text(text);
-        } else if (response.status === 'logout') {
-          clearUser();
-          loadContent();
-        } else {
-          showError('Update error', response.message);
-        }
-      },
-      error: function (e) {
-        showError('Update error', e);
-      },
-      type: 'json'
-    });
-  }
-  editReminderModal.close();
-});
-
-$(document).on('click', '#do-action-btn', function (e) {
-  let reminder_id = $(this).data('item-id');
-  if (!reminder_id) {
-    const row = $(this).closest('tr');
-    if (row) {
-      reminder_id = $(row).data('item-id');
-    }
-  }
-  if (!reminder_id) {
-    const row = companyListModal.currentRow;
-    if (row) {
-      reminder_id = $(row).data('item-id');
-    }
-  }
-  if (!reminder_id) {
-    return;
-  }
-  const checkedCompanies = [];
-  $(companyListModal.modal).find('tbody input[type="checkbox"]:checked').each(function () {
-    checkedCompanies.push($(this).val());
-  });
-  const unchekedCompanies = [];
-  $(companyListModal.modal).find('tbody input[type="checkbox"]').not(':checked').each(function () {
-    unchekedCompanies.push($(this).val());
-  });
-  let user = getUser();
-  let token = user ? user?.token : '';
-  let doActionUrl = $(companyListModal.modal).find('#do-action-url').val();
-  if (doActionUrl) {
-    $.ajax({
-      url: doActionUrl,
-      type: 'POST',
-      data: {
-        token: token,
-        reminder_id: reminder_id,
-        checked_companies: checkedCompanies,
-        uncheked_companies: unchekedCompanies
-      },
-      success: function (response) {
-        if (response.status === 'success') {
-          // Обновление прошло успешно
-        } else if (response.status === 'logout') {
-          clearUser();
-          loadContent();
-        } else {
-          showError('Update error', response.message);
-        }
-      },
-      error: function (e) {
-        showError('Update error', e);
-      },
-      type: 'json'
-    });
-  }
-  companyListModal.close();
-});
-
-$(document).on('click', '.accordeon-item', function (e) {
-  const table = $(this).next('.accordeon-table');
-  table.fadeToggle();
-});
-
-$(document).on('click', 'button.stop-reminder-btn', function (e) {
-  const button = $(this);
-  const user = getUser();
-  const reminderId = $(this).attr('data-rm-id');
-  const scheduleId = $(this).attr('data-sc-id');
-  const companyId = $(this).attr('data-co-id');
-  const token = user ? user?.token : '';
-  const data = {
-    token: token,
-    reminder_id: reminderId,
-    schedule_id: scheduleId,
-    company_id: companyId
-  };
-  $.ajax({
-    url: '/reminder/stop-reminder',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $(button).closest('tr').find('div.stopped-reminder').removeClass('hidden');
-        $(button).addClass('hidden');
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError('Update error', response.message);
-      }
-    },
-    error: function (e) {
-      showError('Update error', e);
-    },
-    type: 'json'
-  });
-});
-
-$(document).on('click', 'input.reminder-activity', function (e) {
-  const input = $(this);
-  const user = getUser();
-  const reminderId = $(this).data('rm-id');
-  const scheduleId = $(this).data('sc-id');
-  const companyId = $(this).data('co-id');
-  const isActive = $(this).is(':checked') ? 1 : 0;
-  const token = user ? user?.token : '';
-  const data = {
-    token: token,
-    reminder_id: reminderId,
-    schedule_id: scheduleId,
-    company_id: companyId,
-    is_active: isActive
-  };
-  $.ajax({
-    url: '/reminder/toggle-reminder-activity',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        const id = response.id ?? '';
-        $(input).attr('data-sc-id', id);
-        const td = $(input).closest('tr').find('td').last();
-        $(td).children().addClass('hidden');
-        if (id) {
-          $(td).find('button.stop-reminder-btn').attr('data-sc-id', id).removeClass('hidden');
-        } else {
-          $(td).find('div.not-assigned-reminder').removeClass('hidden');
-        }
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError('Update error', response.message);
-      }
-    },
-    error: function (e) {
-      showError('Update error', e);
-    },
-    type: 'json'
-  });
-});
-
-$(document).on('click', 'input.tax-activity', function (e) {
-  const input = $(this);
-  const user = getUser();
-  const reminderId = $(this).attr('data-rm-id');
-  const scheduleId = $(this).attr('data-sc-id');
-  const companyId = $(this).attr('data-co-id');
-  const isActive = $(this).is(':checked') ? 1 : 0;
-  const token = user ? user?.token : '';
-  const data = {
-    token: token,
-    reminder_id: reminderId,
-    schedule_id: scheduleId,
-    company_id: companyId,
-    is_active: isActive
-  };
-  $.ajax({
-    url: '/reminder/toggle-tax-activity',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        const id = response.id ?? '';
-        $(input).attr('data-sc-id', id);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError('Update error', response.message);
-      }
-    },
-    error: function (e) {
-      showError('Update error', e);
-    },
-    type: 'json'
-  });
-});
-
-$(document).on('click', 'button.filters-on-off-button', function (e) {
-  if ($('div.filter-box').hasClass('hidden')) {
-    $('div.filter-box').removeClass('hidden');
-  } else {
-    $('div.filter-box').addClass('hidden');
-  }
-});
-
-$(document).on('click', 'button.reset-filters-button', function (e) {
-  $(this).closest('div.filter-box').find('select').val('');
-});
-
-$(document).on('click', '#company-find-button', function (e) {
-  const user = getUser();
-  const token = user ? user?.token : '';
-  const data = {
-    token: token,
-  };
-  let name = $('#search').val();
-  let status = $('#status-filters-select').val();
-  let accountant = $('#responsible-filters-select').val();
-  let sort = $('#sorting-filters-select').val();
-  if (name) {
-    data.name = name;
-  }
-  if (status) {
-    data.status = status;
-  }
-  if (accountant) {
-    data.accountant = accountant;
-  }
-  if (sort) {
-    data.sort = sort;
-  }
-  $.ajax({
-    url: '/company/filter',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $('#company-list').html(response.data);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError('Select error', response.message ?? '');
-      }
-    },
-    error: function (e) {
-      showError('Select error', e);
-    },
-    type: 'json'
-  });
-});
-
-$(document).on('click', '#task-find-button', function (e) {
-  const user = getUser();
-  const token = user ? user?.token : '';
-  const data = {
-    token: token,
-  };
-  let name = $('#search').val();
-  let status = $('#status-filters-select').val();
-  let priority = $('#priority-filters-select').val();
-  let assignedTo = $('#assignedTo-filters-select').length > 0 ? $('#assignedTo-filters-select').val() : '';
-  let company = $('#companyName-filters-select').val();
-  if (name) {
-    data.name = name;
-  }
-  if (status) {
-    data.status = status;
-  }
-  if (priority) {
-    data.priority = priority;
-  }
-  if (assignedTo) {
-    data.assignedTo = assignedTo;
-  }
-  if (company) {
-    data.company = company;
-  }
-  $.ajax({
-    url: '/task/filter',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $('#task-list').html(response.data);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError('Select error', response.message ?? '');
-      }
-    },
-    error: function (e) {
-      showError('Select error', e);
-    },
-    type: 'json'
-  });
-});
-
-$(document).on('click', '#doc-find-button', function (e) {
-  const user = getUser();
-  const token = user ? user?.token : '';
-  const data = {
-    token: token,
-  };
-  let name = $('#search').val();
-  let status = $('#status-filters-select').val();
-  let type = $('#documentType-filters-select').val();
-  let company = $('#companyName-filters-select').val();
-  if (name) {
-    data.name = name;
-  }
-  if (status) {
-    data.status = status;
-  }
-  if (type) {
-    data.type = type;
-  }
-  if (company) {
-    data.company = company;
-  }
-  $.ajax({
-    url: '/document/filter',
-    type: 'POST',
-    data: data,
-    success: function (response) {
-      if (response.status === 'success') {
-        $('#doc-list').html(response.data);
-      } else if (response.status === 'logout') {
-        clearUser();
-        loadContent();
-      } else {
-        showError('Select error', response.message ?? '');
-      }
-    },
-    error: function (e) {
-      showError('Select error', e);
-    },
-    type: 'json'
-  });
-});
-
 
 // ----------------------------------------------------
 //                Resize Debounce

@@ -61,8 +61,12 @@ class TelegramComponent extends Component
         $msg->user_id = $userId;
         $msg->username = $userName;
         $msg->text = $message['text'] ?? null;
-        $msg->created_at = date('Y-m-d H:i:s');//, $message->getDate());
-        $msg->is_outgoing = 0;
+        $msg->created_at = date('Y-m-d H:i:s');
+        if ($msg->username == 'buhgalterija021') {
+            $msg->is_outgoing = 1;
+        } else {
+            $msg->is_outgoing = 0;
+        }
         $msg->save();
     }
 
@@ -91,7 +95,7 @@ class TelegramComponent extends Component
         $msg->chat_id = $chatId;
         $msg->topic_id = $topicId;
         $msg->user_id = $result->getFrom()->getId();
-        $msg->username = 'Bot';
+        $msg->username = 'buhgalterija021';
         $msg->text = $text;
         $msg->created_at = date('Y-m-d H:i:s');
         $msg->is_outgoing = 1;

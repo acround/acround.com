@@ -1,7 +1,7 @@
 /* web/css/chat.css */
 
 div.chat-header {
-    margin-bottom: 20px;
+    margin-bottom: 2px;
     padding: 15px;
     background: #f8f9fa;
     border-radius: 5px;
@@ -36,7 +36,12 @@ div.chat-index {
     overflow-x: hidden;
     overflow-y: auto;
     background: #fff;
+    width: 100%;
 }
+
+/* #chat-list, #chat-summary-container {
+    width: 50%;
+} */
 
 div.chat-index h1 {
     text-align: center;
@@ -63,7 +68,7 @@ button.load-chat.active {
     height: 500px;
     overflow-y: auto;
     padding: 15px;
-    background: #e5ddd5;
+    background: #c4d2a9;
 }
 
 .messages-container::-webkit-scrollbar {
@@ -103,11 +108,24 @@ div.message-input-container {
 button.send-button {
     border-radius: 10px;
     padding: 10px 25px;
+    color: white;
     background-color: #419fd9;
+    border: none;
+    cursor: pointer;
+}
+
+button.send-button.chat-summary {
+    background-color: rgb(225, 67, 55);
 }
 
 button.send-button:hover {
-    background-color: #357ebd;
+    background-color: rgb(229, 231, 235);
+}
+
+button.send-button:disabled {
+    color: gray;
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 #message-text {

@@ -1,0 +1,40 @@
+.suggest-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+#search {
+    /* width: 300px; */
+    /* padding: 8px; */
+    box-sizing: border-box;
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    max-height: 10em;
+    line-height: 0.2 !important;
+    font-size: smaller;
+    overflow-y: auto;
+    display: none;
+    line-height: normal;
+    z-index: 1000;
+}
+
+.suggestions div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestions div.selected {
+    background-color: #e0e0e0;
+}

@@ -21,23 +21,31 @@ class ChatController extends BaseController
 
     public function actionView($chatId, $topicId = null)
     {
-        $query = TelegramMessage::find()
-            ->where(['chat_id' => $chatId])
-            ->orderBy(['created_at' => SORT_ASC]);
+        $request = Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
+        if ($accountant->isValid()) {
+            $query = TelegramMessage::find()
+                ->where(['chat_id' => $chatId])
+                ->orderBy(['created_at' => SORT_ASC]);
 
-        if ($topicId) {
-            $query->andWhere(['topic_id' => $topicId]);
+            if ($topicId) {
+                $query->andWhere(['topic_id' => $topicId]);
+            }
+
+            $messages = $query->all();
+            $chat = TelegramChat::findOne(['chat_id' => $chatId]);
+
+            return $this->render('view', [
+                'user' => $accountant,
+                'messages' => $messages,
+                'chat' => $chat,
+                'chatId' => $chatId,
+                'topicId' => $topicId,
+            ]);
+        } else {
+            return $this->renderLogout();
         }
-
-        $messages = $query->all();
-        $chat = TelegramChat::findOne(['chat_id' => $chatId]);
-
-        return $this->render('view', [
-            'messages' => $messages,
-            'chat' => $chat,
-            'chatId' => $chatId,
-            'topicId' => $topicId,
-        ]);
     }
 
     public function actionSend()
@@ -172,6 +180,27 @@ class ChatController extends BaseController
                 'last_message_id' => !empty($messages) ? end($messages)['id'] : 0,
             ];
 
+            return $response;
+        } else {
+            return $this->renderLogout();
+        }
+    }
+
+    public function actionSummary()
+    {
+        $this->layout = false;
+        $request = \Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
+        if ($accountant->isValid()) {
+            $summary = $this->makeN8nWebhookCall('summary', [
+                'user_id' => $request->post('user_id', null),
+                'chat_id' => $request->post('chat_id', null),
+                'topic_id' => $request->post('topic_id', null),
+            ]);
+            $response = Yii::$app->response;
+            $response->format = Response::FORMAT_JSON;
+            $response->data = $summary;
             return $response;
         } else {
             return $this->renderLogout();

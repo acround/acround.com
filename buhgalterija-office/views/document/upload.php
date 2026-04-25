@@ -1,7 +1,7 @@
 <?php
 
-use app\components\DocUploadBodyWidget;
-use app\components\DocUploadTopWidget;
+use app\widgets\DocUploadBodyWidget;
+use app\widgets\DocUploadTopWidget;
 
 ?>
 <div class="p-6">

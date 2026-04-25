@@ -1,11 +1,11 @@
 <?php
 
-use app\components\DocViewActivityWidget;
-use app\components\DocViewCommentsWidget;
-use app\components\DocViewStatusWidget;
-use app\components\DocViewTopWidget;
-use app\components\DocViewInfoWidget;
-use app\components\DocViewCompanyWidget;
+use app\widgets\DocViewActivityWidget;
+use app\widgets\DocViewCommentsWidget;
+use app\widgets\DocViewStatusWidget;
+use app\widgets\DocViewTopWidget;
+use app\widgets\DocViewInfoWidget;
+use app\widgets\DocViewCompanyWidget;
 
 ?>
 <div class="p-6">

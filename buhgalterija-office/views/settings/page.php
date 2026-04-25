@@ -1,9 +1,9 @@
 <?php
 
-use app\components\SettingsTopWidget;
-use app\components\SettingsDedlinesWidget;
-use app\components\SettingsCalendarWidget;
-use app\components\SettingsTemplatesWidget;
+use app\widgets\SettingsTopWidget;
+use app\widgets\SettingsDedlinesWidget;
+use app\widgets\SettingsCalendarWidget;
+use app\widgets\SettingsTemplatesWidget;
 use app\services\SvgService;
 
 ?>

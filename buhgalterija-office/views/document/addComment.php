@@ -1,6 +1,6 @@
 <?php
 
-use app\components\DocViewCommentsWidget;
+use app\widgets\DocViewCommentsWidget;
 
 $comments = $document->getComments()->all();
 echo DocViewCommentsWidget::widget([

@@ -18,6 +18,20 @@
     border-radius: var(--radius);
 }
 
+.select-widget.open {
+    border-color: #e14337;
+    border-style: solid;
+    border-width: 2px;
+    padding: 2px;
+}
+
+.select-widget:focus {
+    border-color: #e14337;
+    border-style: solid;
+    border-width: 2px;
+    padding: 2px;
+}
+
 .select-widget-trigger {
     padding: 10px;
     background: #fff;
@@ -38,16 +52,11 @@
     z-index: 10;
 }
 
-.select-widget.open {
-    border-color: red;
-    border-style: solid;
-    border-width: 2px;
-    padding: 2px;
-}
-
 /* Когда селект открыт — показываем список */
 .select-widget.open .select-widget-options {
     display: block;
+    max-height: 20em;
+    overflow-y: auto;
 }
 
 .select-widget-option {
@@ -57,6 +66,11 @@
 }
 
 .select-widget-option:hover {
+    background: #f0f0f0;
+    /* color: #fff; */
+}
+
+.select-widget-option.selected {
     background: #3498db;
     color: #fff;
 }

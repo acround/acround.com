@@ -180,6 +180,10 @@ const ChatApp = {
     },
 
     checkNewMessages: function () {
+        if ($('#chat-last-message-id').length == 0) {
+            this.destroy();
+            return;
+        }
         const user = getUser();
         let userId = $('#chat-user-id').val();
         let chatId = $('#chat-id').val();
@@ -202,6 +206,32 @@ const ChatApp = {
                     });
                 }
             });
+    },
+
+    chatSummary: function () {
+        const user = getUser();
+        let userId = $('#chat-user-id').val();
+        let chatId = $('#chat-id').val();
+        let topicId = $('#chat-topic-id').val();
+
+        $('#show-summary-btn').attr('disabled', 'disabled').text(dictionaryLookup('loading', user.lang));
+
+        fetch('/chat/summary', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: user.token, user_id: userId, chat_id: chatId, topic_id: topicId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    $('#chat-summary-content').html(data.data);
+                } else {
+                    showError(dictionaryLookup('error', user.lang), data.message);
+                }
+                $('#show-summary-btn').removeAttr('disabled').text(dictionaryLookup('chatSummary', user.lang));
+            });
     }
 };
 
@@ -216,6 +246,12 @@ function handleSendClick() {
 
 $(document).on('click', '#chat-send-button', (e) => {
     handleSendClick();
+});
+
+$(document).on('keydown', '#message-text', (e) => {
+    if (e.key === 'Enter') {
+        handleSendClick();
+    }
 });
 
 // При клике на "Открыть чат"
@@ -239,4 +275,9 @@ $(document).on('click', '.load-chat', (e) => {
     $('.load-chat').removeClass('active');
     $(e.target).addClass('active');
     ChatApp.loadHistory(userId, chatId, topicId);
+    $('#show-summary-btn').removeAttr('disabled');
+});
+
+$(document).on('click', '#show-summary-btn', (e) => {
+    ChatApp.chatSummary();
 });

@@ -2,10 +2,10 @@
 
 use app\services\AuthService;
 use app\services\DictionaryService;
-use \app\components\DeadLinesWidget;
-use app\components\ViewAccountantsWidget;
-use app\components\LastActivityWidget;
-use app\components\OverviewTopPanelWidget;
+use app\widgets\DeadLinesWidget;
+use app\widgets\ViewAccountantsWidget;
+use app\widgets\LastActivityWidget;
+use app\widgets\OverviewTopPanelWidget;
 
 /** @var $user app\models\Accountant */
 /** @var $data array */

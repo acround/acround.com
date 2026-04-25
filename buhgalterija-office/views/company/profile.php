@@ -1,13 +1,12 @@
 <?php
 
-use app\components\ButtonBackWidget;
 use app\services\DictionaryService;
-use app\components\TaskListWidget;
-use app\components\DocListWidget;
-use app\components\CompanyNotesWidget;
-use app\components\CompanyChatWidget;
-use app\components\CompanyRemindersListWidget;
-use app\components\CompanyTopWidget;
+use app\widgets\TaskListWidget;
+use app\widgets\DocListWidget;
+use app\widgets\CompanyNotesWidget;
+use app\widgets\CompanyChatWidget;
+use app\widgets\CompanyRemindersListWidget;
+use app\widgets\CompanyTopWidget;
 use app\services\SvgService;
 
 /**
@@ -22,7 +21,8 @@ use app\services\SvgService;
 ?>
 <div class="p-6">
     <div class="space-y-6">
-        <?= ButtonBackWidget::widget(['user' => $user]) ?>
+        <div id="page-header" class="flex items-center gap-4">
+        </div>
         <?= CompanyTopWidget::widget(['user' => $user, 'company' => $company, 'customers' => $customers]) ?>
         <div dir="ltr" data-orientation="horizontal" class="space-y-4">
             <div role="tablist" aria-orientation="horizontal" class="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground" tabindex="0" data-orientation="horizontal" style="outline: none;">

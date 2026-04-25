@@ -1,4 +1,4 @@
-main > .container {
+main>.container {
     padding: 70px 15px 20px;
 }
 
@@ -8,7 +8,7 @@ main > .container {
     height: 60px;
 }
 
-.footer > .container {
+.footer>.container {
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -19,7 +19,8 @@ main > .container {
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
+a.asc:after,
+a.desc:after {
     content: '';
     left: 3px;
     display: inline-block;
@@ -59,27 +60,27 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+.nav li>form>button.logout {
     padding-top: 7px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 0;
     }
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus,
+.nav>li>form>button.logout:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.75);
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
 }
 
@@ -109,7 +110,7 @@ a.desc:after {
 }
 
 .cancelled-reminder {
-    background-color: #f8d7da;    
+    background-color: #f8d7da;
 }
 
 .align-left {
@@ -117,9 +118,49 @@ a.desc:after {
 }
 
 .load-by-link {
-    color:grey;
+    color: grey;
 }
 
 table.accountant-page td {
-    color:grey;
+    color: grey;
+}
+
+div.document-view {
+    cursor: pointer;
+}
+
+button.sorting {
+    color: gray;
+}
+
+button.sorting:hover {
+    color: #444;
+    text-decoration: underline;
+}
+
+textarea.edit,
+input.edit {
+    border-color: gray !important;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    resize: vertical;
+    text-align: left;
+}
+
+textarea.edit:focus,
+input.edit:focus {
+    border-width: 2px;
+    border-color: #e14337 !important;
+}
+
+.full {
+    width: 90%;
+}
+
+.error-input::before {
+    display: block;
+    content: "→";
+    color: #e14337;
+    font-weight: bold;
 }

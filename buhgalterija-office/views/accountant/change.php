@@ -1,6 +1,6 @@
 <?php
 
-use app\components\SelectWidget;
+use app\widgets\SelectWidget;
 use app\services\DictionaryService;
 use app\services\SvgService;
 
@@ -52,9 +52,9 @@ $title = $accountant->id ? 'accountantEdit' : 'accountantCreate';
                                 'user' => $user,
                                 'id' => 'accountant-lang',
                                 'options' => [
-                                    ['id' => 'ru', 'name' => DictionaryService::getWord('ru', $user->lang)],
-                                    ['id' => 'rs', 'name' => DictionaryService::getWord('rs', $user->lang)],
-                                    ['id' => 'en', 'name' => DictionaryService::getWord('en', $user->lang)],
+                                    ['id' => DictionaryService::LANG_RUSSIAN, 'name' => DictionaryService::getWord(DictionaryService::LANG_RUSSIAN, $user->lang)],
+                                    ['id' => DictionaryService::LANG_SERBIAN, 'name' => DictionaryService::getWord(DictionaryService::LANG_SERBIAN, $user->lang)],
+                                    ['id' => DictionaryService::LANG_ENGLISH, 'name' => DictionaryService::getWord(DictionaryService::LANG_ENGLISH, $user->lang)],
                                 ],
                                 'selected' => $accountant->lang
                             ]) ?>

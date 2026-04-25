@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
+use app\services\DictionaryService;
 
 $this->title = $chat ? $chat->title : 'Чат';
 $this->registerJsFile('@web/js/chat.js', ['depends' => [\yii\web\JqueryAsset::class]]);
@@ -16,7 +16,7 @@ $this->registerCssFile('@web/css/chat.css');
     <div class="chat-container">
         <div id="messages-container" class="messages-container">
             <div class="text-center text-muted" style="padding: 50px 0;">
-                Нет сообщений
+                <?= DictionaryService::getWord('noMessages', $user->lang) ?>
             </div>
         </div>
 
@@ -31,7 +31,7 @@ $this->registerCssFile('@web/css/chat.css');
                     <?= Html::textarea('text', '', [
                         'id' => 'message-text',
                         'rows' => 2,
-                        'placeholder' => 'Введите сообщение... (Ctrl+Enter для отправки)',
+                        'placeholder' => DictionaryService::getWord('putMessage', $user->lang),
                     ]) ?>
                     <?= Html::button('Отправить', [
                         'class' => 'send-button btn btn-primary',

@@ -13,9 +13,9 @@ class DocTestController extends Controller
     public function actionIndex()
     {
         $statuses = [
-            'uploaded',
-            'needsRevision',
-            'checked',
+            Document::STATUS_UPLOADED,
+            Document::STATUS_NEEDS_REVISION,
+            Document::STATUS_CHECKED,
         ];
         $dirPath = dirname(__DIR__) . '/test/';
         $dir = opendir($dirPath);

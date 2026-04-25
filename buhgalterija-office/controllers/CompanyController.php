@@ -5,8 +5,8 @@ namespace app\controllers;
 use Yii;
 use yii\db\Query;
 use yii\web\Response;
-use app\components\CompanyListWidget;
-use app\components\CompanyNotesWidget;
+use app\widgets\CompanyListWidget;
+use app\widgets\CompanyNotesWidget;
 use app\controllers\BaseController;
 use app\models\Accountant;
 use app\models\Company;
@@ -16,13 +16,18 @@ use app\models\CompanyType;
 use app\models\Customer;
 use app\models\Document;
 use app\models\Reminder;
+use app\models\ReminderOneTime;
+use app\models\ReminderOnetimeCompany;
 use app\models\ReminderRegular;
 use app\models\ReminderRegularCompany;
 use app\models\ReminderSchedule;
+use app\models\ReminderYearly;
+use app\models\ReminderYearlyCompany;
 use app\models\Task;
 use app\models\TaskDocument;
 use app\models\TaxCalendar;
 use app\services\CalendarService;
+use app\services\DictionaryService;
 
 class CompanyController extends BaseController
 {
@@ -33,7 +38,7 @@ class CompanyController extends BaseController
         'statusInactive',
     ];
 
-    protected function getDataForPage($accountant, $status = null, $filters = [])
+    protected function getDataForPage($accountant, $filters = [])
     {
         $select = [
             'c.id AS company_id',
@@ -60,7 +65,7 @@ class CompanyController extends BaseController
             $companiesQuery->andWhere(['LIKE', 'c.name', $filters['name']]);
         }
         if ($filters['status'] ?? null) {
-            $companiesQuery->andWhere(['c.status' => $status]);
+            $companiesQuery->andWhere(['c.status' => $filters['status']]);
         }
         if ($filters['accountant'] ?? null) {
             $companiesQuery->innerJoin(['cc' => CompanyAccountant::tableName()], 'cc.company_id = c.id');
@@ -110,9 +115,14 @@ class CompanyController extends BaseController
         $data = [
             'user' => $accountant,
             'companies' => $companies,
-            'back' => $status !== null,
+            // 'back' => $status !== null,
             'filterStatus' => $filterStatus,
+            'filters' => $filters,
             'filterAccountant' => $filterAccountantQuery->all(),
+            // 'debug' => [
+            //     'filters' => $filters,
+            //     'query' => $companiesQuery->createCommand()->getRawSql(),
+            // ],
         ];
         return $data;
     }
@@ -124,7 +134,13 @@ class CompanyController extends BaseController
         $token = $request->post('token');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
-            $data = $this->getDataForPage($accountant, $status);
+            $filters = [
+                'name' => $request->post('name'),
+                'status' => $status ?? $request->post('status'),
+                'accountant' => $request->post('accountant'),
+                'sort' => $request->post('sort'),
+            ];
+            $data = $this->getDataForPage($accountant, $filters);
             return $this->renderPage($data);
         } else {
             return $this->renderLogout();
@@ -140,11 +156,11 @@ class CompanyController extends BaseController
         if ($accountant->isValid()) {
             $filters = [
                 'name' => $request->post('name'),
-                'status' => $request->post('status'),
+                'status' => $pageStatus ?? $request->post('status'),
                 'accountant' => $request->post('accountant'),
                 'sort' => $request->post('sort'),
             ];
-            $data = $this->getDataForPage($accountant, $pageStatus, $filters);
+            $data = $this->getDataForPage($accountant, $filters);
 
             $response = \Yii::$app->response;
             $response->format = Response::FORMAT_JSON;
@@ -398,13 +414,27 @@ class CompanyController extends BaseController
         $this->layout = false;
         $request = \Yii::$app->request;
         $token = $request->post('token');
+        $type = $request->post('type');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
+            switch ($type) {
+                case 'regular':
+                    $tableName = ReminderRegularCompany::tableName();
+                    break;
+                case 'yearly':
+                    $tableName = ReminderYearlyCompany::tableName();
+                    break;
+                case 'one-time':
+                    $tableName = ReminderOnetimeCompany::tableName();
+                    break;
+                default:
+                    $tableName = ReminderRegularCompany::tableName();
+            }
             $id = $request->post('id');
             $query = (new Query)
                 ->select(['c.id', 'c.name', 'count(rrc.id) as count'])
                 ->from(['c' => Company::tableName()])
-                ->leftJoin(['rrc' => ReminderRegularCompany::tableName()], 'rrc.company_id = c.id and rrc.reminder_id = :id', [':id' => $id])
+                ->leftJoin(['rrc' => $tableName], 'rrc.company_id = c.id and rrc.reminder_id = :id', [':id' => $id])
                 ->groupBy(['c.id', 'c.name'])
                 ->orderBy('c.name');
 
@@ -425,18 +455,33 @@ class CompanyController extends BaseController
         }
     }
 
-    public function actionUpdateListToRegular()
+    public function actionUpdateRemindersList()
     {
+        $debug = [];
         $request = \Yii::$app->request;
         $token = $request->post('token');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
+            $type = $request->post('reminder_type');
+            switch ($type) {
+                case 'regular':
+                    $classLink = ReminderRegularCompany::class;
+                    break;
+                case 'yearly':
+                    $classLink = ReminderYearlyCompany::class;
+                    break;
+                case 'one-time':
+                    $classLink = ReminderOnetimeCompany::class;
+                    break;
+                default:
+                    $classLink = ReminderRegularCompany::class;
+            }
             $reminderId = $request->post('reminder_id');
             $checkedCompanies = $request->post('checked_companies');
             $uncheckedCompanies = $request->post('uncheked_companies');
             // Удаляем существующие напоминания для этой компании и события
             if (!empty($uncheckedCompanies)) {
-                ReminderRegularCompany::deleteAll([
+                $classLink::deleteAll([
                     'reminder_id' => $reminderId,
                     'company_id' => $uncheckedCompanies,
                 ]);
@@ -449,8 +494,21 @@ class CompanyController extends BaseController
             // Добавляем новые напоминания
             $errors = [];
             if (!empty($checkedCompanies)) {
+                switch ($type) {
+                    case 'regular':
+                        $class = ReminderRegular::class;
+                        break;
+                    case 'yearly':
+                        $class = ReminderYearly::class;
+                        break;
+                    case 'one-time':
+                        $class = ReminderOneTime::class;
+                        break;
+                    default:
+                        $class = ReminderRegular::class;
+                }
                 for ($i = 0; $i < count($checkedCompanies); $i++) {
-                    $searchQuery = ReminderRegularCompany::find()
+                    $searchQuery = $classLink::find()
                         ->where([
                             'reminder_id' => $reminderId,
                             'company_id' => (int) $checkedCompanies[$i],
@@ -459,12 +517,12 @@ class CompanyController extends BaseController
                     if ($existingReminder > 0) {
                         continue;
                     }
-                    $reminderCompany = new ReminderRegularCompany();
+                    $reminderCompany = new $classLink();
                     $reminderCompany->company_id = (int) $checkedCompanies[$i];
                     $reminderCompany->reminder_id = $reminderId;
                     if ($reminderCompany->save()) {
-                        $reminderRegular = ReminderRegular::findOne(['id' => $reminderId]);
-                        if ($reminderRegular) {
+                        $reminderRow = $class::findOne(['id' => $reminderId]);
+                        if ($reminderRow) {
                             $companyId = (int) $checkedCompanies[$i];
                             $lang = (new Query())
                                 ->select([
@@ -478,15 +536,44 @@ class CompanyController extends BaseController
                                 ->limit(1)
                                 ->one();
                             if ($lang['tg_id'] == 0 || $lang['tg_id'] == null) {
+                                $debug[] = [
+                                    'type' => $type,
+                                    'reminder_id' => $reminderId,
+                                    'company_id' => $checkedCompanies[$i],
+                                    'reminder_row' => $reminderRow,
+                                    'lang' => $lang,
+                                ];
+                                // continue;
+                                $lang['lang'] = DictionaryService::LANG_DEFAULT;
+                            }
+                            $deadlineDate = null;
+                            switch ($type) {
+                                case 'regular':
+                                    $deadlineDate = date('Y-m-') . str_pad($reminderRow->deadline_day, 2, '0', STR_PAD_LEFT);
+                                    break;
+                                case 'yearly':
+                                    $deadlineDate = date('Y-') .  str_pad($reminderRow->deadline_month, 2, '0', STR_PAD_LEFT) . '-' . str_pad($reminderRow->deadline_day, 2, '0', STR_PAD_LEFT);
+                                    break;
+                                case 'one-time':
+                                    $deadlineDate = $reminderRow->deadline;
+                                    break;
+                            }
+                            if (!$deadlineDate) {
+                                $debug[] = [
+                                    'type' => $type,
+                                    'reminder_id' => $reminderId,
+                                    'company_id' => $checkedCompanies[$i],
+                                    'reminder_row' => $reminderRow,
+                                    'deadline_date' => $deadlineDate,
+                                ];
                                 continue;
                             }
-                            $deadlineDate = date('Y-m-') . str_pad($reminderRegular->deadline_day, 2, '0', STR_PAD_LEFT);
                             $escalationDate = CalendarService::getClosestWorkingDay(date('Y-m-d', strtotime($deadlineDate . ' -1 day')));
                             $reminder_2_date = CalendarService::getClosestWorkingDay(date('Y-m-d', strtotime($escalationDate . ' -1 day')));
                             $reminder_1_date = CalendarService::getClosestWorkingDay(date('Y-m-d', strtotime($reminder_2_date . ' -1 day')));
                             $reminderSchedule = new ReminderSchedule();
                             $reminderSchedule->company_id = (int) $checkedCompanies[$i];
-                            $reminderSchedule->type = 'regular';
+                            $reminderSchedule->type = $type;
                             $reminderSchedule->template_id = $reminderId;
                             $reminderSchedule->updated_at = date('Y-m-d H:i:s');
                             $reminderSchedule->deadline_date = $deadlineDate;
@@ -495,7 +582,7 @@ class CompanyController extends BaseController
                             $reminderSchedule->escalation_date = $escalationDate;
                             $reminderSchedule->target_month = date('Y-m-01', time());
                             $reminderSchedule->status = ReminderSchedule::STATUS_PENDING;
-                            $reminderSchedule->message = ($lang['lang'] == 'ru') ? $reminderRegular->text_ru : $reminderRegular->text_rs;
+                            $reminderSchedule->message = ($lang['lang'] == DictionaryService::LANG_RUSSIAN) ? $reminderRow->text_ru : $reminderRow->text_rs;
                             $reminderSchedule->save();
                             if ($reminderSchedule->hasErrors()) {
                                 $errors[] = $reminderSchedule->getErrors();
@@ -514,6 +601,11 @@ class CompanyController extends BaseController
                 'status' => 'success',
                 'code' => 200,
                 'message' => 'Reminders updated successfully.',
+                'debug' => [
+                    'type' => $type,
+                    'class' => $class ?? 'none',
+                    'd' => $debug,
+                ],
             ];
             if ($errors) {
                 $response->data['errors'] = $errors;
@@ -583,7 +675,7 @@ class CompanyController extends BaseController
                     $reminder->reminder_2_date = date('Y-m-d H:i:s', strtotime($ps->reminder_2_date));
                     $reminder->escalation_date = date('Y-m-d H:i:s', strtotime($ps->escalation_date));
                     $reminder->target_month = date('Y-m-01', strtotime($ps->target_month));
-                    $reminder->message = ($lang['lang'] == 'ru') ? $ps->activity_text_ru : $ps->activity_text_rs;
+                    $reminder->message = ($lang['lang'] == DictionaryService::LANG_RUSSIAN) ? $ps->activity_text_ru : $ps->activity_text_rs;
                     $r = $reminder->save();
                     if (!$r) {
                         $errors[] = $reminder->getErrors();
@@ -641,20 +733,20 @@ class CompanyController extends BaseController
             $text = $request->post('text');
             $tc = TaxCalendar::findOne(['id' => $reminderId]);
             if ($tc) {
-                if ($accountant->lang == 'ru') {
+                if ($accountant->lang == DictionaryService::LANG_RUSSIAN) {
                     $tc->activity_text_ru = $text;
                     $data = [
                         'text' => $text,
-                        'from' => 'ru',
-                        'to' => 'rs',
+                        'from' => DictionaryService::LANG_RUSSIAN,
+                        'to' => DictionaryService::LANG_SERBIAN,
                     ];
                     $tc->activity_text_rs = $this->makeN8nWebhookCall('translate', $data)['data']['translation'] ?? '';
                 } else {
                     $tc->activity_text_rs = $text;
                     $data = [
                         'text' => $text,
-                        'from' => 'rs',
-                        'to' => 'ru',
+                        'from' => DictionaryService::LANG_SERBIAN,
+                        'to' => DictionaryService::LANG_RUSSIAN,
                     ];
                     $tc->activity_text_ru = $this->makeN8nWebhookCall('translate', $data)['data']['translation'] ?? '';
                 }
@@ -682,5 +774,39 @@ class CompanyController extends BaseController
         $response->data = ['method' => __METHOD__];
         return $response;
         // return $this->render('index');
+    }
+
+    public function actionSuggest()
+    {
+        $this->layout = false;
+        $request = \Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken($token);
+        if ($accountant->isValid()) {
+            $query = $request->post('query');
+            $companiesQuery = Company::find()
+                ->select(['c.id', 'c.name'])
+                ->distinct()
+                ->from(['c' => Company::tableName()])
+                ->where(['ILIKE', 'c.name', $query])
+                ->limit(self::SUGGESTS_COUNT);
+            $data = $companiesQuery->all();
+            $data = array_map(function ($item) {
+                return [
+                    'id' => $item['id'],
+                    'name' => mb_strlen($item['name'], 'utf-8') > 40 ? mb_substr($item['name'], 0, 40, 'utf-8') . '…' : $item['name'],
+                ];
+            }, $data);
+            $response = \Yii::$app->response;
+            $response->format = Response::FORMAT_JSON;
+            $response->data =
+                [
+                    'status' => 'success',
+                    'data' => $data,
+                ];
+            return $response;
+        } else {
+            return $this->renderLogout();
+        }
     }
 }

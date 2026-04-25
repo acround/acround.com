@@ -1,0 +1,1161 @@
+{
+    "1": {
+        "id": "1",
+        "name": "Konobars",
+        "pib": "112834239",
+        "customers": [
+            {
+                "id": "40",
+                "tg_id": "123432118",
+                "username": "@bajev"
+            }
+        ]
+    },
+    "2": {
+        "id": "2",
+        "name": "Kidotech",
+        "pib": "112960834",
+        "customers": [
+            {
+                "id": "41",
+                "tg_id": "930902728",
+                "username": "@J_Miii"
+            },
+            {
+                "id": "",
+                "tg_id": "5984323189",
+                "username": "@serg_cy"
+            }
+        ]
+    },
+    "3": {
+        "id": "3",
+        "name": "Beavers Global",
+        "pib": "113145364",
+        "customers": [
+            {
+                "id": "42",
+                "tg_id": "193330746",
+                "username": "@avinoff"
+            }
+        ]
+    },
+    "4": {
+        "id": "4",
+        "name": "Drop Table",
+        "pib": "112956276",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "209941872",
+                "username": "@ichi404"
+            },
+            {
+                "id": "",
+                "tg_id": "278839325",
+                "username": "@smage"
+            }
+        ]
+    },
+    "5": {
+        "id": "5",
+        "name": "Girid Software",
+        "pib": "112932245",
+        "customers": [
+            {
+                "id": "44",
+                "tg_id": "620814047",
+                "username": "@Maximochev"
+            }
+        ]
+    },
+    "6": {
+        "id": "6",
+        "name": "OnlyApps",
+        "pib": "113388812",
+        "customers": [
+            {
+                "id": "45",
+                "tg_id": "528616177",
+                "username": "@onlyapps_org"
+            }
+        ]
+    },
+    "7": {
+        "id": "7",
+        "name": "Jezeto",
+        "pib": "113300122",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "807061824",
+                "username": "@Zecolerot"
+            }
+        ]
+    },
+    "8": {
+        "id": "8",
+        "name": "Lorem ipsum",
+        "pib": "113184830",
+        "customers": [
+            {
+                "id": "46",
+                "tg_id": "1150336899",
+                "username": "@yokala_mayokala"
+            }
+        ]
+    },
+    "9": {
+        "id": "9",
+        "name": "Alm Tech",
+        "pib": "113276010",
+        "customers": [
+            {
+                "id": "47",
+                "tg_id": "118762921",
+                "username": "@a_morozov"
+            }
+        ]
+    },
+    "10": {
+        "id": "10",
+        "name": "RTT Europe",
+        "pib": "113410912",
+        "customers": [
+            {
+                "id": "48",
+                "tg_id": "403078517",
+                "username": "@gm_rtt"
+            }
+        ]
+    },
+    "11": {
+        "id": "11",
+        "name": "NomaDev DOO",
+        "pib": "113480440",
+        "customers": [
+            {
+                "id": "49",
+                "tg_id": "1241003415",
+                "username": "@katyalyamina"
+            }
+        ]
+    },
+    "12": {
+        "id": "12",
+        "name": "WAL Consulting",
+        "pib": "113386747",
+        "customers": [
+            {
+                "id": "50",
+                "tg_id": "475413709",
+                "username": "@spacerudeboy"
+            }
+        ]
+    },
+    "13": {
+        "id": "13",
+        "name": "Creomate",
+        "pib": "113559576",
+        "customers": [
+            {
+                "id": "51",
+                "tg_id": "114496835",
+                "username": "@oagapov"
+            },
+            {
+                "id": "",
+                "tg_id": "156347025",
+                "username": "@LenkaKva"
+            }
+        ]
+    },
+    "14": {
+        "id": "14",
+        "name": "smartvez",
+        "pib": "114303572",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "646233979",
+                "username": "@lavrenina"
+            },
+            {
+                "id": "",
+                "tg_id": "5297438986",
+                "username": "@lavrenin"
+            },
+            {
+                "id": "",
+                "tg_id": "1122008260",
+                "username": "@nyhrat"
+            }
+        ]
+    },
+    "15": {
+        "id": "15",
+        "name": "North Panels",
+        "pib": null,
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "2848183",
+                "username": "@Bersik1"
+            }
+        ]
+    },
+    "16": {
+        "id": "16",
+        "name": "GREEN HOUSE COFFEE DOO NOVI SAD",
+        "pib": "114398069",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "21536485",
+                "username": "@artemfromsiberia"
+            }
+        ]
+    },
+    "17": {
+        "id": "17",
+        "name": "Ikigai 021",
+        "pib": "114868633",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "404315253",
+                "username": "@RihaChe"
+            },
+            {
+                "id": "",
+                "tg_id": "6671673604",
+                "username": "@ikigai_ns"
+            },
+            {
+                "id": "",
+                "tg_id": "5048126671",
+                "username": "@rg_014"
+            },
+            {
+                "id": "",
+                "tg_id": "7584507184",
+                "username": "@kurunek"
+            }
+        ]
+    },
+    "18": {
+        "id": "18",
+        "name": "Ikigai Bubble",
+        "pib": "114867868",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "404315253",
+                "username": "@RihaChe"
+            },
+            {
+                "id": "",
+                "tg_id": "6671673604",
+                "username": "@ikigai_ns"
+            },
+            {
+                "id": "",
+                "tg_id": "5048126671",
+                "username": "@rg_014"
+            },
+            {
+                "id": "",
+                "tg_id": "7584507184",
+                "username": "@kurunek"
+            }
+        ]
+    },
+    "19": {
+        "id": "19",
+        "name": "Kuruneko",
+        "pib": "114868342",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "404315253",
+                "username": "@RihaChe"
+            },
+            {
+                "id": "",
+                "tg_id": "6671673604",
+                "username": "@ikigai_ns"
+            },
+            {
+                "id": "",
+                "tg_id": "5048126671",
+                "username": "@rg_014"
+            },
+            {
+                "id": "",
+                "tg_id": "7584507184",
+                "username": "@kurunek"
+            }
+        ]
+    },
+    "20": {
+        "id": "20",
+        "name": "ruscafe",
+        "pib": null,
+        "customers": []
+    },
+    "21": {
+        "id": "21",
+        "name": "kalopsia",
+        "pib": "112696631",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "7438083630",
+                "username": "@Lilian4242"
+            }
+        ]
+    },
+    "22": {
+        "id": "22",
+        "name": "family office",
+        "pib": "115076504",
+        "customers": [
+            {
+                "id": "54",
+                "tg_id": "6491736022",
+                "username": "Milorad Prodanov"
+            }
+        ]
+    },
+    "23": {
+        "id": "23",
+        "name": "marvini",
+        "pib": "114228451",
+        "customers": [
+            {
+                "id": "33",
+                "tg_id": "5708892937",
+                "username": "@Nikolai_Perslavtsev"
+            }
+        ]
+    },
+    "24": {
+        "id": "24",
+        "name": "Headshot agency",
+        "pib": "115235430",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "886084747",
+                "username": "@Elena_Elisova"
+            }
+        ]
+    },
+    "25": {
+        "id": "25",
+        "name": "vs agregati",
+        "pib": "110965287",
+        "customers": [
+            {
+                "id": "55",
+                "tg_id": "434637206",
+                "username": "@MV030"
+            }
+        ]
+    },
+    "26": {
+        "id": "26",
+        "name": "Mikhail Butorin pr Les",
+        "pib": "112965113",
+        "customers": [
+            {
+                "id": "29",
+                "tg_id": "279141555",
+                "username": "@butorinmn"
+            }
+        ]
+    },
+    "27": {
+        "id": "27",
+        "name": "Aleksandr Gordienko pr",
+        "pib": "115093005",
+        "customers": [
+            {
+                "id": "64",
+                "tg_id": "421552353",
+                "username": "@gordienkoalex"
+            }
+        ]
+    },
+    "28": {
+        "id": "28",
+        "name": "Ivan Edemskii pr",
+        "pib": "113450252",
+        "customers": [
+            {
+                "id": "25",
+                "tg_id": "625613773",
+                "username": "@TheEvilGazebo"
+            }
+        ]
+    },
+    "29": {
+        "id": "29",
+        "name": "Andrei Girko pr Bananalama",
+        "pib": "113346410",
+        "customers": [
+            {
+                "id": "16",
+                "tg_id": "96938013",
+                "username": "@Bananadirector"
+            }
+        ]
+    },
+    "30": {
+        "id": "30",
+        "name": "ULTRAMARINE",
+        "pib": "113780556",
+        "customers": [
+            {
+                "id": "39",
+                "tg_id": "5168403886",
+                "username": "@ciechanow"
+            },
+            {
+                "id": "",
+                "tg_id": "1050576972",
+                "username": "@Marina_Tsekhanovskaya"
+            }
+        ]
+    },
+    "31": {
+        "id": "31",
+        "name": "Valerii Timofeev pr",
+        "pib": "113799653",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "313484484",
+                "username": "@llinFirst"
+            }
+        ]
+    },
+    "32": {
+        "id": "32",
+        "name": "Vino i delikatese",
+        "pib": "114282597",
+        "customers": [
+            {
+                "id": "57",
+                "tg_id": "539445397",
+                "username": "@Elena_Razbeg"
+            }
+        ]
+    },
+    "33": {
+        "id": "33",
+        "name": "Yury Sorokin PR TRAVA",
+        "pib": "113608860",
+        "customers": []
+    },
+    "34": {
+        "id": "34",
+        "name": "Nataliia Prokhorskaia pr",
+        "pib": "113170261",
+        "customers": [
+            {
+                "id": "31",
+                "tg_id": "510630674",
+                "username": "@Natasa_Pro"
+            }
+        ]
+    },
+    "35": {
+        "id": "35",
+        "name": "Aleksandra Tarasenko pr",
+        "pib": "114000935",
+        "customers": [
+            {
+                "id": "6",
+                "tg_id": "444199304",
+                "username": "@sealkia"
+            }
+        ]
+    },
+    "36": {
+        "id": "36",
+        "name": "Vladimir Denisultanov pr NOVI-ČAJ",
+        "pib": "113630704",
+        "customers": [
+            {
+                "id": "58",
+                "tg_id": "625547809",
+                "username": "@tothecandyshop"
+            },
+            {
+                "id": "",
+                "tg_id": "500574242",
+                "username": "@Gatarix"
+            },
+            {
+                "id": "",
+                "tg_id": "5711269344",
+                "username": "@jlsrgvna"
+            }
+        ]
+    },
+    "37": {
+        "id": "37",
+        "name": "Dmytro Kovalenko PR",
+        "pib": "114439777",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "190247378",
+                "username": "@ribapolosataya"
+            }
+        ]
+    },
+    "38": {
+        "id": "38",
+        "name": "Maksim Grishin PR",
+        "pib": "114287525",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "5048126671",
+                "username": "@rg_014"
+            }
+        ]
+    },
+    "39": {
+        "id": "39",
+        "name": "Anton Saburov pr",
+        "pib": "114512097",
+        "customers": [
+            {
+                "id": "36",
+                "tg_id": "120153",
+                "username": "@asaburov"
+            }
+        ]
+    },
+    "40": {
+        "id": "40",
+        "name": "Aleksandr Nedopekin pr",
+        "pib": "114013623",
+        "customers": [
+            {
+                "id": "8",
+                "tg_id": "17296813",
+                "username": "@n1kepoden"
+            }
+        ]
+    },
+    "41": {
+        "id": "41",
+        "name": "Aleksandr Safronov pr",
+        "pib": "113586571",
+        "customers": [
+            {
+                "id": "9",
+                "tg_id": "2047468",
+                "username": "@safronizator"
+            }
+        ]
+    },
+    "42": {
+        "id": "42",
+        "name": "Iana Motina pr Pripremanje i poslu\u017eivanje hrane SUNRICE Novi Sad",
+        "pib": "114779212",
+        "customers": [
+            {
+                "id": "59",
+                "tg_id": "5951665728",
+                "username": "@danieIII359"
+            }
+        ]
+    },
+    "43": {
+        "id": "43",
+        "name": "Vladimir Nikolaev PR Novi Sad",
+        "pib": "13796482",
+        "customers": [
+            {
+                "id": "60",
+                "tg_id": "534873749",
+                "username": "@vladimir300884"
+            }
+        ]
+    },
+    "44": {
+        "id": "44",
+        "name": "Nikolay Pereslavtsev pr Marnivi",
+        "pib": "113326051",
+        "customers": [
+            {
+                "id": "33",
+                "tg_id": "5708892937",
+                "username": "@Nikolai_Perslavtsev"
+            }
+        ]
+    },
+    "45": {
+        "id": "45",
+        "name": "Anton Ivashchenko pr",
+        "pib": "115225331",
+        "customers": [
+            {
+                "id": "12",
+                "tg_id": "637523127",
+                "username": "@yves_saint_anton"
+            }
+        ]
+    },
+    "46": {
+        "id": "46",
+        "name": "Egor Khorkin PR Kafa i Kolaci",
+        "pib": "114934683",
+        "customers": [
+            {
+                "id": "22",
+                "tg_id": "1571203695",
+                "username": "@EgorKhorkin"
+            }
+        ]
+    },
+    "47": {
+        "id": "47",
+        "name": "Vadim Dmitriukov PR",
+        "pib": "115146617",
+        "customers": []
+    },
+    "48": {
+        "id": "48",
+        "name": "Sašatoks",
+        "pib": "113510188",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "1491860284",
+                "username": "@ToxicumSasha"
+            }
+        ]
+    },
+    "49": {
+        "id": "49",
+        "name": "Nova Trava",
+        "pib": "115190379",
+        "customers": [
+            {
+                "id": "34",
+                "tg_id": "2118007311",
+                "username": "@ekaterina_rameikova"
+            }
+        ]
+    },
+    "50": {
+        "id": "50",
+        "name": "Olga Khusainova pr",
+        "pib": "115348023",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "126522306",
+                "username": "@mrs_khusainova"
+            }
+        ]
+    },
+    "51": {
+        "id": "51",
+        "name": "Dmitrii Chubar pr",
+        "pib": "115249121",
+        "customers": [
+            {
+                "id": "19",
+                "tg_id": "125678525",
+                "username": "@dchubar"
+            }
+        ]
+    },
+    "52": {
+        "id": "52",
+        "name": "Pet Shop Šapica 25",
+        "pib": "115375826",
+        "customers": [
+            {
+                "id": "35",
+                "tg_id": "7581967288",
+                "username": "sergei_89_89"
+            }
+        ]
+    },
+    "53": {
+        "id": "53",
+        "name": "Aleksandr Kanaev pr",
+        "pib": "113033884",
+        "customers": [
+            {
+                "id": "7",
+                "tg_id": "760546",
+                "username": "@kanaevad"
+            }
+        ]
+    },
+    "55": {
+        "id": "55",
+        "name": "Anastasiia Pahomova PR",
+        "pib": "114710093",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "428601485",
+                "username": "@adventuresska"
+            }
+        ]
+    },
+    "56": {
+        "id": "56",
+        "name": "Andrei Lomonosov PR",
+        "pib": "114314001",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "326374284",
+                "username": "@Lomonosov_Andrew"
+            }
+        ]
+    },
+    "57": {
+        "id": "57",
+        "name": "Andrey Maximov PR",
+        "pib": "113563723",
+        "customers": [
+            {
+                "id": "10",
+                "tg_id": "357685908",
+                "username": "@MrAndreyMaximov"
+            }
+        ]
+    },
+    "58": {
+        "id": "58",
+        "name": "Anton Buryka PR",
+        "pib": "113139454",
+        "customers": [
+            {
+                "id": "11",
+                "tg_id": "43386298",
+                "username": "@b0tanik"
+            }
+        ]
+    },
+    "59": {
+        "id": "59",
+        "name": "Anton Subbota PR",
+        "pib": "113336627",
+        "customers": [
+            {
+                "id": "13",
+                "tg_id": "5774706281",
+                "username": "@yoloCat777"
+            }
+        ]
+    },
+    "60": {
+        "id": "60",
+        "name": "Artem Melnikov PR",
+        "pib": "112983794",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "1282398885",
+                "username": "@APXEOLOG"
+            }
+        ]
+    },
+    "61": {
+        "id": "61",
+        "name": "Artem Putilov pr Ledinci",
+        "pib": "113624992",
+        "customers": [
+            {
+                "id": "15",
+                "tg_id": "72033013",
+                "username": "@Temo_kasinovic"
+            }
+        ]
+    },
+    "62": {
+        "id": "62",
+        "name": "Arkadiy Nemtsev pr Translub Consulting",
+        "pib": "113549606",
+        "customers": [
+            {
+                "id": "14",
+                "tg_id": "366897662",
+                "username": "@VasiliyIvanovi4"
+            },
+            {
+                "id": "",
+                "tg_id": "579795521",
+                "username": "@Teleport22"
+            }
+        ]
+    },
+    "63": {
+        "id": "63",
+        "name": "Danil Deneko PR",
+        "pib": "112990488",
+        "customers": [
+            {
+                "id": "17",
+                "tg_id": "8059859150",
+                "username": "@danil_dgs"
+            }
+        ]
+    },
+    "64": {
+        "id": "64",
+        "name": "Daria Tikhodeeva PR Novi Sad",
+        "pib": "113490006",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "408217951",
+                "username": "@Tikhodeyeva"
+            }
+        ]
+    },
+    "65": {
+        "id": "65",
+        "name": "Denis Merkulov PR",
+        "pib": "113334746",
+        "customers": [
+            {
+                "id": "18",
+                "tg_id": "5739410845",
+                "username": "@pilotaga2"
+            }
+        ]
+    },
+    "66": {
+        "id": "66",
+        "name": "Dmitrii Kulinenkov PR",
+        "pib": "113554425",
+        "customers": [
+            {
+                "id": "20",
+                "tg_id": "414468373",
+                "username": "@dkulinenkov"
+            }
+        ]
+    },
+    "67": {
+        "id": "67",
+        "name": "Dmitrii Novikov PR",
+        "pib": "113487769",
+        "customers": [
+            {
+                "id": "21",
+                "tg_id": "610528993",
+                "username": "@novdme"
+            }
+        ]
+    },
+    "68": {
+        "id": "68",
+        "name": "Ivan Belov pr Gamebooster",
+        "pib": "113073055",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "5399808",
+                "username": "@vaneszz"
+            }
+        ]
+    },
+    "69": {
+        "id": "69",
+        "name": "German Iurin pr Novi Sad",
+        "pib": "113307825",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "154601290",
+                "username": "@gruenflacheunterhaltung"
+            }
+        ]
+    },
+    "70": {
+        "id": "70",
+        "name": "Ikatie Nail",
+        "pib": "113418036",
+        "customers": [
+            {
+                "id": "23",
+                "tg_id": "435618368",
+                "username": "@ikatie_nail"
+            }
+        ]
+    },
+    "71": {
+        "id": "71",
+        "name": "Ilia Babushkin PR",
+        "pib": "113530611",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "160012745",
+                "username": "@idibt"
+            }
+        ]
+    },
+    "72": {
+        "id": "72",
+        "name": "Ilia Vorobev PR",
+        "pib": "113416508",
+        "customers": [
+            {
+                "id": "24",
+                "tg_id": "1040114205",
+                "username": "@infiniumrulez"
+            }
+        ]
+    },
+    "73": {
+        "id": "73",
+        "name": "Aleksei Kulikov pr KULIKOVAS",
+        "pib": "113342432",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "307896458",
+                "username": "@gig_byte"
+            }
+        ]
+    },
+    "74": {
+        "id": "74",
+        "name": "Maksim Marchenkov PR",
+        "pib": "113229996",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "336533345",
+                "username": "@m_marc"
+            }
+        ]
+    },
+    "75": {
+        "id": "75",
+        "name": "Maksim Serdiukov PR",
+        "pib": "114478884",
+        "customers": [
+            {
+                "id": "5",
+                "tg_id": "297688472",
+                "username": "@r0dnoy"
+            },
+            {
+                "id": "",
+                "tg_id": "978068109",
+                "username": "@alex_selez"
+            }
+        ]
+    },
+    "76": {
+        "id": "76",
+        "name": "Marat Minnullin PR",
+        "pib": "113003546",
+        "customers": [
+            {
+                "id": "27",
+                "tg_id": "93885802",
+                "username": "@MaratMS"
+            }
+        ]
+    },
+    "77": {
+        "id": "77",
+        "name": "Maria Zhertovskaya PR",
+        "pib": null,
+        "customers": []
+    },
+    "78": {
+        "id": "78",
+        "name": "MARINA BRUK PR AGENCIJA ZA KONSALTING I UPRAVLJANJE NOVI SAD",
+        "pib": "113278525",
+        "customers": [
+            {
+                "id": "14",
+                "tg_id": "366897662",
+                "username": "@VasiliyIvanovi4"
+            },
+            {
+                "id": "",
+                "tg_id": "579795521",
+                "username": "@Teleport22"
+            }
+        ]
+    },
+    "79": {
+        "id": "79",
+        "name": "Marko Todorović PR Inđija",
+        "pib": "115313692",
+        "customers": [
+            {
+                "id": "28",
+                "tg_id": "5681664044",
+                "username": "@MarkoAlitor"
+            },
+            {
+                "id": "",
+                "tg_id": "99891495",
+                "username": "@holerius"
+            }
+        ]
+    },
+    "80": {
+        "id": "80",
+        "name": "MIK",
+        "pib": null,
+        "customers": [
+            {
+                "id": "30",
+                "tg_id": "419943066",
+                "username": "@ad1n0d1n"
+            }
+        ]
+    },
+    "81": {
+        "id": "81",
+        "name": "Mikhail Novikov PR",
+        "pib": "113553032",
+        "customers": [
+            {
+                "id": "30",
+                "tg_id": "98266313",
+                "username": "@novmikvis"
+            }
+        ]
+    },
+    "82": {
+        "id": "82",
+        "name": "Nikolai Tikhodeev PR Novi Sad",
+        "pib": "113342205",
+        "customers": [
+            {
+                "id": "61",
+                "tg_id": "3686810",
+                "username": "@tikhodeyev"
+            }
+        ]
+    },
+    "83": {
+        "id": "83",
+        "name": "Nikolai Zhukov pr",
+        "pib": "113585992",
+        "customers": [
+            {
+                "id": "32",
+                "tg_id": "175289812",
+                "username": "@zhuker"
+            }
+        ]
+    },
+    "84": {
+        "id": "84",
+        "name": "Tatiana Babarina PR",
+        "pib": "113002060",
+        "customers": [
+            {
+                "id": "38",
+                "tg_id": "134873326",
+                "username": "@tatyana_bg"
+            }
+        ]
+    },
+    "85": {
+        "id": "85",
+        "name": "Valerii Popov PR Računarsko programiranje Novi Sad",
+        "pib": "112950460",
+        "customers": [
+            {
+                "id": "62",
+                "tg_id": "1235187385",
+                "username": "@valeriylegendar"
+            }
+        ]
+    },
+    "86": {
+        "id": "86",
+        "name": "Aleksandra Selezneva pr",
+        "pib": "113054984",
+        "customers": [
+            {
+                "id": "5",
+                "tg_id": "978068109",
+                "username": "@alex_selez"
+            }
+        ]
+    },
+    "90": {
+        "id": "90",
+        "name": "Albert Krauze pr",
+        "pib": "113432452",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "374501083",
+                "username": "@Giperio"
+            },
+            {
+                "id": "",
+                "tg_id": "404315253",
+                "username": "@RihaChe"
+            }
+        ]
+    },
+    "91": {
+        "id": "91",
+        "name": "Alexey Goryainov pr AlexDev",
+        "pib": "113344830",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "331673208",
+                "username": "@keslorod"
+            }
+        ]
+    },
+    "92": {
+        "id": "92",
+        "name": "Serhii Kotov",
+        "pib": "114768781",
+        "customers": [
+            {
+                "id": "37",
+                "tg_id": "7920120742",
+                "username": "@Serg_Kotov_rehab"
+            }
+        ]
+    },
+    "93": {
+        "id": "93",
+        "name": "GMRS GROUP BALKANS",
+        "pib": "115395782",
+        "customers": [
+            {
+                "id": "",
+                "tg_id": "1651704771",
+                "username": "@ILLINOY"
+            },
+            {
+                "id": "",
+                "tg_id": "5718399864",
+                "username": "@stasytravel"
+            }
+        ]
+    }
+}

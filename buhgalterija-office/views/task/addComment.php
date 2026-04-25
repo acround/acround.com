@@ -1,6 +1,6 @@
 <?php
 
-use app\components\TaskCommentListWidget;
+use app\widgets\TaskCommentListWidget;
 
 $comments = $task->getComments();
 echo TaskCommentListWidget::widget([

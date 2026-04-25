@@ -34,6 +34,8 @@ class ReminderSchedule extends \yii\db\ActiveRecord
 
     const TYPE_TAX_CALENDAR = 'calendar';
     const TYPE_REGULAR = 'regular';
+    const TYPE_YEARLY = 'yearly';
+    const TYPE_ONE_TIME = 'one-time';
     const TYPE_CUSTOM = 'custom';
 
     public static $statuses = [

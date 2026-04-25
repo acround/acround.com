@@ -1,6 +1,6 @@
 <?php
 
-use app\components\SettingsCalendarWidget;
+use app\widgets\SettingsCalendarWidget;
 use app\services\DictionaryService;
 use app\services\SvgService;
 
@@ -19,6 +19,18 @@ use app\services\SvgService;
             <?= DictionaryService::getWord("regularReminders", $user->lang) ?>
         </span>
     </button>
+    <button id="yearly-reminders-button" type="button" data-link="/reminder/yearly" data-controls="yearly-reminders-div" data-state="inactive" class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-2" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">
+        <?= SvgService::svg('calendar') ?>
+        <span>
+            <?= DictionaryService::getWord("yearlyReminders", $user->lang) ?>
+        </span>
+    </button>    
+    <button id="one-time-reminders-button" type="button" data-link="/reminder/one-time" data-controls="one-time-reminders-div" data-state="inactive" class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-2" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">
+        <?= SvgService::svg('calendar') ?>
+        <span>
+            <?= DictionaryService::getWord("oneTimeReminders", $user->lang) ?>
+        </span>
+    </button>    
 </div>
 <div id="reminders-div-list">
     <div id="tax-calendar-div" data-state="active" data-orientation="horizontal" role="tabpanel" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4">
@@ -31,5 +43,9 @@ use app\services\SvgService;
         ]) ?>
     </div>
     <div id="reg-reminders-div" data-state="active" data-orientation="horizontal" role="tabpanel" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4">
+    </div>
+    <div id="yearly-reminders-div" data-state="active" data-orientation="horizontal" role="tabpanel" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4">
+    </div>
+    <div id="one-time-reminders-div" data-state="active" data-orientation="horizontal" role="tabpanel" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4">
     </div>
 </div>

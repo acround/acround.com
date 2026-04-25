@@ -8,17 +8,10 @@ class m251222_135920_vector_for_companies extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
-    {
-        $this->addColumn(Company::tableName(),"embedding", 'vector(768)');
-    }
+    public function safeUp() {}
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
-    {
-        $this->dropColumn(Company::tableName(), "embedding");
-    }
-
+    public function safeDown() {}
 }

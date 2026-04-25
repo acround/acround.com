@@ -2,9 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-use yii\db\Query;
-
 /**
  * This is the model class for table "company".
  *
@@ -14,14 +11,10 @@ use yii\db\Query;
  * @property int|null $type_id
  * @property bool|null $is_pdv
  * @property int|null $activity_id
- * @property string|null $specific_reports
- * @property string|null $reminder
  * @property int|null $pib
  * @property string|null $status
  * @property string $created_at
  * @property string $updated_at
- * @property string|null $report_date
-//  * @property string|null $embedding
  *
  * @property Accountant[] $accountants
  * @property CompanyActivities $activity
@@ -46,6 +39,13 @@ class Company extends \yii\db\ActiveRecord
         self::COMPANY_STATUS_INACTIVE,
     ];
 
+    public static $statusStyles = [
+        'active'     => 'bg-warning/10 text-warning border-warning/20',
+        'onboarding' => 'bg-info/10 text-info border-info/20',
+        'paused'     => 'bg-destructive/10 text-destructive border-destructive/20',
+        'inactive'   => 'bg-muted/10 text-muted border-muted/20',
+    ];
+
     public static $types = [
         'DOO',
         'Knigaš',
@@ -60,24 +60,31 @@ class Company extends \yii\db\ActiveRecord
         return 'company';
     }
 
+    public static function getStatuses()
+    {
+        return self::$statuses;
+    }
+
+    public function getStatusStyle()
+    {
+        return self::$statusStyles[$this->status] ?? '';
+    }
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name', 'name_tg', 'type_id', 'activity_id', 'specific_reports', 'reminder', 'pib', 'report_date'], 'default', 'value' => null],
+            [['name', 'name_tg', 'type_id', 'activity_id', 'pib',], 'default', 'value' => null],
             [['is_pdv'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 'onboarding'],
             [['type_id', 'activity_id', 'pib'], 'default', 'value' => null],
             [['type_id', 'activity_id', 'pib'], 'integer'],
             [['is_pdv'], 'boolean'],
-            [['created_at', 'updated_at', 'report_date'], 'safe'],
-            // [['embedding'], 'string'],
+            [['created_at', 'updated_at'], 'safe'],
             [['name', 'name_tg'], 'string', 'max' => 512],
-            [['specific_reports', 'reminder'], 'string', 'max' => 256],
             [['status'], 'string', 'max' => 32],
-            [['pib'], 'unique'],
+            // [['pib'], 'unique'],
             [['activity_id'], 'exist', 'skipOnError' => true, 'targetClass' => CompanyActivities::class, 'targetAttribute' => ['activity_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CompanyType::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
@@ -95,14 +102,10 @@ class Company extends \yii\db\ActiveRecord
             'type_id' => 'Type ID',
             'is_pdv' => 'Is Pdv',
             'activity_id' => 'Activity ID',
-            'specific_reports' => 'Specific Reports',
-            'reminder' => 'Reminder',
             'pib' => 'Pib',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'report_date' => 'Report Date',
-            // 'embedding' => 'Embedding',
         ];
     }
 

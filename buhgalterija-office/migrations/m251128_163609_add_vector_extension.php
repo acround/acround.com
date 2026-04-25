@@ -26,6 +26,6 @@ class m251128_163609_add_vector_extension extends Migration
     public function safeDown()
     {
         $this->dropTable(Document::tableName());
-        $this->execute('DROP EXTENSION IF EXISTS vector;');
+        // $this->execute('DROP EXTENSION IF EXISTS vector;');
     }
 }

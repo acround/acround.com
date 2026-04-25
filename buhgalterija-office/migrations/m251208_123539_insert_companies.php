@@ -30,13 +30,11 @@ class m251208_123539_insert_companies extends Migration
             $company->type_id = $getTypeIdQuery->where('name = :name', ['name' => $type])->one()['id'];
             $company->is_pdv = $companyRaw['is_pdv'] == 'true' ? true : ($companyRaw['is_pdv'] == 'false' ? false : null);
             $company->activity_id = $getActivityIdQuery->where('name = :name', ['name' => $companyRaw['activity']])->one()['id'] ?? null;
-            $company->specific_reports = $companyRaw['specific_reports'];
-            $company->reminder = $companyRaw['reminder'];
             $company->pib = null;
-            if ($company->save()) {
+            if ($company->insert()) {
                 $num++;
             } else {
-                echo $company->name . " insert error\n";
+                echo $company->name." insert error\n";
                 print_r($company->getErrors());
                 // var_dump($company->type_id);
                 // var_dump($company->activity_id);

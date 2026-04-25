@@ -33,7 +33,11 @@ class Modal {
 
     setDoUrl(url) {
         this.doButtonUrl = url;
-        $(this.modal).find('#do-action-url').val(url);
+        $(this.modal).find('input.do-action-url').val(url);
+    }
+
+    setReminderType(type) {
+        $(this.modal).find('input.reminder-table-type').val(type);
     }
 
     setContent(htmlContent) {

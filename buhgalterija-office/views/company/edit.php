@@ -1,14 +1,14 @@
 <?php
 
-use app\components\ButtonBackWidget;
-use app\components\SelectWidget;
+use app\widgets\SelectWidget;
 use app\services\DictionaryService;
 use app\services\SvgService;
 
 ?>
 <div class="p-6">
-    <?= ButtonBackWidget::widget(['user' => $user]) ?>
-    <h1 class="text-2xl font-heading font-bold"><?= DictionaryService::getWord('companyEditing', $user->lang) ?></h1>
+    <div id="page-header" class="flex items-center gap-4">
+        <h1 class="text-2xl font-heading font-bold"><?= DictionaryService::getWord('companyEditing', $user->lang) ?></h1>
+    </div>
     <div class="space-y-6">
         <table id="company-edit-table" class="w-full caption-bottom text-sm">
             <input type="hidden" name="id" value="<?= $company->id ?>" />
@@ -103,7 +103,7 @@ use app\services\SvgService;
                 </tr>
                 <tr>
                     <td colspan="2" class="text-right">
-                        <button id="company-save-button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" data-id="<?= $company['id'] ?>">
+                        <button id="company-save-button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50    border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" data-id="<?= $company['id'] ?>">
                             <?= SvgService::svg('save') ?>
                             <?= DictionaryService::getWord('save', $user->lang) ?>
                         </button>

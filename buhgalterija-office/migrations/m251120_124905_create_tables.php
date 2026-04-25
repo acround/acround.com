@@ -63,9 +63,6 @@ class m251120_124905_create_tables extends Migration
             'type_id' => $this->bigInteger(),
             'is_pdv' => $this->boolean()->defaultValue(false),
             'activity_id' => $this->bigInteger(),
-            'specific_reports' => $this->string(256),
-            'report_date' => $this->integer(),
-            'reminder' => $this->string(256),
             'pib' => $this->bigInteger(),
             'status' => $this->string(32)->defaultValue('new'),
         ]);

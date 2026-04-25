@@ -26,10 +26,5 @@ class m251225_151938_fix_document_steps extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
-    {
-        echo "m251225_151938_fix_document_steps cannot be reverted.\n";
-
-        return false;
-    }
+    public function safeDown() {}
 }

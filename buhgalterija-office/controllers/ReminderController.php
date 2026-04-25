@@ -3,16 +3,24 @@
 namespace app\controllers;
 
 use yii\db\Query;
+use app\widgets\ReminderCreateUpdateContentWidget;
+use app\widgets\ReminderOneTimeTableRowWidget;
+use app\widgets\ReminderRegTableRowWidget;
+use app\widgets\ReminderYearlyTableRowWidget;
+use app\widgets\SettingsCalendarBodyWidget;
+use app\widgets\SettingsCalendarWidget;
 use app\models\Accountant;
-use app\models\TaxCalendar;
+use app\models\Company;
+use app\models\ReminderOneTime;
+use app\models\ReminderOnetimeCompany;
 use app\models\ReminderRegular;
-use app\components\SettingsCalendarWidget;
-use app\components\SettingsCalendarBodyWidget;
-use app\components\ReminderCreateUpdateContentWidget;
-use app\components\RegReminderTableRowWidget;
-use app\models\ReminderSchedule;
 use app\models\ReminderRegularCompany;
+use app\models\ReminderSchedule;
+use app\models\ReminderYearly;
+use app\models\ReminderYearlyCompany;
+use app\models\TaxCalendar;
 use app\services\CalendarService;
+use app\services\DictionaryService;
 
 class ReminderController extends BaseController
 {
@@ -78,8 +86,6 @@ class ReminderController extends BaseController
         $token = $request->post('token');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
-            $firstDay = date('Y-m-01');
-            $lastDay = date('Y-m-t');
             $reminders = (new Query)
                 ->select(['r.*'])
                 ->from(['r' => ReminderRegular::tableName()])
@@ -88,10 +94,6 @@ class ReminderController extends BaseController
             $data = [
                 'user' => $accountant,
                 'reminders' => $reminders,
-                'debug' => [
-                    $firstDay,
-                    $lastDay,
-                ],
             ];
             return $this->renderPage($data, 'reg');
         } else {
@@ -99,17 +101,31 @@ class ReminderController extends BaseController
         }
     }
 
-    public function actionRegReminderCreate()
+    public function actionReminderCreate()
     {
         $this->layout = false;
         $request = \Yii::$app->request;
         $token = $request->post('token');
+        $type = $request->post('reminderType');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
-            $reminder = new ReminderRegular();
+            switch ($type) {
+                case 'regular':
+                    $reminder = new ReminderRegular();
+                    break;
+                case 'yearly':
+                    $reminder = new ReminderYearly();
+                    break;
+                case 'one-time':
+                    $reminder = new ReminderOneTime();
+                    break;
+                default:
+                    $reminder = new ReminderRegular();
+            }
             $html = ReminderCreateUpdateContentWidget::widget([
                 'user' => $accountant,
                 'reminder' => $reminder,
+                'type' => $type,
             ]);
             $response = \Yii::$app->response;
             $response->format = \yii\web\Response::FORMAT_JSON;
@@ -124,21 +140,48 @@ class ReminderController extends BaseController
         }
     }
 
-    public function actionRegReminderUpdate()
+    public function actionReminderUpdate()
     {
         $this->layout = false;
         $request = \Yii::$app->request;
         $token = $request->post('token');
+        $type = $request->post('reminderType');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
             $id = $request->post('id');
-            $reminder = ReminderRegular::findOne($id);
+            switch ($type) {
+                case 'regular':
+                    $reminder = ReminderRegular::findOne($id);
+                    break;
+                case 'yearly':
+                    $reminder = ReminderYearly::findOne($id);
+                    break;
+                case 'one-time':
+                    $reminder = ReminderOneTime::findOne($id);
+                    break;
+                default:
+                    $reminder = ReminderRegular::findOne($id);
+            }
+
             if (!$reminder) {
-                $reminder = new ReminderRegular();
+                switch ($type) {
+                    case 'regular':
+                        $reminder = new ReminderRegular();
+                        break;
+                    case 'yearly':
+                        $reminder = new ReminderYearly();
+                        break;
+                    case 'one-time':
+                        $reminder = new ReminderOneTime();
+                        break;
+                    default:
+                        $reminder = new ReminderRegular();
+                }
             }
             $html = ReminderCreateUpdateContentWidget::widget([
                 'user' => $accountant,
                 'reminder' => $reminder,
+                'type' => $type,
             ]);
             $response = \Yii::$app->response;
             $response->format = \yii\web\Response::FORMAT_JSON;
@@ -153,17 +196,18 @@ class ReminderController extends BaseController
         }
     }
 
-    public function actionRegReminderSave()
+    public function actionReminderSave()
     {
         $this->layout = false;
         $request = \Yii::$app->request;
         $token = $request->post('token');
+        $type = $request->post('reminderType');
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
             $topicFrom = $request->post('topic');
             $textFrom = $request->post('text');
             $langFrom = $request->post('lang');
-            $langTo = $langFrom == 'ru' ? 'rs' : 'ru';
+            $langTo = $langFrom == DictionaryService::LANG_RUSSIAN ? DictionaryService::LANG_SERBIAN : DictionaryService::LANG_RUSSIAN;
             $data = [
                 'text' => $topicFrom,
                 'from' => $langFrom,
@@ -172,7 +216,7 @@ class ReminderController extends BaseController
             $topicTo = $this->makeN8nWebhookCall('translate', $data)['data']['translation'] ?? '';
             $data['text'] = $textFrom;
             $textTo = $this->makeN8nWebhookCall('translate', $data)['data']['translation'] ?? '';
-            if ($langFrom == 'ru') {
+            if ($langFrom == DictionaryService::LANG_RUSSIAN) {
                 $topicRu = $topicFrom;
                 $textRu = $textFrom;
                 $topicRs = $topicTo;
@@ -191,17 +235,57 @@ class ReminderController extends BaseController
                 'text_ru' => $textRu,
                 'text_rs' => $textRs,
             ];
+            $id = $data['id'];
             if ($data['id']) {
-                $reminder = ReminderRegular::findOne($data['id']);
+                switch ($type) {
+                    case 'regular':
+                        $reminder = ReminderRegular::findOne($id);
+                        break;
+                    case 'yearly':
+                        $reminder = ReminderYearly::findOne($id);
+                        break;
+                    case 'one-time':
+                        $reminder = ReminderOneTime::findOne($id);
+                        break;
+                    default:
+                        $reminder = ReminderRegular::findOne($id);
+                }
             } else {
-                $reminder = new ReminderRegular();
+                switch ($type) {
+                    case 'regular':
+                        $reminder = new ReminderRegular();
+                        break;
+                    case 'yearly':
+                        $reminder = new ReminderYearly();
+                        break;
+                    case 'one-time':
+                        $reminder = new ReminderOneTime();
+                        break;
+                    default:
+                        $reminder = new ReminderRegular();
+                }
+            }
+            switch ($type) {
+                case 'regular':
+                    break;
+                case 'yearly':
+                    $deadlineDay = explode('-', $data['deadline_day']);
+                    $data['deadline_day'] = $deadlineDay[2];
+                    $data['deadline_month'] = $deadlineDay[1];
+                    break;
+                case 'one-time':
+                    $data['deadline'] = $data['deadline_day'];
+                    unset($data['deadline_day']);
+                    break;
             }
             $reminder->load($data, '');
             $reminder->save();
             $reminderSchedule = ReminderSchedule::find()
-                ->where(['template_id' => $reminder->id, 'type' => 'regular'])
+                ->where(['template_id' => $reminder->id, 'type' => $type])
                 ->all();
-            $debug = [];
+            // $debug = [
+            //     'reminderClass' => get_class($reminder),
+            // ];
             if ($reminderSchedule) {
                 foreach ($reminderSchedule as $item) {
                     $companyId = $item->company_id;
@@ -219,11 +303,11 @@ class ReminderController extends BaseController
                     if ($lang['tg_id'] == 0 || $lang['tg_id'] == null) {
                         continue;
                     }
-                    $item->message = ($lang['lang'] == 'ru') ? $reminder->text_ru : $reminder->text_rs;
-                    $debug[] = [
-                        'lang' => $lang,
-                        'message' => $item->message,
-                    ];
+                    $item->message = ($lang['lang'] == DictionaryService::LANG_RUSSIAN) ? $reminder->text_ru : $reminder->text_rs;
+                    // $debug[] = [
+                    //     'lang' => $lang,
+                    //     'message' => $item->message,
+                    // ];
                     $item->save();
                 }
             }
@@ -237,17 +321,36 @@ class ReminderController extends BaseController
                 ];
                 return $response;
             } else {
+                switch ($type) {
+                    case 'regular':
+                        $out = ReminderRegTableRowWidget::widget([
+                            'user' => $accountant,
+                            'reminder' => $reminder,
+                            'class' => ['reg-reminder-btn'],
+                        ]);
+                        break;
+                    case 'yearly':
+                        $out = ReminderYearlyTableRowWidget::widget([
+                            'user' => $accountant,
+                            'reminder' => $reminder,
+                            'class' => ['yearly-reminder-btn'],
+                        ]);
+                        break;
+                    case 'one-time':
+                        $out = ReminderOneTimeTableRowWidget::widget([
+                            'user' => $accountant,
+                            'reminder' => $reminder,
+                            'class' => ['one-time-reminder-btn'],
+                        ]);
+                        break;
+                }
                 $response->data = [
                     'status' => 'success',
-                    'recievedData' => $request->post(),
+                    // 'recievedData' => $request->post(),
                     'action' => $data['id'] ? 'updated' : 'created',
                     'reminder' => $reminder->toArray(),
-                    'data' => RegReminderTableRowWidget::widget([
-                        'user' => $accountant,
-                        'reminder' => $reminder,
-                        'class' => ['reg-reminder-btn'],
-                    ]),
-                    'debug' => $debug,
+                    'data' => $out,
+                    // 'debug' => $debug,
                 ];
                 return $response;
             }
@@ -256,7 +359,7 @@ class ReminderController extends BaseController
         }
     }
 
-    public function actionCancelRegular()
+    public function actionCancelReminder()
     {
         $this->layout = false;
         $request = \Yii::$app->request;
@@ -264,13 +367,31 @@ class ReminderController extends BaseController
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
             $id = $request->post('id');
-            $reminder = ReminderRegular::findOne($id);
+            $type = $request->post('type');
+            switch ($type) {
+                case 'regular':
+                    $reminder = ReminderRegular::findOne($id);
+                    break;
+                case 'yearly':
+                    $reminder = ReminderYearly::findOne($id);
+                    break;
+                case 'one-time':
+                    $reminder = ReminderOneTime::findOne($id);
+                    break;
+                    // default:
+                    //     $reminder = ReminderRegular::findOne($id);
+            }
+            // $reminder = ReminderRegular::findOne($id);
             if ($reminder) {
-                $reminder->delete();
+                $r = $reminder->delete();
                 $response = \Yii::$app->response;
                 $response->format = \yii\web\Response::FORMAT_JSON;
                 $response->data = [
                     'status' => 'success',
+                    'r' => $r,
+                    'errors' => $reminder->getErrors(),
+                    'class' => get_class($reminder),
+                    'reminder' => $reminder,
                 ];
                 return $response;
             } else {
@@ -282,6 +403,44 @@ class ReminderController extends BaseController
                 ];
                 return $response;
             }
+        } else {
+            return $this->renderLogout();
+        }
+    }
+
+    public function actionYearly()
+    {
+        $this->layout = false;
+        $request = \Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
+        if ($accountant->isValid()) {
+            $reminders = ReminderYearly::find()->orderBy(['deadline_month' => SORT_ASC, 'deadline_day' => SORT_ASC])->all();
+            $data = [
+                'user' => $accountant,
+                'reminders' => $reminders,
+            ];
+            return $this->renderPage($data, 'yearly');
+        } else {
+            return $this->renderLogout();
+        }
+    }
+
+    public function actionOneTime()
+    {
+        $this->layout = false;
+        $request = \Yii::$app->request;
+        $token = $request->post('token');
+        $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
+        if ($accountant->isValid()) {
+            $remindersQuery = ReminderOneTime::find()->where(['>', 'deadline', date('Y-m-d')])->orderBy(['deadline' => SORT_ASC]);
+            $reminders = $remindersQuery->all();
+            $data = [
+                'user' => $accountant,
+                'reminders' => $reminders,
+                'debug' => $remindersQuery->createCommand()->getRawSql(),
+            ];
+            return $this->renderPage($data, 'one-time');
         } else {
             return $this->renderLogout();
         }
@@ -375,6 +534,7 @@ class ReminderController extends BaseController
         $response->format = \yii\web\Response::FORMAT_JSON;
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
+            $type = $request->post('type');
             $reminder_id = $request->post('reminder_id');
             $schedule_id = $request->post('schedule_id');
             $company_id = $request->post('company_id');
@@ -382,6 +542,7 @@ class ReminderController extends BaseController
                 'id' => $schedule_id,
                 'template_id' => $reminder_id,
                 'company_id' => $company_id,
+                'type' => $type,
             ]);
             if ($reminder) {
                 $reminder->status = 'stopped';
@@ -413,13 +574,33 @@ class ReminderController extends BaseController
         $response->format = \yii\web\Response::FORMAT_JSON;
         $accountant = Accountant::findIdentityByAccessToken(['token' => $token]);
         if ($accountant->isValid()) {
+            $type = $request->post('type');
             $reminder_id = $request->post('reminder_id');
-            $schedule_id = $request->post('schedule_id');
             $company_id = $request->post('company_id');
+            $company = Company::find()->where(['id' => $company_id,])->one();
+            $customer = $company->getCustomer();
+            $lang = $customer ? $customer->lang : DictionaryService::LANG_DEFAULT;
             $is_active = $request->post('is_active');
+            switch ($type) {
+                case 'regular':
+                    $reminderClass = ReminderRegular::class;
+                    $reminderCompanyClass = ReminderRegularCompany::class;
+                    break;
+                case 'yearly':
+                    $reminderClass = ReminderYearly::class;
+                    $reminderCompanyClass = ReminderYearlyCompany::class;
+                    break;
+                case 'one-time':
+                    $reminderClass = ReminderOneTime::class;
+                    $reminderCompanyClass = ReminderOnetimeCompany::class;
+                    break;
+                default:
+                    $reminderClass = ReminderRegular::class;
+                    $reminderCompanyClass = ReminderRegularCompany::class;
+            }
             if ($is_active) {
                 // Activate reminder
-                $reminder = ReminderRegular::findOne($reminder_id);
+                $reminder = $reminderClass::findOne($reminder_id);
                 if (!$reminder) {
                     $response->data = [
                         'status' => 'error',
@@ -427,35 +608,50 @@ class ReminderController extends BaseController
                     ];
                     return $response;
                 }
-                $reminderCompany = ReminderRegularCompany::findOne([
+                $reminderCompany = $reminderCompanyClass::findOne([
                     'company_id' => $company_id,
                     'reminder_id' => $reminder_id,
                 ]);
                 if (!$reminderCompany) {
-                    $reminderCompany = new ReminderRegularCompany();
+                    $reminderCompany = new $reminderCompanyClass();
                     $reminderCompany->company_id = $company_id;
                     $reminderCompany->reminder_id = $reminder_id;
                     $reminderCompany->save();
                 }
+                switch ($type) {
+                    case 'regular':
+                        $deadlineDate = date('Y-m-') . str_pad($reminder->deadline_day, 2, '0', STR_PAD_LEFT);
+                        break;
+                    case 'yearly':
+                        $deadlineDate = date('Y-') .  str_pad($reminder->deadline_month, 2, '0', STR_PAD_LEFT) . '-' . str_pad($reminder->deadline_day, 2, '0', STR_PAD_LEFT);
+                        break;
+                    case 'one-time':
+                        $deadlineDate = $reminder->deadline;
+                        break;
+                }
                 $reminderSchedule = new ReminderSchedule();
-                $reminderSchedule->deadline_date = date('Y-m-d', strtotime(date('Y-m-01') . ' + ' . ($reminder->deadline_day - 1) . ' days'));
+                $reminderSchedule->deadline_date = date('Y-m-d', strtotime($deadlineDate));
                 $reminderSchedule->escalation_date = CalendarService::getClosestWorkingDay(date('Y-m-d', strtotime($reminderSchedule->deadline_date . ' - 1 day')));
                 $reminderSchedule->reminder_2_date = CalendarService::getClosestWorkingDay(date('Y-m-d', strtotime($reminderSchedule->escalation_date . ' - 1 day')));
                 $reminderSchedule->reminder_1_date = CalendarService::getClosestWorkingDay(date('Y-m-d', strtotime($reminderSchedule->reminder_2_date . ' - 1 day')));
                 $reminderSchedule->template_id = $reminder_id;
                 $reminderSchedule->company_id = $company_id;
-                $reminderSchedule->type = ReminderSchedule::TYPE_REGULAR;
+                $reminderSchedule->type = $type;
                 $reminderSchedule->target_month = date('Y-m') . '-01';
+                $reminderSchedule->message = ($lang == DictionaryService::LANG_RUSSIAN) ? $reminder->text_ru : $reminder->text_rs;
                 $reminderSchedule->status = 'pending';
                 $reminderSchedule->save();
                 $response->data = [
                     'status' => 'success',
                     'message' => 'Reminder activated successfully',
                     'id' => $reminderSchedule->id,
+                    'company' => $company,
+                    'customer' => $customer,
+                    'lang' => $lang,
                 ];
             } else {
                 // Deactivate reminder
-                $reminderCompany = ReminderRegularCompany::findOne([
+                $reminderCompany = $reminderCompanyClass::findOne([
                     'company_id' => $company_id,
                     'reminder_id' => $reminder_id,
                 ]);
@@ -465,11 +661,12 @@ class ReminderController extends BaseController
                 ReminderSchedule::deleteAll([
                     'template_id' => $reminder_id,
                     'company_id' => $company_id,
-                    'type' => ReminderSchedule::TYPE_REGULAR,
+                    'type' => $type,
                 ]);
                 $response->data = [
                     'status' => 'success',
                     'message' => 'Reminder deactivated successfully',
+                    'lang' => $lang,
                 ];
             }
         } else {

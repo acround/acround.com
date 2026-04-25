@@ -1,11 +1,11 @@
 <?php
 
-use app\components\TaskViewActivityWidget;
-use app\components\TaskViewCommentsWidget;
-use app\components\TaskViewCompanyInfoWidget;
-use app\components\TaskViewDetailsWidget;
-use app\components\TaskViewDocumentsWidget;
-use app\components\TaskViewTopWidget;
+use app\widgets\TaskViewActivityWidget;
+use app\widgets\TaskViewCommentsWidget;
+use app\widgets\TaskViewCompanyInfoWidget;
+use app\widgets\TaskViewDetailsWidget;
+use app\widgets\TaskViewDocumentsWidget;
+use app\widgets\TaskViewTopWidget;
 
 ?>
 <div class="p-6">

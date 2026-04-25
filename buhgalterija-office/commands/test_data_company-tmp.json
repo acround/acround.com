@@ -6,10 +6,7 @@
         "type_id": 0,
         "is_pdv": true,
         "activity_id": 0,
-        "specific_reports": "",
-        "reminder": "",
         "pib": "",
-        "status": "active",
-        "report_date": "2024-01-01"
+        "status": "active"
     }
 ]

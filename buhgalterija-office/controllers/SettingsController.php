@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\components\SettingsCalendarBodyWidget;
+use app\widgets\SettingsCalendarBodyWidget;
 use app\models\Accountant;
 use app\models\TaxCalendar;
 use yii\db\Query;
