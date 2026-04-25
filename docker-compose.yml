@@ -130,36 +130,36 @@ services:
       retries: 3
       start_period: 60s
 
-  buhgalterija-office:
-    build:
-      context: .
-      dockerfile: buhgalterija-office/Dockerfile
-    container_name: buhgalterija-office
-    restart: unless-stopped
-    ports:
-      - '8081:80'
-    environment:
-      - POSTGRES_HOST=${DB_HOST:-postgres}
-      - POSTGRES_PORT=${DB_PORT:-5432}
-      - POSTGRES_DATA_DB=${DB_BUCH_DATA}
-      - POSTGRES_USER=${DB_USER:-postgres}
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
-      - N8N_WEBHOOK_BASE_URL=${N8N_WEBHOOK_BASE_URL}
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-    volumes:
-      - ./buhgalterija-office:/var/www/html
-    networks:
-      - web
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.buhgalterija-office.rule=Host(`${BUH_OFFICE_SUBDOMAIN}.${DOMAIN_NAME}`)
-      - traefik.http.routers.buhgalterija-office.entrypoints=websecure
-      - traefik.http.routers.buhgalterija-office.tls=true
-      - traefik.http.routers.buhgalterija-office.tls.certresolver=mytlschallenge
-      - traefik.http.services.buhgalterija-office.loadbalancer.server.port=80
-    depends_on:
-      postgres:
-        condition: service_healthy
+  # buhgalterija-office:
+  #   build:
+  #     context: .
+  #     dockerfile: buhgalterija-office/Dockerfile
+  #   container_name: buhgalterija-office
+  #   restart: unless-stopped
+  #   ports:
+  #     - '8081:80'
+  #   environment:
+  #     - POSTGRES_HOST=${DB_HOST:-postgres}
+  #     - POSTGRES_PORT=${DB_PORT:-5432}
+  #     - POSTGRES_DATA_DB=${DB_BUCH_DATA}
+  #     - POSTGRES_USER=${DB_USER:-postgres}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
+  #     - N8N_WEBHOOK_BASE_URL=${N8N_WEBHOOK_BASE_URL}
+  #     - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+  #   volumes:
+  #     - ./buhgalterija-office:/var/www/html
+  #   networks:
+  #     - web
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.buhgalterija-office.rule=Host(`${BUH_OFFICE_SUBDOMAIN}.${DOMAIN_NAME}`)
+  #     - traefik.http.routers.buhgalterija-office.entrypoints=websecure
+  #     - traefik.http.routers.buhgalterija-office.tls=true
+  #     - traefik.http.routers.buhgalterija-office.tls.certresolver=mytlschallenge
+  #     - traefik.http.services.buhgalterija-office.loadbalancer.server.port=80
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
 
   pgadmin:
     image: dpage/pgadmin4:latest
