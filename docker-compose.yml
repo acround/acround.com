@@ -22,10 +22,9 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     networks:
       - web
+
   postgres:
     image: pgvector/pgvector:pg15
-    # build:
-    # dockerfile: postgres/Dockerfile
     container_name: postgres
     restart: unless-stopped
     environment:
@@ -68,7 +67,6 @@ services:
       - traefik.http.routers.n8n.middlewares=n8n@docker
       - traefik.http.services.n8n.loadbalancer.server.port=5678
     environment:
-      #      - DB_TYPE=sqlite
       - DB_TYPE=${DB_TYPE:-postgresdb}
       - DB_POSTGRESDB_HOST=${DB_HOST:-postgres}
       - DB_POSTGRESDB_PORT=${DB_PORT:-5432}
@@ -79,7 +77,6 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
       - N8N_RUNNERS_ENABLED=true
-      #      - NODE_ENV=production
       - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
       - N8N_SECURE_COOKIE=false
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
@@ -90,10 +87,10 @@ services:
       - N8N_CORS_ALLOWED_ORIGINS=https://receipt-insights-bot.vercel.app/
       - N8N_PROXY_HOPS=1
       - EXECUTIONS_DATA_PRUNE=true
-      - EXECUTIONS_DATA_MAX_AGE=168 # 7 дней
+      - EXECUTIONS_DATA_MAX_AGE=168
       - EXECUTIONS_DATA_SAVE_ON_ERROR=all
-      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=none # Экономит кучу места. 'info' - компромисс
-      - EXECUTIONS_DATA_SAVE_ON_PROGRESS=false # <-- Исправлено на false для скорости!
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+      - EXECUTIONS_DATA_SAVE_ON_PROGRESS=false
       - NODE_OPTIONS=--max-old-space-size=2048
       - NODE_FUNCTION_ALLOW_BUILTIN=crypto
       - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
@@ -130,37 +127,6 @@ services:
       retries: 3
       start_period: 60s
 
-  # buhgalterija-office:
-  #   build:
-  #     context: .
-  #     dockerfile: buhgalterija-office/Dockerfile
-  #   container_name: buhgalterija-office
-  #   restart: unless-stopped
-  #   ports:
-  #     - '8081:80'
-  #   environment:
-  #     - POSTGRES_HOST=${DB_HOST:-postgres}
-  #     - POSTGRES_PORT=${DB_PORT:-5432}
-  #     - POSTGRES_DATA_DB=${DB_BUCH_DATA}
-  #     - POSTGRES_USER=${DB_USER:-postgres}
-  #     - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
-  #     - N8N_WEBHOOK_BASE_URL=${N8N_WEBHOOK_BASE_URL}
-  #     - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-  #   volumes:
-  #     - ./buhgalterija-office:/var/www/html
-  #   networks:
-  #     - web
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.buhgalterija-office.rule=Host(`${BUH_OFFICE_SUBDOMAIN}.${DOMAIN_NAME}`)
-  #     - traefik.http.routers.buhgalterija-office.entrypoints=websecure
-  #     - traefik.http.routers.buhgalterija-office.tls=true
-  #     - traefik.http.routers.buhgalterija-office.tls.certresolver=mytlschallenge
-  #     - traefik.http.services.buhgalterija-office.loadbalancer.server.port=80
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
@@ -185,9 +151,169 @@ services:
       - traefik.http.routers.pgadmin.tls.certresolver=mytlschallenge
       - traefik.http.services.pgadmin.loadbalancer.server.port=80
 
+  # ---------------------------------------------------------------------------
+  # Firecrawl — все исходники лежат в ./firecrawl/
+  # ---------------------------------------------------------------------------
+
+  firecrawl-playwright:
+    build: ./firecrawl/apps/playwright-service-ts
+    container_name: firecrawl-playwright
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      PROXY_SERVER: ${PROXY_SERVER}
+      PROXY_USERNAME: ${PROXY_USERNAME}
+      PROXY_PASSWORD: ${PROXY_PASSWORD}
+      ALLOW_LOCAL_WEBHOOKS: ${ALLOW_LOCAL_WEBHOOKS}
+      BLOCK_MEDIA: ${BLOCK_MEDIA}
+      MAX_CONCURRENT_PAGES: ${CRAWL_CONCURRENT_REQUESTS:-10}
+    networks:
+      - web
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    cpus: 2.0
+    mem_limit: 4G
+    memswap_limit: 4G
+    tmpfs:
+      - /tmp/.cache:noexec,nosuid,size=1g
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        compress: "true"
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+
+  firecrawl-redis:
+    image: redis:alpine
+    container_name: firecrawl-redis
+    restart: unless-stopped
+    networks:
+      - web
+    command: redis-server --bind 0.0.0.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+        compress: "true"
+
+  firecrawl-rabbitmq:
+    image: rabbitmq:3-management
+    container_name: firecrawl-rabbitmq
+    restart: unless-stopped
+    networks:
+      - web
+    command: rabbitmq-server
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+        compress: "true"
+
+  firecrawl-postgres:
+    build: ./firecrawl/apps/nuq-postgres
+    container_name: firecrawl-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${FIRECRAWL_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${FIRECRAWL_POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${FIRECRAWL_POSTGRES_DB:-postgres}
+    networks:
+      - web
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        compress: "true"
+
+  firecrawl-api:
+    build: ./firecrawl/apps/api
+    container_name: firecrawl-api
+    restart: unless-stopped
+    environment:
+      REDIS_URL: ${FIRECRAWL_REDIS_URL:-redis://firecrawl-redis:6379}
+      REDIS_RATE_LIMIT_URL: ${FIRECRAWL_REDIS_URL:-redis://firecrawl-redis:6379}
+      PLAYWRIGHT_MICROSERVICE_URL: http://firecrawl-playwright:3000/scrape
+      POSTGRES_USER: ${FIRECRAWL_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${FIRECRAWL_POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${FIRECRAWL_POSTGRES_DB:-postgres}
+      POSTGRES_HOST: firecrawl-postgres
+      POSTGRES_PORT: 5432
+      USE_DB_AUTHENTICATION: ${USE_DB_AUTHENTICATION:-false}
+      NUM_WORKERS_PER_QUEUE: ${NUM_WORKERS_PER_QUEUE:-8}
+      CRAWL_CONCURRENT_REQUESTS: ${CRAWL_CONCURRENT_REQUESTS:-10}
+      MAX_CONCURRENT_JOBS: ${MAX_CONCURRENT_JOBS:-5}
+      BROWSER_POOL_SIZE: ${BROWSER_POOL_SIZE:-5}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+      MODEL_NAME: ${MODEL_NAME}
+      MODEL_EMBEDDING_NAME: ${MODEL_EMBEDDING_NAME}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+      AUTUMN_SECRET_KEY: ${AUTUMN_SECRET_KEY}
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL}
+      BULL_AUTH_KEY: ${BULL_AUTH_KEY}
+      TEST_API_KEY: ${TEST_API_KEY}
+      SUPABASE_ANON_TOKEN: ${SUPABASE_ANON_TOKEN}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_TOKEN: ${SUPABASE_SERVICE_TOKEN}
+      SELF_HOSTED_WEBHOOK_URL: ${SELF_HOSTED_WEBHOOK_URL}
+      LOGGING_LEVEL: ${LOGGING_LEVEL}
+      PROXY_SERVER: ${PROXY_SERVER}
+      PROXY_USERNAME: ${PROXY_USERNAME}
+      PROXY_PASSWORD: ${PROXY_PASSWORD}
+      SEARXNG_ENDPOINT: ${SEARXNG_ENDPOINT}
+      SEARXNG_ENGINES: ${SEARXNG_ENGINES}
+      SEARXNG_CATEGORIES: ${SEARXNG_CATEGORIES}
+      HOST: "0.0.0.0"
+      PORT: ${FIRECRAWL_INTERNAL_PORT:-3002}
+      EXTRACT_WORKER_PORT: ${EXTRACT_WORKER_PORT:-3004}
+      WORKER_PORT: ${WORKER_PORT:-3005}
+      NUQ_RABBITMQ_URL: amqp://firecrawl-rabbitmq:5672
+      ENV: local
+    networks:
+      - web
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      firecrawl-redis:
+        condition: service_started
+      firecrawl-playwright:
+        condition: service_started
+      firecrawl-rabbitmq:
+        condition: service_healthy
+    ports:
+      - ${FIRECRAWL_PORT:-3002}:${FIRECRAWL_INTERNAL_PORT:-3002}
+    command: node dist/src/harness.js --start-docker
+    cpus: 4.0
+    mem_limit: 8G
+    memswap_limit: 8G
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        compress: "true"
+
 networks:
   web:
     driver: bridge
+
 volumes:
   traefik_data:
   postgres_data:
