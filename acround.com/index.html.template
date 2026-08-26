@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akround — automatizacija poslovnih procesa za MSP</title>
+<meta name="description" content="Akround automatizuje radne tokove, e-fakture i izveštaje za mala i srednja preduzeća u Srbiji. Bez ručnog unosa podataka. Zakažite besplatnu konsultaciju.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://acround.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Akround">
+<meta property="og:title" content="Akround — automatizacija poslovnih procesa za MSP">
+<meta property="og:description" content="Povezujemo vaše alate, dokumente i timove u jedan automatizovan tok. Za mala i srednja preduzeća u Srbiji.">
+<meta property="og:url" content="https://acround.com/">
+<meta property="og:locale" content="sr_RS">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<!-- TODO: dodajte og:image, 1200×630px, pre lansiranja -->
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Akround — automatizacija poslovnih procesa za MSP">
+<meta name="twitter:description" content="Povezujemo vaše alate, dokumente i timove u jedan automatizovan tok. Za mala i srednja preduzeća u Srbiji.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Akround",
+  "description": "Automatizacija poslovnih procesa za mala i srednja preduzeća u Srbiji: radni tokovi, e-fakture, integracije softvera i izveštaji.",
+  "url": "https://acround.com/",
+  "areaServed": { "@type": "Country", "name": "Srbija" },
+  "telephone": "+381628731096",
+  "email": "akround@gmail.com",
+  "priceRange": "390€-890€",
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Start",
+      "priceSpecification": { "@type": "UnitPriceSpecification", "price": "390", "priceCurrency": "EUR", "billingDuration": "P1M" }
+    },
+    {
+      "@type": "Offer",
+      "name": "Growth",
+      "priceSpecification": { "@type": "UnitPriceSpecification", "price": "890", "priceCurrency": "EUR", "billingDuration": "P1M" }
+    },
+    {
+      "@type": "Offer",
+      "name": "Enterprise",
+      "description": "Individualna ponuda po dogovoru."
+    }
+  ]
+}
+</script>
+<!-- END HEAD METADATA -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/app.css">
+
+</head>
+<body>
+
+<div class="nav-shell">
+  <nav class="nav">
+    <a href="#top" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-word">Akround</span>
+    </a>
+    <div class="nav-links">
+      <a href="#usluge"><span data-sr>Usluge</span><span data-ru>Услуги</span><span data-en>Services</span></a>
+      <a href="#proces"><span data-sr>Proces</span><span data-ru>Процесс</span><span data-en>Process</span></a>
+      <a href="#cene"><span data-sr>Cene</span><span data-ru>Цены</span><span data-en>Pricing</span></a>
+      <a href="#kontakt"><span data-sr>Kontakt</span><span data-ru>Контакты</span><span data-en>Contact</span></a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language / Језик">
+        <button type="button" data-set-lang="sr" aria-pressed="true">SR</button>
+        <button type="button" data-set-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a href="#kontakt" class="btn btn-primary" style="padding:10px 20px; font-size:0.85rem;">
+        <span data-sr>Zakažite poziv</span><span data-ru>Записаться</span><span data-en>Book a call</span>
+      </a>
+    </div>
+  </nav>
+</div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <video class="bg-video" autoplay muted loop playsinline aria-hidden="true" src="assets/video/hero.mp4"></video>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="orbit-field" aria-hidden="true">
+      <svg class="orbit-rings" viewBox="0 0 640 640">
+        <circle class="ring" cx="320" cy="320" r="150"/>
+        <circle class="ring" cx="320" cy="320" r="220"/>
+        <circle class="ring" cx="320" cy="320" r="290"/>
+      </svg>
+      <span class="orbit-node n1"></span>
+      <span class="orbit-node n2"></span>
+      <span class="orbit-node n3"></span>
+      <span class="orbit-node n4"></span>
+    </div>
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow on-dark">
+          <span data-sr>Automatizacija poslovnih procesa · Srbija</span>
+          <span data-ru>Автоматизация бизнес-процессов · Сербия</span>
+          <span data-en>Business process automation · Serbia</span>
+        </span>
+        <h1>
+          <span data-sr>Poslovanje koje se vrti samo od sebe.</span>
+          <span data-ru>Бизнес, который крутится сам.</span>
+          <span data-en>Business that runs itself.</span>
+        </h1>
+        <p class="hero-sub">
+          <span data-sr>Akround povezuje vaše alate i dokumente u jedan automatizovan tok. Podaci se sami prenose između sistema, umesto da ih prekucavate ručno.</span>
+          <span data-ru>Akround связывает ваши инструменты и документы в единый автоматизированный поток. Данные сами переходят между системами, вместо того чтобы вы вводили их вручную.</span>
+          <span data-en>Akround connects your tools and documents into one automated flow. Data moves between systems on its own, instead of you retyping it by hand.</span>
+        </p>
+        <div class="hero-cta">
+          <a href="#kontakt" class="btn btn-white">
+            <span data-sr>Zakažite besplatnu konsultaciju</span><span data-ru>Бесплатная консультация</span><span data-en>Book a free consultation</span>
+          </a>
+          <a href="#proces" class="btn btn-ghost-dark">
+            <span data-sr>Pogledajte kako radi</span><span data-ru>Как это работает</span><span data-en>See how it works</span>
+          </a>
+        </div>
+        <div class="hero-meta">
+          <div><strong data-sr class="block">Radimo širom Srbije</strong><strong data-ru class="block">Работаем по всей Сербии</strong><strong data-en class="block">We work across Serbia</strong></div>
+          <div><strong data-sr class="block">2–4 nedelje</strong><strong data-ru class="block">2–4 недели</strong><strong data-en class="block">2–4 weeks</strong><span data-sr>do prvog automatizovanog toka</span><span data-ru>до первого автоматизированного потока</span><span data-en>to your first automated flow</span></div>
+        </div>
+      </div>
+
+      <div class="flow-card reveal">
+        <div class="flow-card-head">
+          <span class="eyebrow on-dark"><span data-sr>Primer toka</span><span data-ru>Пример потока</span><span data-en>Example flow</span></span>
+          <span class="dot-status"><span data-sr>Aktivno</span><span data-ru>Активно</span><span data-en>Active</span></span>
+        </div>
+        <div class="flow-steps">
+          <span class="flow-pulse" aria-hidden="true"></span>
+          <div class="flow-step">
+            <span class="flow-node trigger">01</span>
+            <div class="flow-text">
+              <p><span data-sr>Nova faktura stigla na mejl</span><span data-ru>Новый счёт получен на почту</span><span data-en>New invoice arrives by email</span></p>
+              <span data-sr>Okidač</span><span data-ru>Триггер</span><span data-en>Trigger</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="flow-node check">02</span>
+            <div class="flow-text">
+              <p><span data-sr>Provera iznosa i dobavljača</span><span data-ru>Проверка суммы и поставщика</span><span data-en>Amount and supplier check</span></p>
+              <span data-sr>Uslov</span><span data-ru>Условие</span><span data-en>Condition</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="flow-node action">03</span>
+            <div class="flow-text">
+              <p><span data-sr>Knjiženje i obaveštenje knjigovođi</span><span data-ru>Проводка и уведомление бухгалтеру</span><span data-en>Posted and accountant notified</span></p>
+              <span data-sr>Akcija</span><span data-ru>Действие</span><span data-en>Action</span>
+            </div>
+          </div>
+        </div>      </div>
+    </div>
+  </section>
+
+  <!-- SECTORS -->
+  <section class="band band-light" style="padding:56px 0;">
+    <div class="wrap">
+      <p class="eyebrow">
+        <span data-sr>Radimo sa firmama iz ovih delatnosti:</span>
+        <span data-ru>Работаем с компаниями из этих сфер:</span>
+        <span data-en>We work with companies in these industries:</span>
+      </p>
+      <div class="sectors-viewport">
+        <div class="sectors">
+          <span class="tag tag-iris"><span data-sr>Maloprodaja</span><span data-ru>Розница</span><span data-en>Retail</span></span>
+          <span class="tag tag-ember"><span data-sr>Ugostiteljstvo</span><span data-ru>HoReCa</span><span data-en>Hospitality</span></span>
+          <span class="tag tag-iris"><span data-sr>Logistika</span><span data-ru>Логистика</span><span data-en>Logistics</span></span>
+          <span class="tag tag-ember"><span data-sr>Usluge</span><span data-ru>Услуги</span><span data-en>Services</span></span>
+          <span class="tag tag-iris"><span data-sr>Proizvodnja</span><span data-ru>Производство</span><span data-en>Manufacturing</span></span>
+          <span class="tag tag-ember"><span data-sr>E-trgovina</span><span data-ru>E-commerce</span><span data-en>E-commerce</span></span>
+          <span class="tag tag-iris dup" aria-hidden="true"><span data-sr>Maloprodaja</span><span data-ru>Розница</span><span data-en>Retail</span></span>
+          <span class="tag tag-ember dup" aria-hidden="true"><span data-sr>Ugostiteljstvo</span><span data-ru>HoReCa</span><span data-en>Hospitality</span></span>
+          <span class="tag tag-iris dup" aria-hidden="true"><span data-sr>Logistika</span><span data-ru>Логистика</span><span data-en>Logistics</span></span>
+          <span class="tag tag-ember dup" aria-hidden="true"><span data-sr>Usluge</span><span data-ru>Услуги</span><span data-en>Services</span></span>
+          <span class="tag tag-iris dup" aria-hidden="true"><span data-sr>Proizvodnja</span><span data-ru>Производство</span><span data-en>Manufacturing</span></span>
+          <span class="tag tag-ember dup" aria-hidden="true"><span data-sr>E-trgovina</span><span data-ru>E-commerce</span><span data-en>E-commerce</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM / SOLUTION -->
+  <section class="band band-white">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span data-sr>Zašto Akround</span><span data-ru>Почему Akround</span><span data-en>Why Akround</span></span>
+        <h2><span data-sr>Znamo kako izgleda ponedeljak ujutru.</span><span data-ru>Мы знаем, как выглядит утро понедельника.</span><span data-en>We know what Monday morning looks like.</span></h2>
+        <p><span data-sr>Alati koje već imate uglavnom rade dobro. Problem je što ne razmenjuju podatke jedni s drugima.</span><span data-ru>Инструменты, которые у вас уже есть, обычно работают нормально. Проблема в том, что они не обмениваются данными друг с другом.</span><span data-en>The tools you already have usually work fine. The problem is they don't share data with each other.</span></p>
+      </div>
+      <div class="compare reveal">
+        <div class="compare-col">
+          <h3><span data-sr>Bez Akrounda</span><span data-ru>Без Akround</span><span data-en>Without Akround</span></h3>
+          <ul>
+            <li><span data-sr>Fakture se prepisuju ručno iz mejla u knjigovodstveni program</span><span data-ru>Счета вручную переносятся из почты в бухгалтерскую программу</span><span data-en>Invoices get retyped by hand from email into the accounting software</span></li>
+            <li><span data-sr>Izveštaji se sklapaju u Excelu, uveče, pred rok</span><span data-ru>Отчёты собираются в Excel вечером перед дедлайном</span><span data-en>Reports get pieced together in Excel, in the evening, before a deadline</span></li>
+            <li><span data-sr>Klijent čeka odgovor jer podatak "još nije stigao od kolege"</span><span data-ru>Клиент ждёт ответа, потому что данные «ещё не пришли от коллеги»</span><span data-en>A client waits for an answer because the data "hasn't come from a colleague yet"</span></li>
+          </ul>
+        </div>
+        <div class="compare-col is-solution">
+          <h3><span data-sr>Sa Akroundom</span><span data-ru>С Akround</span><span data-en>With Akround</span></h3>
+          <ul>
+            <li><span data-sr>Dokumenti i fakture teku automatski između sistema</span><span data-ru>Документы и счета автоматически перетекают между системами</span><span data-en>Documents and invoices flow automatically between systems</span></li>
+            <li><span data-sr>Izveštaj se sam generiše svakog jutra u 8h</span><span data-ru>Отчёт формируется сам каждое утро в 8:00</span><span data-en>The report generates itself every morning at 8am</span></li>
+            <li><span data-sr>Tim dobija obaveštenje čim je nešto zaista potrebno njemu</span><span data-ru>Команда получает уведомление, как только что-то реально требует внимания</span><span data-en>The team gets notified the moment something actually needs their attention</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="band band-dark" id="usluge">
+    <video class="bg-video" autoplay muted loop playsinline aria-hidden="true" src="assets/video/services.mp4"></video>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow on-dark"><span data-sr>Šta radimo</span><span data-ru>Что мы делаем</span><span data-en>What we do</span></span>
+        <h2><span data-sr>Ovo automatizujemo svaki dan.</span><span data-ru>Вот что мы автоматизируем каждый день.</span><span data-en>This is what we automate every day.</span></h2>
+      </div>
+      <div class="services-grid reveal">
+        <div class="service-card">
+          <span class="glow" aria-hidden="true"></span>
+          <span class="service-num">01</span>
+          <h3><span data-sr>Automatizacija radnih tokova</span><span data-ru>Автоматизация рабочих процессов</span><span data-en>Workflow automation</span></h3>
+          <p><span data-sr>Ručne, ponavljajuće korake povezujemo u tok koji se pokreće sam, od porudžbine do zatvorenog naloga.</span><span data-ru>Ручные, повторяющиеся шаги соединяем в поток, который запускается сам, от заказа до закрытого наряда.</span><span data-en>We connect manual, repetitive steps into a flow that runs itself, from order to closed job.</span></p>
+        </div>
+        <div class="service-card">
+          <span class="glow" aria-hidden="true"></span>
+          <span class="service-num">02</span>
+          <h3><span data-sr>e-Fakture i knjigovodstvo</span><span data-ru>Электронные счета и учёт</span><span data-en>e-Invoices and bookkeeping</span></h3>
+          <p><span data-sr>Povezujemo SEF, vaš ERP i knjigovođu tako da se fakture i PDV evidencija slažu bez ručnog kopiranja.</span><span data-ru>Соединяем систему e-Faktura (SEF), вашу ERP и бухгалтера так, чтобы счета и учёт НДС сводились без копирования.</span><span data-en>We connect SEF, your ERP and your accountant so invoices and VAT records line up without manual copying.</span></p>
+        </div>
+        <div class="service-card">
+          <span class="glow" aria-hidden="true"></span>
+          <span class="service-num">03</span>
+          <h3><span data-sr>Integracije softvera</span><span data-ru>Интеграция ПО</span><span data-en>Software integrations</span></h3>
+          <p><span data-sr>Povezujemo CRM, kasu, magacin i sajt u jedan sistem koji sam razmenjuje podatke.</span><span data-ru>Соединяем CRM, кассу, склад и сайт в систему, которая сама обменивается данными.</span><span data-en>We connect your CRM, POS, warehouse and website into one system that exchanges data on its own.</span></p>
+        </div>
+        <div class="service-card">
+          <span class="glow" aria-hidden="true"></span>
+          <span class="service-num">04</span>
+          <h3><span data-sr>Izveštaji u realnom vremenu</span><span data-ru>Отчёты в реальном времени</span><span data-en>Real-time reporting</span></h3>
+          <p><span data-sr>Dašbord se sam ažurira i šalje pregled pravoj osobi, umesto večernjeg rada u Excelu.</span><span data-ru>Дашборд обновляется сам и отправляет сводку нужному человеку, вместо вечерней работы в Excel.</span><span data-en>A dashboard updates itself and sends the summary to the right person, instead of an evening spent in Excel.</span></p>
+        </div>
+        <div class="service-card">
+          <span class="glow" aria-hidden="true"></span>
+          <span class="service-num">05</span>
+          <h3><span data-sr>Automatizacija komunikacije</span><span data-ru>Автоматизация коммуникации</span><span data-en>Communication automation</span></h3>
+          <p><span data-sr>Podsetnici, potvrde i odgovori klijentima idu automatski, tačno na vreme.</span><span data-ru>Напоминания, подтверждения и ответы клиентам уходят автоматически, точно вовремя.</span><span data-en>Reminders, confirmations and replies to clients go out automatically, right on time.</span></p>
+        </div>
+        <div class="service-card">
+          <span class="glow" aria-hidden="true"></span>
+          <span class="service-num">06</span>
+          <h3><span data-sr>Rešenja po meri, bez koda</span><span data-ru>No-code решения под задачу</span><span data-en>Custom solutions, no code</span></h3>
+          <p><span data-sr>Kad gotov alat ne postoji, gradimo mali interni sistem tačno za vaš proces.</span><span data-ru>Когда готового инструмента нет, собираем небольшую внутреннюю систему именно под ваш процесс.</span><span data-en>When there's no off-the-shelf tool for it, we build a small internal system made exactly for your process.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="band band-light" id="proces">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span data-sr>Kako radimo</span><span data-ru>Как мы работаем</span><span data-en>How we work</span></span>
+        <h2><span data-sr>Kako izgleda saradnja s nama.</span><span data-ru>Как выглядит совместная работа с нами.</span><span data-en>What working with us looks like.</span></h2>
+      </div>
+      <div class="process-list reveal">
+        <div class="process-track" aria-hidden="true"><div class="process-track-fill" id="processTrackFill"></div></div>
+        <div class="process-row">
+          <span class="process-index">01</span>
+          <div class="process-body">
+            <h3><span data-sr>Analiza procesa</span><span data-ru>Анализ процесса</span><span data-en>Process analysis</span></h3>
+            <p><span data-sr>Dolazimo kod vas ili se povezujemo online, mapiramo kako posao stvarno teče i gde se gubi vreme.</span><span data-ru>Приезжаем к вам или подключаемся онлайн, картируем реальный ход работы и точки потери времени.</span><span data-en>We come to you or connect online, and map how the work actually flows and where time gets lost.</span></p>
+          </div>
+        </div>
+        <div class="process-row">
+          <span class="process-index">02</span>
+          <div class="process-body">
+            <h3><span data-sr>Dizajn rešenja</span><span data-ru>Проектирование решения</span><span data-en>Solution design</span></h3>
+            <p><span data-sr>Predlažemo konkretan tok automatizacije i alate, sa jasnom cenom pre nego što krenemo.</span><span data-ru>Предлагаем конкретный сценарий автоматизации и инструменты с чёткой ценой до начала работы.</span><span data-en>We propose a concrete automation flow and toolset, with a clear price before we start.</span></p>
+          </div>
+        </div>
+        <div class="process-row">
+          <span class="process-index">03</span>
+          <div class="process-body">
+            <h3><span data-sr>Implementacija</span><span data-ru>Внедрение</span><span data-en>Implementation</span></h3>
+            <p><span data-sr>Povezujemo sisteme i testiramo na realnim podacima, bez prekida rada.</span><span data-ru>Соединяем системы и тестируем на реальных данных, без остановки работы.</span><span data-en>We connect the systems and test on real data, without interrupting your work.</span></p>
+          </div>
+        </div>
+        <div class="process-row">
+          <span class="process-index">04</span>
+          <div class="process-body">
+            <h3><span data-sr>Podrška i optimizacija</span><span data-ru>Поддержка и оптимизация</span><span data-en>Support and optimization</span></h3>
+            <p><span data-sr>Pratimo kako tok radi u praksi i doterujemo ga kako se posao menja.</span><span data-ru>Следим за работой потока на практике и дорабатываем его по мере роста бизнеса.</span><span data-en>We watch how the flow performs in practice and adjust it as your business changes.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS / INVERTED BLOCK -->
+  <section class="band band-black">
+    <video class="bg-video" autoplay muted loop playsinline aria-hidden="true" src="assets/video/stats.mp4"></video>
+    <div class="wrap">
+      <div class="section-head reveal" style="margin-bottom:0;">
+        <span class="eyebrow on-dark"><span data-sr>Kako to izgleda u brojkama</span><span data-ru>Как это выглядит в цифрах</span><span data-en>What that looks like in numbers</span></span>
+        <h2><span data-sr>Bez drame. Samo manje ponavljanja.</span><span data-ru>Без драмы. Просто меньше повторений.</span><span data-en>No drama. Just less repetition.</span></h2>
+      </div>
+      <div class="stat-grid reveal">
+        <div class="stat-cell">
+          <div class="stat-num"><span class="stat-value" data-target="1">0</span> <span data-sr>KONTAKT</span><span data-ru>КОНТАКТ</span><span data-en>CONTACT</span></div>
+          <p><span data-sr>osoba za sve integracije, od analize do podrške</span><span data-ru>для всех интеграций, от анализа до поддержки</span><span data-en>person for all integrations, from analysis to support</span></p>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num"><span class="stat-value" data-target="4">0</span> <span data-sr>KORAKA</span><span data-ru>ШАГА</span><span data-en>STEPS</span></div>
+          <p><span data-sr>od prve analize do automatizovanog toka koji radi sam</span><span data-ru>от первого анализа до автоматизированного потока</span><span data-en>from first analysis to an automated flow that runs itself</span></p>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num"><span class="stat-value" data-target="0">0</span> <span data-sr>KOPIRANJA</span><span data-ru>КОПИРОВАНИЯ</span><span data-en>COPYING</span></div>
+          <p><span data-sr>podataka između sistema koje povežemo</span><span data-ru>данных между системами, которые мы связываем</span><span data-en>of data between the systems we connect</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="band band-white" id="cene">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span data-sr>Cene</span><span data-ru>Цены</span><span data-en>Pricing</span></span>
+        <h2><span data-sr>Jasna cena pre nego što bilo šta povežemo.</span><span data-ru>Понятная цена до того, как мы что-либо соединим.</span><span data-en>A clear price before we connect anything.</span></h2>
+        <p><span data-sr>Orijentacione mesečne cene za rad na daljinu. Konačna ponuda zavisi od broja alata i složenosti procesa. Cene su bez PDV-a.</span><span data-ru>Ориентировочные месячные цены для удалённой работы. Итоговое предложение зависит от числа инструментов и сложности процесса. Цены указаны без НДС.</span><span data-en>Indicative monthly prices for remote work. The final quote depends on the number of tools and the complexity of the process. Prices exclude VAT.</span></p>
+      </div>
+      <div class="pricing-grid reveal">
+        <div class="price-card">
+          <span class="tag tag-iris price-badge"><span data-sr>Za početak</span><span data-ru>Для начала</span><span data-en>To get started</span></span>
+          <div class="price-name">Start</div>
+          <p class="price-desc"><span data-sr>Za jedan proces koji vas najviše koči.</span><span data-ru>Для одного процесса, который тормозит сильнее всего.</span><span data-en>For the one process that slows you down the most.</span></p>
+          <div class="price-amount"><span data-sr>od</span><span data-ru>от</span><span data-en>from</span> 390€</div>
+          <ul class="price-list">
+            <li><span data-sr>1 automatizovani tok</span><span data-ru>1 автоматизированный поток</span><span data-en>1 automated flow</span></li>
+            <li><span data-sr>do 2 povezana alata</span><span data-ru>до 2 связанных инструментов</span><span data-en>up to 2 connected tools</span></li>
+            <li><span data-sr>podrška putem mejla</span><span data-ru>поддержка по почте</span><span data-en>email support</span></li>
+          </ul>
+          <a href="#kontakt" class="btn btn-ghost-light"><span data-sr>Zakažite razgovor</span><span data-ru>Обсудить</span><span data-en>Book a call</span></a>
+        </div>
+
+        <div class="price-card is-featured">
+          <span class="tag tag-ember price-badge"><span data-sr>Najčešći izbor</span><span data-ru>Выбор большинства</span><span data-en>Most popular</span></span>
+          <div class="price-name">Growth</div>
+          <p class="price-desc"><span data-sr>Za tim koji širi automatizaciju kroz više odeljenja.</span><span data-ru>Для команды, расширяющей автоматизацию на несколько отделов.</span><span data-en>For a team expanding automation across several departments.</span></p>
+          <div class="price-amount"><span data-sr>od</span><span data-ru>от</span><span data-en>from</span> 890€</div>
+          <ul class="price-list">
+            <li><span data-sr>do 5 automatizovanih tokova</span><span data-ru>до 5 автоматизированных потоков</span><span data-en>up to 5 automated flows</span></li>
+            <li><span data-sr>neograničen broj integracija</span><span data-ru>неограниченное число интеграций</span><span data-en>unlimited integrations</span></li>
+            <li><span data-sr>prioritetna podrška</span><span data-ru>приоритетная поддержка</span><span data-en>priority support</span></li>
+            <li><span data-sr>mesečni izveštaj o učinku</span><span data-ru>ежемесячный отчёт о результатах</span><span data-en>monthly performance report</span></li>
+          </ul>
+          <a href="#kontakt" class="btn btn-white"><span data-sr>Zakažite razgovor</span><span data-ru>Обсудить</span><span data-en>Book a call</span></a>
+        </div>
+
+        <div class="price-card">
+          <span class="tag tag-iris price-badge"><span data-sr>Za kompleksne sisteme</span><span data-ru>Для сложных систем</span><span data-en>For complex systems</span></span>
+          <div class="price-name">Enterprise</div>
+          <p class="price-desc"><span data-sr>Za posebne zahteve i veće organizacije.</span><span data-ru>Для особых задач и крупных организаций.</span><span data-en>For special requirements and larger organizations.</span></p>
+          <div class="price-amount"><span data-sr>Individualno</span><span data-ru>Индивидуально</span><span data-en>Custom</span></div>
+          <ul class="price-list">
+            <li><span data-sr>razvoj po meri</span><span data-ru>разработка под задачу</span><span data-en>custom development</span></li>
+            <li><span data-sr>posvećeni inženjer</span><span data-ru>выделенный инженер</span><span data-en>dedicated engineer</span></li>
+            <li><span data-sr>SLA podrška</span><span data-ru>поддержка по SLA</span><span data-en>SLA support</span></li>
+          </ul>
+          <a href="#kontakt" class="btn btn-ghost-light"><span data-sr>Zakažite razgovor</span><span data-ru>Обсудить</span><span data-en>Book a call</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-band" id="kontakt">
+    <video class="bg-video" autoplay muted loop playsinline aria-hidden="true" src="assets/video/cta.mp4"></video>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap cta-inner reveal">
+      <h2><span data-sr>Spremni da prestanete da kucate isto dvaput?</span><span data-ru>Готовы перестать вводить одно и то же дважды?</span><span data-en>Ready to stop typing the same thing twice?</span></h2>
+      <p><span data-sr>Zakažite kratak poziv od 20 minuta. Pogledaćemo vaš proces i iskreno vam reći da li automatizacija ima smisla.</span><span data-ru>Запишитесь на короткий 20-минутный звонок. Посмотрим на ваш процесс и честно скажем, есть ли смысл в автоматизации.</span><span data-en>Book a short 20-minute call. We'll look at your process and tell you honestly whether automation makes sense.</span></p>
+      <div class="hero-cta">
+        <button type="button" class="btn btn-white" id="bookCallBtn"><span data-sr>Zakažite poziv</span><span data-ru>Записаться на звонок</span><span data-en>Book a call</span></button>
+        <a href="mailto:akround@gmail.com" class="btn btn-ghost-dark">akround@gmail.com</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="bookingModal" hidden>
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+    <button type="button" class="modal-close" id="bookingModalClose" aria-label="Zatvori / Закрыть">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M5 5 L15 15 M15 5 L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="modal-step" id="bookingFormStep">
+      <span class="eyebrow"><span data-sr>Zakazivanje poziva</span><span data-ru>Запись на звонок</span><span data-en>Book a call</span></span>
+      <h3 id="bookingModalTitle"><span data-sr>Ostavite kontakt.</span><span data-ru>Оставьте контакты.</span><span data-en>Leave your details.</span></h3>
+      <p class="modal-sub"><span data-sr>Javljamo se u toku radnog dana da dogovorimo termin.</span><span data-ru>Свяжемся с вами в течение рабочего дня, чтобы договориться о времени звонка.</span><span data-en>We'll get back to you within a business day to set up a time.</span></p>
+
+      <form id="bookingForm" novalidate>
+        <label class="modal-field">
+          <span data-sr>Ime i prezime</span><span data-ru>Имя и фамилия</span><span data-en>Full name</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label class="modal-field">
+          <span data-sr>Telefon</span><span data-ru>Телефон</span><span data-en>Phone</span>
+          <input type="tel" name="phone" autocomplete="tel" required>
+        </label>
+        <label class="modal-field">
+          <span data-sr>Email</span><span data-ru>Email</span><span data-en>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+
+        <button type="submit" class="btn btn-primary modal-submit" id="bookingSubmitBtn">
+          <span data-sr>Pošaljite</span><span data-ru>Отправить</span><span data-en>Send</span>
+        </button>
+
+        <p class="modal-error" id="bookingError" hidden>
+          <span data-sr>Nešto nije uspelo. Pokušajte ponovo ili nam pišite direktno na</span>
+          <span data-ru>Что-то пошло не так. Попробуйте ещё раз или напишите нам напрямую на</span>
+          <span data-en>Something went wrong. Try again or email us directly at</span>
+          <a href="mailto:akround@gmail.com">akround@gmail.com</a>.
+        </p>
+      </form>
+    </div>
+
+    <div class="modal-step" id="bookingSuccessStep" hidden>
+      <span class="success-dot" aria-hidden="true"></span>
+      <h3><span data-sr>Hvala!</span><span data-ru>Спасибо!</span><span data-en>Thank you!</span></h3>
+      <p><span data-sr>Primili smo vaše podatke. Javljamo se u toku radnog dana da dogovorimo poziv.</span><span data-ru>Мы получили ваши данные. Свяжемся с вами в течение рабочего дня, чтобы договориться о звонке.</span><span data-en>We've received your details. We'll get back to you within a business day to set up the call.</span></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="brand"><span class="brand-mark" aria-hidden="true"></span><span class="brand-word">Akround</span></a>
+        <p><span data-sr>Automatizacija poslovnih procesa za mala i srednja preduzeća u Srbiji.</span><span data-ru>Автоматизация бизнес-процессов для малого и среднего бизнеса в Сербии.</span><span data-en>Business process automation for small and medium businesses in Serbia.</span></p>
+      </div>
+      <div class="footer-col">
+        <h4><span data-sr>Usluge</span><span data-ru>Услуги</span><span data-en>Services</span></h4>
+        <ul>
+          <li><a href="#usluge"><span data-sr>Radni tokovi</span><span data-ru>Рабочие процессы</span><span data-en>Workflows</span></a></li>
+          <li><a href="#usluge"><span data-sr>e-Fakture</span><span data-ru>Электронные счета</span><span data-en>e-Invoices</span></a></li>
+          <li><a href="#usluge"><span data-sr>Integracije</span><span data-ru>Интеграции</span><span data-en>Integrations</span></a></li>
+          <li><a href="#usluge"><span data-sr>Izveštaji</span><span data-ru>Отчёты</span><span data-en>Reports</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-sr>Kompanija</span><span data-ru>Компания</span><span data-en>Company</span></h4>
+        <ul>
+          <li><a href="#proces"><span data-sr>Kako radimo</span><span data-ru>Как мы работаем</span><span data-en>How we work</span></a></li>
+          <li><a href="#cene"><span data-sr>Cene</span><span data-ru>Цены</span><span data-en>Pricing</span></a></li>
+          <li><a href="#kontakt"><span data-sr>Kontakt</span><span data-ru>Контакты</span><span data-en>Contact</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-sr>Kontakt</span><span data-ru>Контакты</span><span data-en>Contact</span></h4>
+        <ul>
+          <li><a href="mailto:akround@gmail.com">akround@gmail.com</a></li>
+          <li><a href="tel:+381628731096">+381 62 873 1096</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Akround. <span data-sr>Sva prava zadržana.</span><span data-ru>Все права защищены.</span><span data-en>All rights reserved.</span></span>
+      <div class="lang-switch" role="group" aria-label="Language / Језик">
+        <button type="button" data-set-lang="sr" aria-pressed="true">SR</button>
+        <button type="button" data-set-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SETTINGS — configures the booking form's n8n webhook URL.
+     ${N8N_WEBHOOK_URL} below is a template placeholder, not a JS
+     variable — docker-entrypoint.d/10-inject-settings.sh fills it in
+     at container startup from the N8N_WEBHOOK_URL variable in your
+     .env. To change the URL later: edit .env, then
+     `docker compose up -d akround-site` — no image rebuild needed.
+     ============================================================ -->
+<script>
+  window.AKROUND_SETTINGS = {
+    n8nWebhookUrl: "${N8N_WEBHOOK_URL}"
+  };
+</script>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.vscode
+node_modules
+.next
+next-env.d.ts
+package-lock.json
+
+# Инструменты агента: скиллы ставятся заново одной командой, в репозитории
+# сайта им не место
+.claude/skills/
+.claude/agents/
+
+# Локальные настройки деплоя — свои на каждой машине, не для репозитория
+.env
+docker-compose.override.yml

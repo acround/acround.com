@@ -1,0 +1,43 @@
+services:
+  rezbajka:
+    build: .
+    container_name: rezbajka
+    restart: unless-stopped
+    environment:
+      # Домен/протокол в canonical и OG-тегах. Без .env — тот же
+      # адрес, что зашит в файлы при сборке, поведение не меняется.
+      # Для локального теста заведите .env (см. .env.example), без слэша
+      # на конце:
+      #   REZBAJKA_DOMAIN=http://localhost:8082
+      - REZBAJKA_DOMAIN=${REZBAJKA_DOMAIN:-https://rezbajka.akround.com}
+      # Куда форма «Заказать» шлёт заявку (POST JSON, source: "rezbajka").
+      # Не задан — форма честно говорит, что приём заявок не подключён.
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-}
+    networks:
+      - acround-web
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=acround-web"
+      - "traefik.http.services.rezbajka.loadbalancer.server.port=80"
+
+      # HTTPS
+      - "traefik.http.routers.rezbajka.rule=Host(`rezbajka.akround.com`)"
+      - "traefik.http.routers.rezbajka.entrypoints=websecure"
+      - "traefik.http.routers.rezbajka.tls=true"
+      - "traefik.http.routers.rezbajka.tls.certresolver=letsencrypt"
+
+      # HTTP → HTTPS. Названия entrypoints "web"/"websecure" — стандартные из
+      # официальных примеров Traefik; если у вас другие, поправьте здесь.
+      - "traefik.http.routers.rezbajka-http.rule=Host(`rezbajka.akround.com`)"
+      - "traefik.http.routers.rezbajka-http.entrypoints=web"
+      - "traefik.http.routers.rezbajka-http.middlewares=rezbajka-https-redirect"
+      - "traefik.http.middlewares.rezbajka-https-redirect.redirectscheme.scheme=https"
+
+networks:
+  acround-web:
+    external: true

@@ -1,0 +1,16 @@
+# Локальный тест через docker compose, если сеть Traefik уже есть на
+# машине (docker network create acround-web). Скопируйте в
+# docker-compose.override.yml — Compose подхватывает его сам, без -f.
+#
+#   cp docker-compose.override.yml.example docker-compose.override.yml
+#   docker compose up -d --build
+#   открыть http://localhost:8082
+#
+# Без сети acround-web проще запустить контейнер напрямую — команда
+# в DEPLOY.md, без Traefik и без внешних сетей вообще.
+#
+# docker-compose.override.yml — в .gitignore, в репозиторий не попадёт.
+services:
+  rezbajka:
+    ports:
+      - "8082:80"
