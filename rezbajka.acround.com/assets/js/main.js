@@ -442,7 +442,7 @@
 
       fetch(WEBHOOK_URL, {
         method: 'POST',
-        mode: 'no-cors',
+//        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           source: 'rezbajka',
