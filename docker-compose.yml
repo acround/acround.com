@@ -21,7 +21,7 @@ services:
       - 'traefik_data:/letsencrypt'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     networks:
-      - acround-web
+      - web
 
   postgres:
     image: pgvector/pgvector:pg15
@@ -36,7 +36,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - acround-web
+      - web
     healthcheck:
       test:
         - CMD-SHELL
@@ -100,7 +100,7 @@ services:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
     networks:
-      - acround-web
+      - web
     depends_on:
       postgres:
         condition: service_healthy
@@ -111,7 +111,7 @@ services:
     build: ./embedding-service
     container_name: embedding-service
     networks:
-      - acround-web
+      - web
     ports:
       - "5000:5000"
     restart: unless-stopped
@@ -146,7 +146,7 @@ services:
     volumes:
       - ./buhgalterija-office:/var/www/html
     networks:
-      - acround-web
+      - web
     labels:
       - traefik.enable=true
       - traefik.http.routers.buhgalterija-office.rule=Host(`${BUH_OFFICE_SUBDOMAIN}.${BASE_DOMAIN_NAME}`)
@@ -171,7 +171,7 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     networks:
-      - acround-web
+      - web
     depends_on:
       - postgres
     labels:
@@ -193,7 +193,7 @@ services:
     environment:
       - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL}
     networks:
-      - acround-web
+      - web
     labels:
       - traefik.enable=true
       - traefik.http.routers.akround-site.rule=Host(`${BASE_DOMAIN_NAME}`) || Host(`www.${BASE_DOMAIN_NAME}`)
@@ -209,7 +209,7 @@ services:
     ports:
       - '8082:80'
     networks:
-      - acround-web
+      - web
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
@@ -220,7 +220,7 @@ services:
       - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL}
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=acround-web"
+      - "traefik.docker.network=web"
       - "traefik.http.services.rezbajka.loadbalancer.server.port=80"
 
       # HTTPS
@@ -235,7 +235,7 @@ services:
       - "traefik.http.middlewares.rezbajka-https-redirect.redirectscheme.scheme=https"
 
 networks:
-  acround-web:
+  web:
     external: true
 volumes:
   traefik_data:
