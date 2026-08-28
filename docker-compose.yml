@@ -195,13 +195,19 @@ services:
     networks:
       - web
     labels:
+    labels:
       - traefik.enable=true
-      - traefik.http.routers.akround-site.rule=Host(`${BASE_DOMAIN_NAME}`) || Host(`www.${BASE_DOMAIN_NAME}`)
+      - traefik.http.routers.akround-site.rule=Host(`${BASE_DOMAIN_NAME}`)
       - traefik.http.routers.akround-site.entrypoints=websecure
       - traefik.http.routers.akround-site.tls=true
       - traefik.http.routers.akround-site.tls.certresolver=mytlschallenge
       - traefik.http.services.akround-site.loadbalancer.server.port=80
 
+      - traefik.http.routers.akround-site-www.rule=Host(`www.${BASE_DOMAIN_NAME}`)
+      - traefik.http.routers.akround-site-www.entrypoints=websecure
+      - traefik.http.routers.akround-site-www.tls=true
+      - traefik.http.routers.akround-site-www.tls.certresolver=mytlschallenge
+      - traefik.http.routers.akround-site-www.service=akround-site
   rezbajka:
     build: ./rezbajka.acround.com
     container_name: rezbajka
