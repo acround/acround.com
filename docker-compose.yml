@@ -195,7 +195,6 @@ services:
     networks:
       - web
     labels:
-    labels:
       - traefik.enable=true
       - traefik.http.routers.akround-site.rule=Host(`${BASE_DOMAIN_NAME}`)
       - traefik.http.routers.akround-site.entrypoints=websecure
