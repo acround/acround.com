@@ -236,7 +236,8 @@ services:
 
 networks:
   web:
-    external: true
+#    external: true
+    driver: bridge
 volumes:
   traefik_data:
   postgres_data:
