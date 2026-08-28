@@ -227,7 +227,7 @@ services:
       - "traefik.http.routers.rezbajka.rule=Host(`${REZBAJKA_DOMAIN}`)"
       - "traefik.http.routers.rezbajka.entrypoints=websecure"
       - "traefik.http.routers.rezbajka.tls=true"
-      - "traefik.http.routers.rezbajka.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.rezbajka.tls.certresolver=mytlschallenge"
 
       - "traefik.http.routers.rezbajka-http.rule=Host(`${REZBAJKA_SUBDOMAIN}.${BASE_DOMAIN_NAME}`)"
       - "traefik.http.routers.rezbajka-http.entrypoints=web"
