@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rezbajka.akround.com/sitemap.xml
+Sitemap: https://rezbajka.acround.com/sitemap.xml

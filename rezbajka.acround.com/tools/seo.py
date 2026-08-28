@@ -27,7 +27,7 @@ import re
 #  НАСТРОЙКА. Здесь всё, что зависит от вас.
 # ─────────────────────────────────────────────────────────────────────────
 
-SITE_URL = 'https://rezbajka.akround.com'   # ← ваш домен, без слэша на конце
+SITE_URL = 'https://rezbajka.acround.com'   # ← ваш домен, без слэша на конце
 
 LANG_TAG = 'sr-Latn'   # значение [lang] на <html> по умолчанию — язык сайта
 LANG_LOCALES = {'sr': 'sr_Latn_RS', 'ru': 'ru_RU', 'en': 'en_US'}

@@ -20,7 +20,7 @@ docker compose up -d --build
 
 Traefik подхватит контейнер по лейблам автоматически — отдельно
 регистрировать роутер не нужно. Через минуту-две (пока выпускается
-сертификат) сайт должен открыться на `https://rezbajka.akround.com`.
+сертификат) сайт должен открыться на `https://rezbajka.acround.com`.
 
 ## Обновление после правок
 
@@ -36,7 +36,7 @@ docker compose up -d --build
 ```bash
 docker compose ps                 # rezbajka — healthy
 docker compose logs -f rezbajka   # логи nginx
-curl -I https://rezbajka.akround.com/
+curl -I https://rezbajka.acround.com/
 ```
 
 ## Локальный тест

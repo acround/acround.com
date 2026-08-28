@@ -29,7 +29,7 @@ python3 -m http.server 8000   # затем http://localhost:8000
 ## Деплой
 
 На свой VPS с Traefik — `Dockerfile` и `docker-compose.yml` с готовыми
-лейблами уже в репозитории, домен `rezbajka.akround.com` вписан. Подробности
+лейблами уже в репозитории, домен `rezbajka.acround.com` вписан. Подробности
 и команды — в `DEPLOY.md`.
 
 ## Тексты и путь к заказу
@@ -69,7 +69,7 @@ python3 tools/seo.py
 **Запускайте его после каждой правки текстов.** Он обновляет `sitemap.xml`,
 `robots.txt` и блок для поиска прямо в `index.html`.
 
-Домен уже вписан в `tools/seo.py`, строка `SITE_URL` — `rezbajka.akround.com`.
+Домен уже вписан в `tools/seo.py`, строка `SITE_URL` — `rezbajka.acround.com`.
 Поменяется адрес — поменяйте и здесь, и в лейблах `docker-compose.yml`
 (`Host(...)`), запустите скрипт заново.
 

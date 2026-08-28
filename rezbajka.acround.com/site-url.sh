@@ -12,9 +12,9 @@
 # в файлах уже есть свой (все ссылки в них — с адресом сайта).
 set -eu
 
-: "${REZBAJKA_DOMAIN:=https://rezbajka.akround.com}"
+: "${REZBAJKA_DOMAIN:=https://rezbajka.acround.com}"
 REZBAJKA_DOMAIN="${REZBAJKA_DOMAIN%/}"   # свой слэш не добавит — уже есть в файлах
-BAKED='https://rezbajka.akround.com'
+BAKED='https://rezbajka.acround.com'
 
 if [ "$REZBAJKA_DOMAIN" != "$BAKED" ]; then
   find /usr/share/nginx/html -type f \( -name '*.html' -o -name '*.xml' -o -name '*.txt' \) \
